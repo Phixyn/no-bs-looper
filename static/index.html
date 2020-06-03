@@ -13,18 +13,37 @@
   </head>
 
   <body>
+    <h1>No Bullshit YouTube Looper</h1>
+
     <!-- The <iframe> (and video player) will replace this <div> tag -->
     <div id="player"></div>
-    
+
+    <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
     <form>
       <label for="video-id">Video ID:</label>
-      <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"> <br>
+      <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"><br>
       <label for="start-time">Start time (seconds):</label>
-      <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
-      <input type="number" id="start-time" name="start-time" value="410">
+      <input type="number" id="start-time" name="start-time" value="420"><br>
       <label for="end-time">End time (seconds):</label>
-      <input type="number" id="end-time" name="end-time" value="730">
+      <input type="number" id="end-time" name="end-time" value="727"><br>
+      <input type="button" id="update-btn" name="update-btn" value="Update" onclick="updatePlayer()">
+      <input type="reset" id="reset-btn" name="reset-btn" value="Reset"><br>
+      <input type="button" id="toggle-vid-btn" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
     </form>
+
+    <hr>
+    <h3>Check these out</h3>
+    <ul>
+      <li>id: TtsQl_X3cbw</li>
+      <li>start: 828</li>
+      <li>end: 1155</li>
+    </ul>
+
+    <ul>
+      <li>id: Uq-TffHkCcc</li>
+      <li>start: 185 / 234</li>
+      <li>end: 280 / 284</li>
+    </ul>
 
     <script>
       var videoId = document.getElementById("video-id").value;
@@ -47,13 +66,14 @@
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: 'orxvTsPW10k',
+          videoId: videoId,
           playerVars: {
             rel: 0,
-            start: startTime
+            start: startTime,
+            modestBranding: 1
           },
           events: {
-            'onReady': onPlayerReady,
+            // 'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
           }
         });
@@ -64,10 +84,19 @@
        *
        * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
        */
-      function onPlayerReady(event) {
-        player.seekTo(startTime, true);
-        event.target.playVideo();
-      }
+      // function onPlayerReady(event) {
+        // event.target.playVideo();
+        // Could use this, but if user seeks, endSeconds becomes invalidated
+        // This is the same reason we don't have loop: 1 in our playerVars. Because
+        // we have our own loop through the setInterval callback.
+        // player.loadVideoById(
+        //   {
+        //     videoId: videoId,
+        //     startSeconds: startTime,
+        //     endSeconds: endTime
+        //   }
+        // );
+      // }
 
       /**
        * Called by the API when the video player's state changes.
@@ -92,10 +121,37 @@
       }
 
       function eventCallback() {
-        console.debug("Tick.");
-        // TODO not sure if it's worth having that second condition
         if (player.getCurrentTime() >= endTime) {
           player.seekTo(startTime, true);
+        }
+      }
+
+      function updatePlayer() {
+        console.debug("Updating player.");
+        videoId = document.getElementById("video-id").value;
+        startTime = parseInt(document.getElementById("start-time").value);
+        endTime = parseInt(document.getElementById("end-time").value);
+
+        // player.loadVideoById({videoId:String,
+        //               startSeconds:Number,
+        //               endSeconds:Number}):Void
+        // endSeconds becomes invalid if user seeks, so it's pointless
+        player.loadVideoById(
+          {
+            videoId: videoId,
+            startSeconds: startTime
+          }
+        );
+      }
+
+      function togglePlayer() {
+        console.debug("Toggling player visibility.");
+        var playerDiv = document.getElementById("player");
+        // TODO Get rid of first condition by assigning display: block to #player in CSS
+        if (playerDiv.style.display === "" || playerDiv.style.display !== "none") {
+          playerDiv.style.display = "none";
+        } else {
+          playerDiv.style.display = "block";
         }
       }
     </script>
