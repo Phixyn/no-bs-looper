@@ -15,8 +15,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
-lib64/
 parts/
 sdist/
 var/
@@ -103,6 +101,7 @@ tags
 *.json
 *.log
 *.txt
+!requirements.txt
 
 # Summary/other output files and devlog.md
 *.md
