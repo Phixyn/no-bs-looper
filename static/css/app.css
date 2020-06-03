@@ -1,4 +1,16 @@
 /* -----------------------------------
+ZURB Foundation Phixed Dark Theme
+No bullshit edition.
+
+Version: 0.2.1 (no bs edition)
+Author:  Phixyn
+
+TODO:
+ * Buttons and labels (dark theme colors)
+ * Orbit height + Orbit images
+----------------------------------- */
+
+/* -----------------------------------
     COLORS
 ----------------------------------- */
 
@@ -31,29 +43,29 @@
   --button-main-color: #333333;
   --button-hover-color: #666666;
 }
-  
+
 /* -----------------------------------
     HTML ELEMENTS
 ----------------------------------- */
 
 body {
-  background: var(--background-main-color) url('../images/zwartevilt.png');
+  background: var(--background-main-color) url('../img/zwartevilt.png');
+}
+
+body,
+.breadcrumbs li {
   color: var(--text-main-color);
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  font-weight: normal;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0; 
 }
 
 h3,
-h4 {
+h4,
+.h3,
+.h4 {
   padding: 0.9rem 0;
 }
 
-a {
+a,
+.breadcrumbs a {
   color: var(--link-main-color);
 }
 
@@ -65,4 +77,271 @@ a:hover {
 
 hr {
   border-bottom: 1px solid var(--separator-main-color);
+}
+
+code {
+  border: 1px solid var(--border-lighter-color);
+  background-color: var(--background-lighter-color);
+  color: var(--text-main-color);
+}
+
+pre {
+  border: 2px solid var(--border-light-color);
+  background-color: var(--background-light-color);
+}
+
+/* -----------------------------------
+    TOP BAR
+----------------------------------- */
+
+/* Prevent FOUC (Flash Of Unstyled Content) for top bar */
+.no-js .top-bar {
+  display: none;
+}
+
+@media screen and (min-width: 40em) {
+  .no-js .top-bar {
+    display: block;
+  }
+  .no-js .title-bar {
+    display: none;
+  }
+}
+/* End of FOUC prevention for top bar */
+
+.top-bar {
+  border-bottom: 2px solid var(--separator-accent-color);
+  box-shadow: 0 0 7px 2px var(--shadow-main-color);
+  padding: 0.1rem;
+}
+
+.top-bar,
+.top-bar ul {
+  background-color: var(--background-dark-color);
+  color: var(--menu-link-main-color);
+}
+
+/* -----------------------------------
+    MENUS
+----------------------------------- */
+
+.menu .menu-text {
+  padding: 0 2.5rem;
+  font-size: 1.5em;
+  font-weight: 100;
+  letter-spacing: 0.21em;
+}
+
+.menu a,
+.dropdown > li > a {
+  color: var(--menu-link-main-color);
+}
+
+.menu a:focus,
+.menu a:hover,
+.dropdown > li > a:focus,
+.dropdown > li > a:hover {
+  color: var(--menu-link-hover-color);
+}
+
+.dropdown > li > a:focus,
+.dropdown > li > a:hover {
+  box-shadow: 0 -2px 0 0 var(--shadow-main-color) inset;
+}
+
+/* TODO: Add a pink box-shadow bottom to active links? */
+/* .dropdown.menu > li.is-active > a,
+.dropdown.menu > li.is-active > a:focus,
+.dropdown.menu > li.is-active > a:hover {
+  box-shadow: 0 -2px 0 0 var(--shadow-main-color) inset;
+} */
+
+.dropdown.menu > li.is-active > a,
+.dropdown.menu > li.is-active > a:focus {
+  color: var(--separator-accent-color);
+}
+
+.dropdown.menu > li.is-active > a:hover {
+  color: var(--separator-accent-color);
+}
+
+/* Down arrow for opening sub-menus */
+.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+  border-color: var(--shadow-main-color) transparent transparent;
+}
+
+.is-dropdown-submenu.js-dropdown-active {
+  border: 1px solid var(--border-main-color);
+  background: var(--background-dark-transparent-color);
+  margin-top: 0.3rem;
+}
+
+li.is-submenu-item > a:focus,
+li.is-submenu-item > a:hover {
+  background: var(--background-dark-color);
+}
+
+/* -----------------------------------
+    THUMBNAIL
+----------------------------------- */
+
+.thumbnail {
+  /* border: 1px solid var(--border-main-color); */
+  /* For now, 4px border around it is fine */
+  border-color: var(--border-main-color);
+}
+
+.thumbnail > img {
+  width: 100%;
+}
+
+/* -----------------------------------
+    ORBIT (CAROUSEL)
+----------------------------------- */
+
+.orbit-bullets button {
+  background-color: var(--button-main-color);
+}
+
+.orbit-bullets button:hover,
+.orbit-bullets button.is-active {
+  background-color: var(--button-hover-color);
+}
+
+#home-orbit-container {
+  /* Make sure the top bar's box shadow is visible above the orbit.
+   * position: relative declared in .orbit, so not needed here. */
+  z-index: -1;
+  border-bottom: 2px solid var(--separator-dark-color);
+  /* height: 423.25px; */
+  max-height: 25em;
+}
+
+/* -----------------------------------
+    CALLOUT
+----------------------------------- */
+
+.callout {
+  border: 1px solid var(--border-main-color);
+  background-color: var(--background-sub-section-color);
+  color: var(--text-main-color);
+}
+
+/* -----------------------------------
+    CARD
+----------------------------------- */
+
+.card {
+  /* border: 1px solid #3d3d3d; */
+  border: 1px solid var(--border-main-color);
+}
+
+.card,
+.card-divider {
+  /* background: var(--button-main-color); */
+  background-color: var(--background-sub-section-color);
+  color: var(--text-main-color);
+}
+
+/* -----------------------------------
+    FORMS
+----------------------------------- */
+
+.input-group-label {
+  border: 1px solid var(--border-main-color);
+  background: var(--background-sub-section-color);
+  /* TODO: Should be darker? */
+  color: var(--text-main-color);
+}
+
+/* TODO: Find out how much this change affects */
+::placeholder {
+  color: var(--menu-link-main-color);
+}
+
+/* -----------------------------------
+    GENERAL / OTHER
+----------------------------------- */
+
+#main-content-banner,
+.blog-post-image {
+  text-align: center;
+}
+
+/* -----------------------------------
+    CONTACT DETAILS
+----------------------------------- */
+
+#contact-details {
+  border: 1px dashed var(--button-main-color);
+}
+
+#social-media-icons p {
+  margin: 0 auto;
+}
+
+#social-media-icons a {
+  padding-right: 1.2rem;
+}
+
+#social-media-icons a img {
+  opacity: 0.85;
+}
+
+#social-media-icons a:hover img {
+  opacity: 1;
+}
+
+/* -----------------------------------
+    FOOTER
+----------------------------------- */
+
+#footer {
+  background-color: var(--background-dark-color);
+  border-top: 2px solid var(--separator-accent-color);
+  box-shadow: 0 0 5px 2px var(--shadow-main-color);
+  /* margin-top: 6em; */
+  padding: 1.11em 0;
+}
+
+.copyright-msg {
+  border-top: 1px solid var(--separator-dark-color);
+  margin: 1.18rem 5.967rem; /* 1.48em 7.4em */
+  padding-top: 0.85rem; /* 1.04em */
+  color: var(--text-dark-color);
+  font-size: 0.8em;
+  text-align: right;
+}
+
+/* -----------------------------------
+    STICKY FOOTER
+
+Required for having a footer div that
+sticks to the bottom of the page no
+matter how much content the page has.
+----------------------------------- */
+
+html {
+	height: 100%;
+}
+
+body {
+	position: relative;
+	/* margin: 0; */ /* already present */
+	min-height: 100%;
+  /* Must be the same as the margin-bottom of the element that is
+  before the footer element. */
+	padding-bottom: 6em;
+}
+
+.grid-container {
+	/* Must be the same as the padding-bottom of the body element */
+  margin-bottom: 6em;
+}
+
+#footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
