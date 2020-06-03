@@ -101,7 +101,6 @@ tags
 
 # Debug output files
 *.json
-*.html
 *.log
 *.txt
 
