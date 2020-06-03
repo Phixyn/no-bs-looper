@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="No BS here only loops" />
+    <meta name="keywords" content="adware,must,die" />
+    <title>No Bullshit YouTube Looper</title>
+
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+
+  <body>
+    <!-- The <iframe> (and video player) will replace this <div> tag -->
+    <div id="player"></div>
+    
+    <form>
+      <label for="video-id">Video ID:</label>
+      <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"> <br>
+      <label for="start-time">Start time (seconds):</label>
+      <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
+      <input type="number" id="start-time" name="start-time" value="410">
+      <label for="end-time">End time (seconds):</label>
+      <input type="number" id="end-time" name="end-time" value="730">
+    </form>
+
+    <script>
+      var videoId = document.getElementById("video-id").value;
+      var startTime = parseInt(document.getElementById("start-time").value);
+      var endTime = parseInt(document.getElementById("end-time").value);
+
+      // Load the IFrame Player API code asynchronously
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      /**
+       * Creates an <iframe> element (and YouTube player) after the API code
+       * is downloaded.
+       */
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: 'orxvTsPW10k',
+          playerVars: {
+            rel: 0,
+            start: startTime
+          },
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      /**
+       * Called by the API when the video player is ready.
+       *
+       * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
+       */
+      function onPlayerReady(event) {
+        player.seekTo(startTime, true);
+        event.target.playVideo();
+      }
+
+      /**
+       * Called by the API when the video player's state changes.
+       *
+       * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
+       */
+      var timer = null;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING) {
+          console.debug("Interval started.");
+          timer = setInterval(eventCallback, 1000);
+        }
+        // TODO Check if this also affects things like player state == buffering,
+        // and if so, maybe improve it.
+        // Update: It does. Maybe do if (event.data == YT.PlayerState.PAUSED) ?
+        else {
+          if (timer != null) {
+            console.debug("Interval cleared from onPlayerStateChange.");
+            clearInterval(timer);
+          }
+        }
+      }
+
+      function eventCallback() {
+        console.debug("Tick.");
+        // TODO not sure if it's worth having that second condition
+        if (player.getCurrentTime() >= endTime) {
+          player.seekTo(startTime, true);
+        }
+      }
+    </script>
+  </body>
+</html>

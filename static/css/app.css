@@ -1,0 +1,68 @@
+/* -----------------------------------
+    COLORS
+----------------------------------- */
+
+:root {
+  --background-main-color: #121212;
+  --background-dark-color: #000000;
+  --background-lighter-color: rgba(40, 40, 40, 0.8);
+  --background-light-color: rgb(32, 32, 32);
+  --background-dark-transparent-color: rgba(0, 0, 0, 0.5);
+  /* TODO: Improve this color. Maybe darker or more transparent? */
+  --background-sub-section-color: rgba(25, 25, 25, 0.8);
+  /* --background-sub-section-color: #e6e6e6; */
+  /* --border-main-color: #3d3d3d; */
+  /* --border-main-color: #cacaca; */
+  --border-main-color: rgba(68, 68, 68, 0.25);
+  --border-lighter-color: rgb(78, 78, 78);
+  --border-light-color: rgb(57, 57, 57);
+  --text-main-color: #d9d9d9;
+  --text-dark-color: #777777;
+  --link-main-color: #db5a7f;
+  --link-hover-color: #d993a7;
+  --menu-link-main-color: #9d9d9d;
+  --menu-link-hover-color: #ffffff;
+  --separator-main-color: #424242;
+  --separator-dark-color: #252525;
+  --separator-accent-color: #a62139;
+  /* Shadow can be lighter/darker than accent, if desired */
+  --shadow-main-color: #a62139;
+  /* Orbit bullets */
+  --button-main-color: #333333;
+  --button-hover-color: #666666;
+}
+  
+/* -----------------------------------
+    HTML ELEMENTS
+----------------------------------- */
+
+body {
+  background: var(--background-main-color) url('../images/zwartevilt.png');
+  color: var(--text-main-color);
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: normal;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0; 
+}
+
+h3,
+h4 {
+  padding: 0.9rem 0;
+}
+
+a {
+  color: var(--link-main-color);
+}
+
+a:focus,
+a:hover {
+  color: var(--link-hover-color);
+  text-decoration: none;
+}
+
+hr {
+  border-bottom: 1px solid var(--separator-main-color);
+}
