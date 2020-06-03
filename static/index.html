@@ -14,37 +14,86 @@
   </head>
 
   <body>
-    <h1>No Bullshit YouTube Looper</h1>
+    <!-- TOP NAV BAR -->
+    <div class="title-bar" data-responsive-toggle="top-navbar" data-hide-for="medium">
+      <button class="menu-icon" type="button" data-toggle="top-navbar"></button>
+      <div class="title-bar-title">Menu</div>
+    </div> <!-- .title-bar -->
 
-    <!-- The <iframe> (and video player) will replace this <div> tag -->
-    <div id="player"></div>
+    <div class="top-bar" id="top-navbar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <!-- SITE TITLE -->
+          <li class="menu-text">No Bullshit YouTube Looper</li>
+        </ul>
+      </div> <!-- .top-bar-left -->
 
-    <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
-    <form>
-      <label for="video-id">Video ID:</label>
-      <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"><br>
-      <label for="start-time">Start time (seconds):</label>
-      <input type="number" id="start-time" name="start-time" value="420"><br>
-      <label for="end-time">End time (seconds):</label>
-      <input type="number" id="end-time" name="end-time" value="727"><br>
-      <input type="button" id="update-btn" name="update-btn" value="Update" onclick="updatePlayer()">
-      <input type="reset" id="reset-btn" name="reset-btn" value="Reset"><br>
-      <input type="button" id="toggle-vid-btn" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-    </form>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <!-- SITE TITLE -->
+          <li class="menu-text">Suspunk 2077</li>
+        </ul>
+      </div> <!-- .top-bar-right -->
+    </div> <!-- .top-bar #top-navbar -->
 
-    <hr>
-    <h3>Check these out</h3>
-    <ul>
-      <li>id: TtsQl_X3cbw</li>
-      <li>start: 828</li>
-      <li>end: 1155</li>
-    </ul>
+    <!-- MAIN CONTENT -->
+    <div class="grid-container">
+      <div class="grid-x grid-padding-x grid-padding-y">
+        <div class="cell">
+          <hr />
+          <h1 class="h5 subheader" id="main-content-banner">&bull; Put Video Title Here &bull;</h1>
+          <hr />
+        </div> <!-- .cell -->
 
-    <ul>
-      <li>id: Uq-TffHkCcc</li>
-      <li>start: 185 / 234</li>
-      <li>end: 280 / 284</li>
-    </ul>
+        <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
+          <div class="responsive-embed widescreen">
+            <div id="player"></div>
+          </div> <!-- .responsive-embed .widescreen -->
+        </div> <!-- .cell -->
+
+        <div class="cell">
+          <!-- The <iframe> (and video player) will replace this <div> tag -->
+          <!-- <div id="player"></div> -->
+
+          <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
+          <form>
+            <label for="video-id">Video ID:</label>
+            <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"><br>
+            <label for="start-time">Start time (seconds):</label>
+            <input type="number" id="start-time" name="start-time" value="420"><br>
+            <label for="end-time">End time (seconds):</label>
+            <input type="number" id="end-time" name="end-time" value="727"><br>
+            <input type="button" id="update-btn" name="update-btn" value="Update" onclick="updatePlayer()">
+            <input type="reset" id="reset-btn" name="reset-btn" value="Reset"><br>
+            <input type="button" id="toggle-vid-btn" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
+          </form>
+
+          <hr>
+          <h3>Check these out</h3>
+          <ul>
+            <li>id: TtsQl_X3cbw</li>
+            <li>start: 828</li>
+            <li>end: 1155</li>
+          </ul>
+
+          <ul>
+            <li>id: Uq-TffHkCcc</li>
+            <li>start: 185 / 234</li>
+            <li>end: 280 / 284</li>
+          </ul>
+        </div> <!-- .cell -->
+      </div> <!-- .grid-x -->
+    </div> <!-- .grid-container -->
+
+    <!-- FOOTER -->
+    <div class="grid-container full" id="footer">
+      <div class="grid-x">
+        <div class="cell">
+          <p class="copyright-msg">&copy; <?php $fromYear = 2012; $thisYear = (int)date('Y'); echo $fromYear . (($fromYear != $thisYear) ? ' - ' . $thisYear : '');?> Alpeche Pancha. All rights reserved. <br />
+          <?php echo $config['version'] ?></p>
+        </div> <!-- .cell -->
+      </div> <!-- .grid-x -->
+    </div> <!-- .grid-container -->
 
     <script src="lib/jquery.js"></script>
     <script src="lib/what-input.js"></script>
