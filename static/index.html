@@ -28,11 +28,11 @@
         </ul>
       </div> <!-- .top-bar-left -->
 
+      <!-- TODO fix by probably giving menu-text padding -->
       <div class="top-bar-right">
         <ul class="menu">
-          <!-- SITE TITLE -->
-          <li class="menu-text">Suspunk 2077</li>
-        </ul>
+          <li><a href="#">&nbsp;</a></li>
+        </ul> <!-- .dropdown .menu -->
       </div> <!-- .top-bar-right -->
     </div> <!-- .top-bar #top-navbar -->
 
@@ -47,27 +47,35 @@
 
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
           <div class="responsive-embed widescreen">
+            <!-- The <iframe> (and video player) will replace this <div> tag -->
             <div id="player"></div>
           </div> <!-- .responsive-embed .widescreen -->
         </div> <!-- .cell -->
 
-        <div class="cell">
-          <!-- The <iframe> (and video player) will replace this <div> tag -->
-          <!-- <div id="player"></div> -->
-
-          <!-- <input type="number" id="start-time" name="start-time" min="0" max="100" value="30"> -->
+        <div class="cell medium-6 large-6 medium-offset-3 large-offset-3">
           <form>
-            <label for="video-id">Video ID:</label>
-            <input type="text" id="video-id" name="video-id" value="orxvTsPW10k"><br>
-            <label for="start-time">Start time (seconds):</label>
-            <input type="number" id="start-time" name="start-time" value="420"><br>
-            <label for="end-time">End time (seconds):</label>
-            <input type="number" id="end-time" name="end-time" value="727"><br>
-            <input type="button" id="update-btn" name="update-btn" value="Update" onclick="updatePlayer()">
-            <input type="reset" id="reset-btn" name="reset-btn" value="Reset"><br>
-            <input type="button" id="toggle-vid-btn" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-          </form>
+            <div class="input-group">
+              <span class="input-group-label" style="min-width: 11.2rem;">Video ID</span>
+              <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
+            </div> <!-- .input-group -->
 
+            <div class="input-group">
+              <span class="input-group-label" style="min-width: 11.2rem;">Start time (seconds)</span>
+              <input type="number" id="start-time" class="input-group-field" name="start-time" value="420">
+            </div> <!-- .input-group -->
+
+            <div class="input-group">
+              <span class="input-group-label" style="min-width: 11.2rem;">End time (seconds)</span>
+              <input type="number" id="end-time" class="input-group-field" name="end-time" value="727">
+            </div> <!-- .input-group -->
+
+            <input type="button" id="update-btn" class="button" name="update-btn" value="Update" onclick="updatePlayer()">
+            <input type="reset" id="reset-btn" class="button" name="reset-btn" value="Reset"><br>
+            <input type="button" id="toggle-vid-btn" class="button" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
+          </form>
+        </div> <!-- .cell -->
+
+        <div class="cell">
           <hr>
           <h3>Check these out</h3>
           <ul>
@@ -89,8 +97,8 @@
     <div class="grid-container full" id="footer">
       <div class="grid-x">
         <div class="cell">
-          <p class="copyright-msg">&copy; <?php $fromYear = 2012; $thisYear = (int)date('Y'); echo $fromYear . (($fromYear != $thisYear) ? ' - ' . $thisYear : '');?> Alpeche Pancha. All rights reserved. <br />
-          <?php echo $config['version'] ?></p>
+          <p class="copyright-msg">No Bullshit Software by Phixyn. No bullshit, no rights reserved. Also, no warranty.<br />
+          v1.0.0</p>
         </div> <!-- .cell -->
       </div> <!-- .grid-x -->
     </div> <!-- .grid-container -->

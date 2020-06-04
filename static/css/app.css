@@ -49,7 +49,7 @@ TODO:
 ----------------------------------- */
 
 body {
-  background: var(--background-main-color) url('../img/zwartevilt.png');
+  background: var(--background-main-color) url('../images/zwartevilt.png');
 }
 
 body,
@@ -88,6 +88,10 @@ code {
 pre {
   border: 2px solid var(--border-light-color);
   background-color: var(--background-light-color);
+}
+
+label {
+  color: var(--text-main-color);
 }
 
 /* -----------------------------------
