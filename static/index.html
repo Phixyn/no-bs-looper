@@ -50,6 +50,14 @@
             <!-- The <iframe> (and video player) will replace this <div> tag -->
             <div id="player"></div>
           </div> <!-- .responsive-embed .widescreen -->
+
+          <div id="loop-portion-slider" class="slider" data-slider data-start="0" data-end="200" data-initial-start="0" data-initial-end="100" data-double-sided="true">
+            <span id="start-time-handle" class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="start-time"></span>
+            <span class="slider-fill" data-slider-fill></span>
+            <span id="end-time-handle" class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="end-time"></span>
+            <!-- <input type="hidden" id="slider-start">
+            <input type="hidden" id="slider-end"> -->
+          </div> <!-- .slider -->
         </div> <!-- .cell -->
 
         <div class="cell medium-6 large-6 medium-offset-3 large-offset-3">
@@ -61,12 +69,12 @@
 
             <div class="input-group">
               <span class="input-group-label" style="min-width: 11.2rem;">Start time (seconds)</span>
-              <input type="number" id="start-time" class="input-group-field" name="start-time" value="420">
+              <input type="number" id="start-time" class="input-group-field" name="start-time" value="0">
             </div> <!-- .input-group -->
 
             <div class="input-group">
               <span class="input-group-label" style="min-width: 11.2rem;">End time (seconds)</span>
-              <input type="number" id="end-time" class="input-group-field" name="end-time" value="727">
+              <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
             </div> <!-- .input-group -->
 
             <input type="button" id="update-btn" class="button" name="update-btn" value="Update" onclick="updatePlayer()">
