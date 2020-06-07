@@ -43,7 +43,7 @@ function onYouTubeIframeAPIReady() {
       rel: 0,
       start: startTime,
       modestBranding: 1,
-      version: 3
+      loop: 1
     },
     events: {
       'onReady': onPlayerReady,
@@ -154,6 +154,43 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
 
 }
 
+// TODO move this either to another JS file or to top
+var websocketClient = new WebSocket("ws://192.168.1.71:14670");
+
+/**
+ * onmessage handler for websocket.
+ */
+websocketClient.onmessage = function(event) {
+  // We got a new video endTime, so update the slider and input elements
+  console.debug("Received data from websocket server.");
+  console.debug(event.data);
+  var msg = JSON.parse(event.data);
+  endTime = parseInt(msg.lengthSeconds);
+  // TODO check message contents for errors, unrecognized data, etc,
+  // and handle those.
+  updateSliderAndInputAttributes(0, endTime);
+}
+
+/**
+ * onopen handler for websocket.
+ */
+websocketClient.onopen = function(event) {
+  console.log("Successfully opened websocket connection.");
+  // console.debug("onopen event:");
+  // console.debug(event);
+}
+
+/**
+ * onclose handler for websocket.
+ * TODO needs improvement. Maybe pinging the server every x seconds?
+ */
+websocketClient.onclose = function(event) {
+  console.log("Websocket server connection closed.");
+  console.debug(event);
+  // TODO this doesn't work. Find another way to reconnect
+  // websocketClient = new WebSocket("ws://192.168.1.71:14670");
+}
+
 /**
  * TODO
  *
@@ -172,7 +209,6 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
  * request on the behalf of this web app, and send us the video info
  * via HTTP. This will eventually be replaced with websocket for IPC.
  */
-var someReq;
 function updatePlayer() {
   // TODO rename function, maybe updatePlayerWithNewVideo? e_e
   console.debug("Updating player.");
@@ -181,19 +217,10 @@ function updatePlayer() {
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
   startTime = 0;
-  // Get fucked CORS. We'll use a separate application to proxy our GET request muahahaha
-  someReq = $.get("http://192.168.1.71:14670/get_yt_video_length?video_id=" + videoId, function() {
-      console.debug("Response to request: success");
-    }
-  ).done(function(result) {
-    console.debug("GET request done, setting endTime.");
-    // Get me that illegal video info data >:)
-    endTime = result.lengthSeconds;
-    // And FINALLY, we can update the slider and input elements here, giving our
-    // users a much nicer UX. And it only took 10 hours to figure this out. I
-    // sure hope our 1 user appreciates this (talkin about myself).
-    updateSliderAndInputAttributes(startTime, endTime);
-  });
+  // Get fucked CORS. We'll use a separate application to make our GET request muahahaha
+  // Get me that illegal video info data >:)
+  // TODO check if websocket connection is open first, if not, wait some seconds?
+  websocketClient.send(JSON.stringify({"request_video_info": videoId}));
 }
 
 /**
