@@ -65,7 +65,7 @@ function onPlayerReady(event) {
   startTime = parseInt(startTimeInput.value);
   // event.target.getDuration() = 1634.781  ... might need to change precision of slider and also data type?
   // For now use parseInt()
-  updateSliderAndInputAttributes(parseInt(event.target.getDuration()));
+  updateSliderAndInputAttributes(startTime, parseInt(event.target.getDuration()));
 }
 
 /**
@@ -77,8 +77,6 @@ var timer = null;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
     console.debug("Interval started.");
-    // Bad UX: end slider changes everytime user unpauses video
-    // updateSliderAndInputAttributes(parseInt(event.target.getDuration()));
     timer = setInterval(eventCallback, 1000);
   }
   // TODO Check if this also affects things like player state == buffering,
@@ -99,6 +97,9 @@ function eventCallback() {
   if (player.getCurrentTime() >= endTime) {
     player.seekTo(startTime, true);
   }
+  else if (player.getCurrentTime() <= startTime) {
+    player.seekTo(startTime, true);
+  }
 }
 
 /**
@@ -109,7 +110,7 @@ function eventCallback() {
  * new times properly and will be forced to use the slider. We want users
  * to have a choice and for both choices to work 100% all the time.
  */
-function updateSliderAndInputAttributes(newEndTime) {
+function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.log("Updating slider and input data.");
 
   // JavaScript amirite?
@@ -119,7 +120,7 @@ function updateSliderAndInputAttributes(newEndTime) {
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.setAttribute("max", (newEndTime - 1).toString());
 
-  startTimeInput.value = startTime;
+  startTimeInput.value = newStartTime;
   // By default, we'll put the end slider at the end of video time
   endTimeInput.value = endTimeString;
 
@@ -175,25 +176,23 @@ var someReq;
 function updatePlayer() {
   // TODO rename function, maybe updatePlayerWithNewVideo? e_e
   console.debug("Updating player.");
-  // startTime = parseInt(document.getElementById("start-time").value);
-  startTime = 0;
   videoId = document.getElementById("video-id").value;
   player.loadVideoById(videoId);
-  console.log(player.getDuration());
-  console.log(player.playerInfo.duration);
+
+  // On new videos, reset startTime to 0 and set endTime to new video's length
+  startTime = 0;
   // Get fucked CORS. We'll use a separate application to proxy our GET request muahahaha
   someReq = $.get("http://192.168.1.71:14670/get_yt_video_length?video_id=" + videoId, function() {
-      console.log("Response to request: success");
+      console.debug("Response to request: success");
     }
   ).done(function(result) {
-    console.log("GET request done, setting endTime.");
+    console.debug("GET request done, setting endTime.");
     // Get me that illegal video info data >:)
     endTime = result.lengthSeconds;
-    // console.debug(endTime);
     // And FINALLY, we can update the slider and input elements here, giving our
     // users a much nicer UX. And it only took 10 hours to figure this out. I
     // sure hope our 1 user appreciates this (talkin about myself).
-    updateSliderAndInputAttributes(endTime);
+    updateSliderAndInputAttributes(startTime, endTime);
   });
 }
 
