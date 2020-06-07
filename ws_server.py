@@ -99,7 +99,6 @@ def process_message(message: str) -> str:
     else:
         # TODO add more logging and could probably go to a separate function
         video_id = parsed_message["request_video_info"]
-        # print(video_id)    
         url = f"https://www.youtube.com/get_video_info?html5=1&video_id={video_id}"
         # Perform request to YouTube server. It replies with a formencoded string,
         # which can be parsed with parse_qs.
@@ -118,12 +117,13 @@ def process_message(message: str) -> str:
 
 async def server_handler(websocket, path):
     """Handler function for the websocket server."""
-    request_message = await websocket.recv()
-    logger.info(f"Received: {request_message}")
+    async for request_message in websocket:
+        # request_message = await websocket.recv()
+        logger.info(f"Received: {request_message}")
 
-    response_message = process_message(request_message)
-    logger.info(f"Sending: {response_message}")
-    await websocket.send(response_message)
+        response_message = process_message(request_message)
+        logger.info(f"Sending: {response_message}")
+        await websocket.send(response_message)
 
 
 if __name__ == "__main__":
