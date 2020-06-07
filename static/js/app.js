@@ -123,15 +123,34 @@ function updateSliderAndInputAttributes(newEndTime) {
   // By default, we'll put the end slider at the end of video time
   endTimeInput.value = endTimeString;
 
-  // Logical end value of slider
+  // Update logical end value of slider
   loopPortionSlider.options.end = newEndTime;
-  // Visual end value of slider
+  // Update visual end value of slider
   sliderDiv.setAttribute("data-end", endTimeString);
 
   // Update ARIA 'valuemax' data for time slider handles. Entirely for
   // accessibility purposes, has no effect on handles' functionality.
   startTimeSliderHandle.setAttribute("aria-valuemax", (newEndTime - 1).toString());
   endTimeSliderHandle.setAttribute("aria-valuemax", endTimeString);
+
+  /* Changing an input element's value as done above does not trigger an
+   * onchange event. Thus the sliders bound to the input elements will not
+   * update their position to reflect the new values. To fix this, we can
+   * trigger the onchange event.
+   *
+   * Note that this is a jQuery function and does NOT trigger a native onchange
+   * event. Instead, it will only fire on all the onchange listeners that are
+   * bound through jQuery. This works fine here because we are using Foundation
+   * and jQuery, but it's something to keep in mind. It also means that we need
+   * to use a jQuery selector (as opposed to something DOM native like
+   * document.getElementById).
+   */
+  // TODO should probably make variables for these
+  $("#start-time").change();
+  // Do this only after setting logical and visual end values for slider,
+  // otherwise the second handle's position won't match the endTime value.
+  $("#end-time").change();
+
 }
 
 /**
