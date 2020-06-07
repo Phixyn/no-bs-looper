@@ -59,6 +59,9 @@
             <div class="input-group">
               <span class="input-group-label" style="min-width: 11.2rem;">Video ID</span>
               <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
+              <div class="input-group-button">
+                <input type="button" id="update-btn" class="button" name="update-btn" value="Update" onclick="updatePlayer()">
+              </div>
             </div> <!-- .input-group -->
 
             <div class="input-group">
@@ -71,7 +74,6 @@
               <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
             </div> <!-- .input-group -->
 
-            <input type="button" id="update-btn" class="button" name="update-btn" value="Update" onclick="updatePlayer()">
             <input type="reset" id="reset-btn" class="button" name="reset-btn" value="Reset"><br>
             <input type="button" id="toggle-vid-btn" class="button" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
           </form>
