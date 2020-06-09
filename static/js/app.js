@@ -2,8 +2,6 @@
 $(document).foundation();
 
 var videoId = document.getElementById("video-id").value;
-// var startTime = parseInt(document.getElementById("start-time").value);
-// var endTime = parseInt(document.getElementById("end-time").value);
 var startTime = 0;
 var endTime;
 
@@ -16,7 +14,6 @@ var loopPortionSlider = new Foundation.Slider($(sliderDiv));
 var startTimeSliderHandle = document.getElementById("start-time-handle");
 var endTimeSliderHandle = document.getElementById("end-time-handle");
 
-// TODO Debug only
 $(sliderDiv).on("moved.zf.slider", function() {
   // console.log("Slider moved!");
   updateLoopPortion();
@@ -24,7 +21,6 @@ $(sliderDiv).on("moved.zf.slider", function() {
 
 // Load the IFrame Player API code asynchronously
 var tag = document.createElement('script');
-
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -40,9 +36,11 @@ function onYouTubeIframeAPIReady() {
     width: '640',
     videoId: videoId,
     playerVars: {
+      version: 3,
       rel: 0,
       start: startTime,
       modestBranding: 1,
+      playlist: videoId,
       loop: 1
     },
     events: {
@@ -63,17 +61,18 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
   startTime = parseInt(startTimeInput.value);
+  // event.target.setLoop(true); // Probably don't need this, see note in eventCallback
   // event.target.getDuration() = 1634.781  ... might need to change precision of slider and also data type?
   // For now use parseInt()
   updateSliderAndInputAttributes(startTime, parseInt(event.target.getDuration()));
 }
 
+var timer = null;
 /**
  * Called by the API when the video player's state changes.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
  */
-var timer = null;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
     console.debug("Interval started.");
@@ -94,10 +93,14 @@ function onPlayerStateChange(event) {
  * TODO
  */
 function eventCallback() {
-  if (player.getCurrentTime() >= endTime) {
-    player.seekTo(startTime, true);
-  }
-  else if (player.getCurrentTime() <= startTime) {
+  // TODO Trivial bug:
+  // Need to make sure endTime is using the 3 decimal points float
+  // for precision, otherwise comparisons are not 100% accurate
+  // (could be a few milliseconds off). Doesn't matter as much now
+  // that we've added loop: 1 and playlist: id to the player params,
+  // but still worth fixing.
+  // Update: still an issue on mobile, so worth fixing
+  if (player.getCurrentTime() >= endTime || player.getCurrentTime() < startTime) {
     player.seekTo(startTime, true);
   }
 }
@@ -120,7 +123,7 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.setAttribute("max", (newEndTime - 1).toString());
 
-  startTimeInput.value = newStartTime;
+  startTimeInput.value = newStartTime.toString();
   // By default, we'll put the end slider at the end of video time
   endTimeInput.value = endTimeString;
 
@@ -228,9 +231,9 @@ function updatePlayer() {
  */
 function updateLoopPortion() {
   console.debug("Setting new loop start and end times.");
-  startTime = parseInt(document.getElementById("start-time").value);
-  endTime = parseInt(document.getElementById("end-time").value);
-  if (startTime > player.getCurrentTime()) {
+  startTime = parseInt(startTimeInput.value);
+  endTime = parseInt(endTimeInput.value);
+  if (player.getCurrentTime() >= endTime || player.getCurrentTime() < startTime) {
     player.seekTo(startTime, true);
   }
 }
@@ -241,10 +244,28 @@ function updateLoopPortion() {
 function togglePlayer() {
   console.debug("Toggling player visibility.");
   var playerDiv = document.getElementById("player");
-  // TODO Get rid of first condition by assigning display: block to #player in CSS
+  // TODO Get rid of first condition by assigning display: block to #player in CSS?
   if (playerDiv.style.display === "" || playerDiv.style.display !== "none") {
     playerDiv.style.display = "none";
   } else {
     playerDiv.style.display = "block";
   }
+}
+
+/**
+ * TODO
+ */
+function setStartTimeToCurrent() {
+  startTime = parseInt(player.getCurrentTime());
+  startTimeInput.value = startTime.toString();
+  $("#start-time").change();
+}
+
+/**
+ * TODO
+ */
+function setEndTimeToCurrent() {
+  endTime = parseInt(player.getCurrentTime());
+  endTimeInput.value = endTime.toString();
+  $("#end-time").change();
 }
