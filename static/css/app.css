@@ -15,6 +15,7 @@ TODO:
 ----------------------------------- */
 
 :root {
+  /* TODO Make new colors for slider, forms, etc. */
   --background-main-color: #121212;
   --background-dark-color: #000000;
   --background-lighter-color: rgba(40, 40, 40, 0.8);
@@ -222,6 +223,28 @@ li.is-submenu-item > a:hover {
 }
 
 /* -----------------------------------
+    BUTTON
+----------------------------------- */
+
+.button.primary {
+  background-color: var(--background-lighter-color);
+}
+
+.button.primary:focus,
+.button.primary:hover {
+  background-color: rgba(61, 61, 61, 0.8);
+}
+
+.button.primary,
+.button.primary:focus,
+.button.primary:hover {
+  /* TODO improve */
+  border: 1px solid var(--border-main-color);
+  /* TODO: Should be darker? */
+  color: var(--text-main-color);
+}
+
+/* -----------------------------------
     CALLOUT
 ----------------------------------- */
 
@@ -251,6 +274,30 @@ li.is-submenu-item > a:hover {
     FORMS
 ----------------------------------- */
 
+[type="color"], [type="date"], [type="datetime-local"],
+[type="datetime"], [type="email"], [type="month"],
+[type="number"], [type="password"], [type="search"],
+[type="tel"], [type="text"], [type="time"],
+[type="url"], [type="week"], textarea {
+  background-color: var(--separator-main-color);
+  color: var(--text-main-color);
+  border: none;
+}
+
+[type="color"]:focus, [type="date"]:focus,
+[type="datetime-local"]:focus, [type="datetime"]:focus,
+[type="email"]:focus, [type="month"]:focus,
+[type="number"]:focus, [type="password"]:focus,
+[type="search"]:focus, [type="tel"]:focus,
+[type="text"]:focus, [type="time"]:focus,
+[type="url"]:focus, [type="week"]:focus, textarea:focus {
+  /* TODO improve colors when focused? Or just adjust
+  the default border and box-shadow. */
+  background-color: var(--separator-main-color);
+  color: var(--text-main-color);
+  border: none;
+}
+
 .input-group-label {
   border: 1px solid var(--border-main-color);
   background: var(--background-sub-section-color);
@@ -261,6 +308,37 @@ li.is-submenu-item > a:hover {
 /* TODO: Find out how much this change affects */
 ::placeholder {
   color: var(--menu-link-main-color);
+}
+
+/* -----------------------------------
+    SLIDER
+----------------------------------- */
+
+.slider {
+  background-color: var(--separator-main-color);
+}
+
+.slider-fill {
+  background-color: var(--separator-accent-color);
+  /* box-shadow: 0 0 5px var(--shadow-main-color); */
+  box-shadow: 0 0 10px var(--shadow-main-color);
+}
+
+.slider-handle {
+  /* TODO: Improve */
+  /* background-color: var(--background-dark-color); */
+  border: 1px solid var(--border-main-color);
+  background-color: var(--background-lighter-color);
+}
+
+.slider-handle:hover {
+  background-color: var(--background-dark-transparent-color);
+}
+
+.slider-handle,
+.slider-handle:hover {
+  border: 1px solid var(--border-main-color);
+  /* border: 1px solid var(--border-main-color); */
 }
 
 /* -----------------------------------
