@@ -92,7 +92,11 @@ pre {
 }
 
 label {
-  color: var(--text-main-color);
+  /* color: var(--text-main-color); */
+  color: #afafaf; /*  TODO make this the new text-main-color */
+  /* color: #d9d9d9; */
+  font-weight: bold;
+  font-size: 1.0em;
 }
 
 /* -----------------------------------
@@ -201,50 +205,6 @@ li.is-submenu-item > a:hover {
 }
 
 /* -----------------------------------
-    ORBIT (CAROUSEL)
------------------------------------ */
-
-.orbit-bullets button {
-  background-color: var(--button-main-color);
-}
-
-.orbit-bullets button:hover,
-.orbit-bullets button.is-active {
-  background-color: var(--button-hover-color);
-}
-
-#home-orbit-container {
-  /* Make sure the top bar's box shadow is visible above the orbit.
-   * position: relative declared in .orbit, so not needed here. */
-  z-index: -1;
-  border-bottom: 2px solid var(--separator-dark-color);
-  /* height: 423.25px; */
-  max-height: 25em;
-}
-
-/* -----------------------------------
-    BUTTON
------------------------------------ */
-
-.button.primary {
-  background-color: var(--background-lighter-color);
-}
-
-.button.primary:focus,
-.button.primary:hover {
-  background-color: rgba(61, 61, 61, 0.8);
-}
-
-.button.primary,
-.button.primary:focus,
-.button.primary:hover {
-  /* TODO improve */
-  border: 1px solid var(--border-main-color);
-  /* TODO: Should be darker? */
-  color: var(--text-main-color);
-}
-
-/* -----------------------------------
     CALLOUT
 ----------------------------------- */
 
@@ -271,6 +231,32 @@ li.is-submenu-item > a:hover {
 }
 
 /* -----------------------------------
+    BUTTON
+----------------------------------- */
+
+.button.primary {
+  /* background-color: var(--background-lighter-color); */
+  /* background-color: var(--separator-main-color); */
+  /* background-color: #222; */
+  background-color: #191919;
+}
+
+.button.primary:focus,
+.button.primary:hover {
+  /* TODO this is too light maybe? */
+  background-color: rgba(61, 61, 61, 0.8);
+}
+
+.button.primary,
+.button.primary:focus,
+.button.primary:hover {
+  /* TODO improve */
+  border: 1px solid var(--border-main-color);
+  /* TODO: Should be darker? */
+  color: var(--text-main-color);
+}
+
+/* -----------------------------------
     FORMS
 ----------------------------------- */
 
@@ -279,9 +265,11 @@ li.is-submenu-item > a:hover {
 [type="number"], [type="password"], [type="search"],
 [type="tel"], [type="text"], [type="time"],
 [type="url"], [type="week"], textarea {
-  background-color: var(--separator-main-color);
+  /* background-color: var(--separator-main-color); */
+  background-color: hsl(0, 0%, 14%);
   color: var(--text-main-color);
-  border: none;
+  /* border: none; */
+  border: 1px solid hsl(0, 0%, 20%);
 }
 
 [type="color"]:focus, [type="date"]:focus,
@@ -293,9 +281,12 @@ li.is-submenu-item > a:hover {
 [type="url"]:focus, [type="week"]:focus, textarea:focus {
   /* TODO improve colors when focused? Or just adjust
   the default border and box-shadow. */
+  /* TODO this is too light */
   background-color: var(--separator-main-color);
   color: var(--text-main-color);
-  border: none;
+  border-color: var(--separator-accent-color);
+  -webkit-box-shadow: 0 0 5px var(--shadow-main-color);
+  box-shadow: 0 0 5px var(--shadow-main-color);
 }
 
 .input-group-label {
@@ -305,7 +296,7 @@ li.is-submenu-item > a:hover {
   color: var(--text-main-color);
 }
 
-/* TODO: Find out how much this change affects */
+/* 'placeholder=' HTML attribute */
 ::placeholder {
   color: var(--menu-link-main-color);
 }
@@ -339,39 +330,6 @@ li.is-submenu-item > a:hover {
 .slider-handle:hover {
   border: 1px solid var(--border-main-color);
   /* border: 1px solid var(--border-main-color); */
-}
-
-/* -----------------------------------
-    GENERAL / OTHER
------------------------------------ */
-
-#main-content-banner,
-.blog-post-image {
-  text-align: center;
-}
-
-/* -----------------------------------
-    CONTACT DETAILS
------------------------------------ */
-
-#contact-details {
-  border: 1px dashed var(--button-main-color);
-}
-
-#social-media-icons p {
-  margin: 0 auto;
-}
-
-#social-media-icons a {
-  padding-right: 1.2rem;
-}
-
-#social-media-icons a img {
-  opacity: 0.85;
-}
-
-#social-media-icons a:hover img {
-  opacity: 1;
 }
 
 /* -----------------------------------
