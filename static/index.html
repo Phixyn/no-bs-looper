@@ -53,44 +53,111 @@
             <input type="hidden" id="slider-end"> -->
           </div> <!-- .slider -->
         </div> <!-- .cell -->
+      </div> <!-- .grid-x -->
 
-        <div class="cell medium-6 large-6 medium-offset-3 large-offset-3">
-          <form>
-            <!-- Video ID -->
-            <label>Video ID
-              <div class="input-group">
-                <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
-                <div class="input-group-button">
-                  <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
-                </div>
-              </div> <!-- .input-group -->
-            </label>
+      <form class="grid-x grid-padding-x grid-padding-y">
+        <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
+          <!-- Video ID -->
+          <label>Video ID
+            <div class="input-group">
+              <!-- TODO add placeholder=  to all 3 -->
+              <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
+              <div class="input-group-button">
+                <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
+              </div>
+            </div> <!-- .input-group -->
+          </label>
+        </div> <!-- .cell -->
 
-            <!-- Start time -->
-            <label>Start (seconds)
-              <div class="input-group">
-                <input type="number" id="start-time" class="input-group-field" name="start-time" value="0">
-                <div class="input-group-button">
-                  <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
-                </div>
-              </div> <!-- .input-group -->
-            </label>
+        <div class="cell medium-4 large-4 medium-offset-2 large-offset-2">
+          <!-- Start time -->
+          <label>Start (seconds)
+            <div class="input-group">
+              <input type="number" id="start-time" class="input-group-field" name="start-time" value="0">
+              <div class="input-group-button">
+                <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
+              </div>
+            </div> <!-- .input-group -->
+          </label>
+        </div> <!-- .cell -->
 
-            <!-- End time -->
-            <label>End (seconds)
-              <div class="input-group">
-                <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
-                <div class="input-group-button">
-                  <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
-                </div>
-              </div> <!-- .input-group -->
-            </label>
+        <div class="cell medium-4 large-4">
+          <!-- End time -->
+          <label>End (seconds)
+            <div class="input-group">
+              <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
+              <div class="input-group-button">
+                <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
+              </div>
+            </div> <!-- .input-group -->
+          </label>
+        </div> <!-- .cell -->
 
-            <!-- Control buttons -->
-            <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-            <input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights"> <!-- TODO not yet implemented -->
-            <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop"> <!-- TODO not yet implemented -->
-          </form>
+        <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
+          <!-- Control buttons -->
+          <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
+          <input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights"> <!-- TODO not yet implemented -->
+          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop"> <!-- TODO not yet implemented -->
+        </div> <!-- .cell -->
+      </form> <!-- .grid-x -->
+
+      <div class="grid-x grid-padding-x grid-padding-y">
+        <div class="cell"><hr></div>
+
+        <div class="cell small-12 medium-6 large-6 medium-offset-3 large-offset-3">
+          <h3>Check these out</h3>
+        </div> <!-- .cell -->
+
+        <div class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2">
+          <ul>
+            <li>id: orxvTsPW10k</li>
+            <li>start: 420</li>
+            <li>end: 727 / 642</li>
+          </ul>
+
+          <ul>
+            <li>id: TtsQl_X3cbw</li>
+            <li>start: 828</li>
+            <li>end: 1155</li>
+          </ul>
+
+          <ul>
+            <li>id: Uq-TffHkCcc</li>
+            <li>start: 185 / 234</li>
+            <li>end: 280 / 284</li>
+          </ul>
+
+          <ul>
+            <li>id: 22v1cDByZWY</li>
+            <li>start: 94</li>
+            <li>end: 131</li>
+          </ul>
+        </div> <!-- .cell -->
+
+        <div class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2">
+          <ul>
+            <li>id: vjsTURfn4y4</li>
+            <li>start: 1279</li>
+            <li>end: 1478</li>
+          </ul>
+
+          <ul>
+            <li>id: 4GXNiQvK_qg</li>
+            <li>start: 0</li>
+            <li>end: end</li>
+          </ul>
+
+          <ul>
+            <li>id: kXtzXMGD_Og</li>
+            <li>start: 1129</li>
+            <li>end: 1170</li>
+          </ul>
+
+          <ul>
+            <li>id: _f4LQUgl_Nw</li>
+            <li>start: 787</li>
+            <li>end: 825</li>
+          </ul>
         </div> <!-- .cell -->
       </div> <!-- .grid-x -->
     </div> <!-- .grid-container -->
