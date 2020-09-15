@@ -56,31 +56,40 @@
 
         <div class="cell medium-6 large-6 medium-offset-3 large-offset-3">
           <form>
-            <div class="input-group">
-              <span class="input-group-label" style="min-width: 11.2rem;">Video ID</span>
-              <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
-              <div class="input-group-button">
-                <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
-              </div>
-            </div> <!-- .input-group -->
+            <!-- Video ID -->
+            <label>Video ID
+              <div class="input-group">
+                <input type="text" id="video-id" class="input-group-field" name="video-id" value="orxvTsPW10k">
+                <div class="input-group-button">
+                  <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
+                </div>
+              </div> <!-- .input-group -->
+            </label>
 
-            <div class="input-group">
-              <span class="input-group-label" style="min-width: 11.2rem;">Start (seconds)</span>
-              <input type="number" id="start-time" class="input-group-field" name="start-time" value="0">
-              <div class="input-group-button">
-                <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
-              </div>
-            </div> <!-- .input-group -->
+            <!-- Start time -->
+            <label>Start (seconds)
+              <div class="input-group">
+                <input type="number" id="start-time" class="input-group-field" name="start-time" value="0">
+                <div class="input-group-button">
+                  <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
+                </div>
+              </div> <!-- .input-group -->
+            </label>
 
-            <div class="input-group">
-              <span class="input-group-label" style="min-width: 11.2rem;">End (seconds)</span>
-              <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
-              <div class="input-group-button">
-                <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
-              </div>
-            </div> <!-- .input-group -->
+            <!-- End time -->
+            <label>End (seconds)
+              <div class="input-group">
+                <input type="number" id="end-time" class="input-group-field" name="end-time" value="100" min="1">
+                <div class="input-group-button">
+                  <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
+                </div>
+              </div> <!-- .input-group -->
+            </label>
 
+            <!-- Control buttons -->
             <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
+            <input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights"> <!-- TODO not yet implemented -->
+            <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop"> <!-- TODO not yet implemented -->
           </form>
         </div> <!-- .cell -->
       </div> <!-- .grid-x -->
