@@ -235,23 +235,21 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .button.primary {
-  /* background-color: var(--background-lighter-color); */
-  /* background-color: var(--separator-main-color); */
-  /* background-color: #222; */
   background-color: #191919;
 }
 
 .button.primary:focus,
 .button.primary:hover {
-  /* TODO this is too light maybe? */
-  background-color: rgba(61, 61, 61, 0.8);
+  /* background-color: rgba(36, 36, 36, 0.8); */
+  background-color: rgb(36, 36, 36);
 }
 
 .button.primary,
 .button.primary:focus,
 .button.primary:hover {
-  /* TODO improve */
-  border: 1px solid var(--border-main-color);
+  /* border: 1px solid var(--border-main-color); */
+  border: 1px solid rgba(85, 85, 85, 0.25);
+  /* border: 1px solid rgba(72, 72, 72, 0.25); */
   /* TODO: Should be darker? */
   color: var(--text-main-color);
 }
@@ -282,7 +280,9 @@ li.is-submenu-item > a:hover {
   /* TODO improve colors when focused? Or just adjust
   the default border and box-shadow. */
   /* TODO this is too light */
-  background-color: var(--separator-main-color);
+  /* background-color: var(--separator-main-color); */
+  background-color: #2d2d2d;
+  /* background-color: #2b2b2b; */
   color: var(--text-main-color);
   border-color: var(--separator-accent-color);
   -webkit-box-shadow: 0 0 5px var(--shadow-main-color);
@@ -316,7 +316,7 @@ li.is-submenu-item > a:hover {
 }
 
 .slider-handle {
-  /* TODO: Improve */
+  /* TODO: Improve - later? */
   /* background-color: var(--background-dark-color); */
   border: 1px solid var(--border-main-color);
   background-color: var(--background-lighter-color);
