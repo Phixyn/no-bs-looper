@@ -264,7 +264,7 @@ li.is-submenu-item > a:hover {
 [type="tel"], [type="text"], [type="time"],
 [type="url"], [type="week"], textarea {
   /* background-color: var(--separator-main-color); */
-  background-color: hsl(0, 0%, 14%);
+  background-color: rgb(36, 36, 36);
   color: var(--text-main-color);
   /* border: none; */
   border: 1px solid hsl(0, 0%, 20%);
@@ -277,16 +277,14 @@ li.is-submenu-item > a:hover {
 [type="search"]:focus, [type="tel"]:focus,
 [type="text"]:focus, [type="time"]:focus,
 [type="url"]:focus, [type="week"]:focus, textarea:focus {
-  /* TODO improve colors when focused? Or just adjust
-  the default border and box-shadow. */
-  /* TODO this is too light */
-  /* background-color: var(--separator-main-color); */
-  background-color: #2d2d2d;
-  /* background-color: #2b2b2b; */
+  /* background-color: #2d2d2d; */ /* Also good, but couldn't decide between d and b */
+  background-color: #2b2b2b;
   color: var(--text-main-color);
-  border-color: var(--separator-accent-color);
-  -webkit-box-shadow: 0 0 5px var(--shadow-main-color);
-  box-shadow: 0 0 5px var(--shadow-main-color);
+  /* border-color: var(--separator-accent-color); */
+  /* border-color: #4f4f4f; */
+  border-color: #5d5d5d;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .input-group-label {
