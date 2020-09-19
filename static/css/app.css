@@ -2,12 +2,8 @@
 ZURB Foundation Phixed Dark Theme
 No bullshit edition.
 
-Version: 0.2.1 (no bs edition)
+Version: 0.3.0 (no bs edition)
 Author:  Phixyn
-
-TODO:
- * Buttons and labels (dark theme colors)
- * Orbit height + Orbit images
 ----------------------------------- */
 
 /* -----------------------------------
@@ -285,13 +281,6 @@ li.is-submenu-item > a:hover {
   border-color: #5d5d5d;
   -webkit-box-shadow: none;
   box-shadow: none;
-}
-
-.input-group-label {
-  border: 1px solid var(--border-main-color);
-  background: var(--background-sub-section-color);
-  /* TODO: Should be darker? */
-  color: var(--text-main-color);
 }
 
 /* 'placeholder=' HTML attribute */
