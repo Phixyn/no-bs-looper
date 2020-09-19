@@ -11,7 +11,11 @@ Author:  Phixyn
 ----------------------------------- */
 
 :root {
-  /* TODO Make new colors vars for slider? */
+  /* Generic theme colors
+     TODO #29: Rename these based on shade, rather than where
+     they're used, because right now we're using them in
+     multiple places and names don't make sense (e.g.
+     shadow-main-color is not always used as a shadow color). */
   --background-main-color: rgb(18, 18, 18);
   --background-dark-color: rgb(0, 0, 0);
   --background-dark-transparent-color: rgba(0, 0, 0, 0.5);
@@ -25,18 +29,18 @@ Author:  Phixyn
   --border-main-color: rgba(68, 68, 68, 0.25);
   --border-light-color: rgb(57, 57, 57);
   --border-lighter-color: rgb(78, 78, 78);
-  /* TODO change */
-  --text-main-color: rgb(217, 217, 217);
-  --text-dark-color: rgb(119, 119, 119);
-  --link-main-color: rgb(219, 90, 127);
-  --link-hover-color: rgb(217, 147, 167);
-  --menu-link-main-color: rgb(157, 157, 157);
-  --menu-link-hover-color: rgb(255, 255, 255);
   --separator-main-color: rgb(66, 66, 66);
   --separator-dark-color: rgb(37, 37, 37);
   --separator-accent-color: rgb(166, 33, 57);
   /* Shadow can be lighter/darker than accent, if desired */
   --shadow-main-color: rgb(166, 33, 57);
+  /* Specific-purpose colors */
+  --text-main-color: rgb(175, 175, 175);
+  --text-dark-color: rgb(119, 119, 119);
+  --link-main-color: rgb(219, 90, 127);
+  --link-hover-color: rgb(217, 147, 167);
+  --menu-link-main-color: rgb(157, 157, 157);
+  --menu-link-hover-color: rgb(255, 255, 255);
 }
 
 /* -----------------------------------
@@ -86,9 +90,7 @@ pre {
 }
 
 label {
-  /* color: var(--text-main-color); */
-  color: #afafaf; /*  TODO make this the new text-main-color */
-  /* color: #d9d9d9; */
+  color: var(--text-main-color);
   font-weight: bold;
   font-size: 1.0em;
 }
@@ -236,19 +238,15 @@ li.is-submenu-item > a:hover {
 }
 
 .button.primary {
-  background-color: var(--button-main-color);
-}
-
-.button.primary:focus,
-.button.primary:hover {
-  background-color: var(--button-hover-color);
-}
-
-.button.primary,
-.button.primary:focus,
-.button.primary:hover {
   border: 1px solid var(--button-border-color);
-  /* TODO: Should be darker? */
+  background-color: var(--button-main-color);
+  color: var(--text-main-color);
+}
+
+.button.primary:hover,
+.button.primary:active,
+.button.primary:focus {
+  background-color: var(--button-hover-color);
   color: var(--text-main-color);
 }
 
@@ -301,6 +299,11 @@ input {
 ----------------------------------- */
 
 .slider {
+  /* TODO #29 reuse the button/input vars once we do the renaming
+     task? Could not be worth because of the transparency value
+     but we could add the same transparency to the buttons. */
+  --handle-main-color: rgba(25, 25, 25, 0.8);
+  --handle-hover-color: rgba(36, 36, 36, 0.8);
   background-color: var(--separator-main-color);
 }
 
@@ -311,20 +314,14 @@ input {
 }
 
 .slider-handle {
-  /* TODO: Improve - later? */
-  /* background-color: var(--background-dark-color); */
   border: 1px solid var(--border-main-color);
-  background-color: var(--background-lighter-color);
+  background-color: var(--handle-main-color);
 }
 
-.slider-handle:hover {
-  background-color: var(--background-dark-transparent-color);
-}
-
-.slider-handle,
-.slider-handle:hover {
-  border: 1px solid var(--border-main-color);
-  /* border: 1px solid var(--border-main-color); */
+.slider-handle:hover,
+.slider-handle:active,
+.slider-handle:focus {
+  background-color: var(--handle-hover-color);
 }
 
 /* -----------------------------------
