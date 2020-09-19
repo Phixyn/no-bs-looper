@@ -2,12 +2,8 @@
 ZURB Foundation Phixed Dark Theme
 No bullshit edition.
 
-Version: 0.2.1 (no bs edition)
+Version: 0.3.1 (no bs edition)
 Author:  Phixyn
-
-TODO:
- * Buttons and labels (dark theme colors)
- * Orbit height + Orbit images
 ----------------------------------- */
 
 /* -----------------------------------
@@ -15,34 +11,36 @@ TODO:
 ----------------------------------- */
 
 :root {
-  /* TODO Make new colors for slider, forms, etc. */
-  --background-main-color: #121212;
-  --background-dark-color: #000000;
-  --background-lighter-color: rgba(40, 40, 40, 0.8);
-  --background-light-color: rgb(32, 32, 32);
+  /* Generic theme colors
+     TODO #29: Rename these based on shade, rather than where
+     they're used, because right now we're using them in
+     multiple places and names don't make sense (e.g.
+     shadow-main-color is not always used as a shadow color). */
+  --background-main-color: rgb(18, 18, 18);
+  --background-dark-color: rgb(0, 0, 0);
   --background-dark-transparent-color: rgba(0, 0, 0, 0.5);
+  --background-light-color: rgb(32, 32, 32);
+  --background-lighter-color: rgba(40, 40, 40, 0.8);
   /* TODO: Improve this color. Maybe darker or more transparent? */
   --background-sub-section-color: rgba(25, 25, 25, 0.8);
   /* --background-sub-section-color: #e6e6e6; */
   /* --border-main-color: #3d3d3d; */
   /* --border-main-color: #cacaca; */
   --border-main-color: rgba(68, 68, 68, 0.25);
-  --border-lighter-color: rgb(78, 78, 78);
   --border-light-color: rgb(57, 57, 57);
-  --text-main-color: #d9d9d9;
-  --text-dark-color: #777777;
-  --link-main-color: #db5a7f;
-  --link-hover-color: #d993a7;
-  --menu-link-main-color: #9d9d9d;
-  --menu-link-hover-color: #ffffff;
-  --separator-main-color: #424242;
-  --separator-dark-color: #252525;
-  --separator-accent-color: #a62139;
+  --border-lighter-color: rgb(78, 78, 78);
+  --separator-main-color: rgb(66, 66, 66);
+  --separator-dark-color: rgb(37, 37, 37);
+  --separator-accent-color: rgb(166, 33, 57);
   /* Shadow can be lighter/darker than accent, if desired */
-  --shadow-main-color: #a62139;
-  /* Orbit bullets */
-  --button-main-color: #333333;
-  --button-hover-color: #666666;
+  --shadow-main-color: rgb(166, 33, 57);
+  /* Specific-purpose colors */
+  --text-main-color: rgb(175, 175, 175);
+  --text-dark-color: rgb(119, 119, 119);
+  --link-main-color: rgb(219, 90, 127);
+  --link-hover-color: rgb(217, 147, 167);
+  --menu-link-main-color: rgb(157, 157, 157);
+  --menu-link-hover-color: rgb(255, 255, 255);
 }
 
 /* -----------------------------------
@@ -51,10 +49,6 @@ TODO:
 
 body {
   background: var(--background-main-color) url('../images/zwartevilt.png');
-}
-
-body,
-.breadcrumbs li {
   color: var(--text-main-color);
 }
 
@@ -65,8 +59,7 @@ h4,
   padding: 0.9rem 0;
 }
 
-a,
-.breadcrumbs a {
+a {
   color: var(--link-main-color);
 }
 
@@ -93,6 +86,8 @@ pre {
 
 label {
   color: var(--text-main-color);
+  font-weight: bold;
+  font-size: 1.0em;
 }
 
 /* -----------------------------------
@@ -201,50 +196,6 @@ li.is-submenu-item > a:hover {
 }
 
 /* -----------------------------------
-    ORBIT (CAROUSEL)
------------------------------------ */
-
-.orbit-bullets button {
-  background-color: var(--button-main-color);
-}
-
-.orbit-bullets button:hover,
-.orbit-bullets button.is-active {
-  background-color: var(--button-hover-color);
-}
-
-#home-orbit-container {
-  /* Make sure the top bar's box shadow is visible above the orbit.
-   * position: relative declared in .orbit, so not needed here. */
-  z-index: -1;
-  border-bottom: 2px solid var(--separator-dark-color);
-  /* height: 423.25px; */
-  max-height: 25em;
-}
-
-/* -----------------------------------
-    BUTTON
------------------------------------ */
-
-.button.primary {
-  background-color: var(--background-lighter-color);
-}
-
-.button.primary:focus,
-.button.primary:hover {
-  background-color: rgba(61, 61, 61, 0.8);
-}
-
-.button.primary,
-.button.primary:focus,
-.button.primary:hover {
-  /* TODO improve */
-  border: 1px solid var(--border-main-color);
-  /* TODO: Should be darker? */
-  color: var(--text-main-color);
-}
-
-/* -----------------------------------
     CALLOUT
 ----------------------------------- */
 
@@ -259,14 +210,38 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .card {
-  /* border: 1px solid #3d3d3d; */
   border: 1px solid var(--border-main-color);
 }
 
 .card,
 .card-divider {
-  /* background: var(--button-main-color); */
   background-color: var(--background-sub-section-color);
+  color: var(--text-main-color);
+}
+
+/* -----------------------------------
+    BUTTON
+----------------------------------- */
+
+.button {
+  --button-main-color: rgb(25, 25, 25);
+  --button-hover-color: rgb(36, 36, 36);
+  /* Could also add transparency to button on hover */
+  /* --button-hover-color: rgba(36, 36, 36, 0.8); */
+  --button-border-color: rgba(85, 85, 85, 0.25);
+  /* --button-border-color: rgba(72, 72, 72, 0.25); */
+}
+
+.button.primary {
+  border: 1px solid var(--button-border-color);
+  background-color: var(--button-main-color);
+  color: var(--text-main-color);
+}
+
+.button.primary:hover,
+.button.primary:active,
+.button.primary:focus {
+  background-color: var(--button-hover-color);
   color: var(--text-main-color);
 }
 
@@ -274,14 +249,25 @@ li.is-submenu-item > a:hover {
     FORMS
 ----------------------------------- */
 
+input {
+  --input-bg-color: rgb(36, 36, 36);
+  --input-border-color: rgb(51, 51, 51);
+  --input-focus-bg-color: rgb(43, 43, 43);
+  /* Also good, but couldn't decide between them */
+  /* --input-focus-bg-color: rgb(45, 45, 45); */
+  --input-focus-border-color: rgb(93, 93, 93);
+  /* Also good? */
+  /* --input-focus-border-color: rgb(79, 79, 79); */
+}
+
 [type="color"], [type="date"], [type="datetime-local"],
 [type="datetime"], [type="email"], [type="month"],
 [type="number"], [type="password"], [type="search"],
 [type="tel"], [type="text"], [type="time"],
 [type="url"], [type="week"], textarea {
-  background-color: var(--separator-main-color);
+  background-color: var(--input-bg-color);
   color: var(--text-main-color);
-  border: none;
+  border: 1px solid var(--input-border-color);
 }
 
 [type="color"]:focus, [type="date"]:focus,
@@ -291,21 +277,14 @@ li.is-submenu-item > a:hover {
 [type="search"]:focus, [type="tel"]:focus,
 [type="text"]:focus, [type="time"]:focus,
 [type="url"]:focus, [type="week"]:focus, textarea:focus {
-  /* TODO improve colors when focused? Or just adjust
-  the default border and box-shadow. */
-  background-color: var(--separator-main-color);
+  background-color: var(--input-focus-bg-color);
   color: var(--text-main-color);
-  border: none;
+  border-color: var(--input-focus-border-color);
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
-.input-group-label {
-  border: 1px solid var(--border-main-color);
-  background: var(--background-sub-section-color);
-  /* TODO: Should be darker? */
-  color: var(--text-main-color);
-}
-
-/* TODO: Find out how much this change affects */
+/* 'placeholder=' HTML attribute */
 ::placeholder {
   color: var(--menu-link-main-color);
 }
@@ -315,6 +294,11 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .slider {
+  /* TODO #29 reuse the button/input vars once we do the renaming
+     task? Could not be worth because of the transparency value
+     but we could add the same transparency to the buttons. */
+  --handle-main-color: rgba(25, 25, 25, 0.8);
+  --handle-hover-color: rgba(36, 36, 36, 0.8);
   background-color: var(--separator-main-color);
 }
 
@@ -325,53 +309,14 @@ li.is-submenu-item > a:hover {
 }
 
 .slider-handle {
-  /* TODO: Improve */
-  /* background-color: var(--background-dark-color); */
   border: 1px solid var(--border-main-color);
-  background-color: var(--background-lighter-color);
+  background-color: var(--handle-main-color);
 }
 
-.slider-handle:hover {
-  background-color: var(--background-dark-transparent-color);
-}
-
-.slider-handle,
-.slider-handle:hover {
-  border: 1px solid var(--border-main-color);
-  /* border: 1px solid var(--border-main-color); */
-}
-
-/* -----------------------------------
-    GENERAL / OTHER
------------------------------------ */
-
-#main-content-banner,
-.blog-post-image {
-  text-align: center;
-}
-
-/* -----------------------------------
-    CONTACT DETAILS
------------------------------------ */
-
-#contact-details {
-  border: 1px dashed var(--button-main-color);
-}
-
-#social-media-icons p {
-  margin: 0 auto;
-}
-
-#social-media-icons a {
-  padding-right: 1.2rem;
-}
-
-#social-media-icons a img {
-  opacity: 0.85;
-}
-
-#social-media-icons a:hover img {
-  opacity: 1;
+.slider-handle:hover,
+.slider-handle:active,
+.slider-handle:focus {
+  background-color: var(--handle-hover-color);
 }
 
 /* -----------------------------------
