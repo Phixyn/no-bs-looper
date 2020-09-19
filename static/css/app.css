@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No bullshit edition.
 
-Version: 0.3.0 (no bs edition)
+Version: 0.3.1 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -49,10 +49,6 @@ Author:  Phixyn
 
 body {
   background: var(--background-main-color) url('../images/zwartevilt.png');
-}
-
-body,
-.breadcrumbs li {
   color: var(--text-main-color);
 }
 
@@ -63,8 +59,7 @@ h4,
   padding: 0.9rem 0;
 }
 
-a,
-.breadcrumbs a {
+a {
   color: var(--link-main-color);
 }
 
