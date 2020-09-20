@@ -116,7 +116,7 @@ label {
 .top-bar {
   border-bottom: 2px solid var(--primary-accent-color);
   box-shadow: 0 0 7px 2px var(--secondary-accent-color);
-  padding: 0.1rem;
+  padding: 0.55rem 0.1rem;
 }
 
 .top-bar,
