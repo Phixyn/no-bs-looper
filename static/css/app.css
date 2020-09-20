@@ -103,16 +103,6 @@ label {
   display: none;
 }
 
-@media screen and (min-width: 40em) {
-  .no-js .top-bar {
-    display: block;
-  }
-  .no-js .title-bar {
-    display: none;
-  }
-}
-/* End of FOUC prevention for top bar */
-
 .top-bar {
   border-bottom: 2px solid var(--primary-accent-color);
   box-shadow: 0 0 7px 2px var(--secondary-accent-color);
@@ -131,9 +121,9 @@ label {
 
 .menu .menu-text {
   padding: 0 2.5rem;
-  font-size: 1.5em;
-  font-weight: 100;
-  letter-spacing: 0.21em;
+  font-size: 2vw;
+  font-weight: normal;
+  letter-spacing: 0.15em;
 }
 
 .menu a,
