@@ -1,46 +1,50 @@
 /* -----------------------------------
 ZURB Foundation Phixed Dark Theme
-No bullshit edition.
+No BS edition.
 
-Version: 0.3.1 (no bs edition)
+Version: 0.4.0 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
 /* -----------------------------------
-    COLORS
+    CUSTOM PROPERTIES
 ----------------------------------- */
 
 :root {
-  /* Generic theme colors
-     TODO #29: Rename these based on shade, rather than where
-     they're used, because right now we're using them in
-     multiple places and names don't make sense (e.g.
-     shadow-main-color is not always used as a shadow color). */
-  --background-main-color: rgb(18, 18, 18);
-  --background-dark-color: rgb(0, 0, 0);
-  --background-dark-transparent-color: rgba(0, 0, 0, 0.5);
-  --background-light-color: rgb(32, 32, 32);
-  --background-lighter-color: rgba(40, 40, 40, 0.8);
+  --primary-background-color: rgb(18, 18, 18);
+  --secondary-background-color: rgb(32, 32, 32);
+  --accent-background-color: rgb(0, 0, 0);
+  --accent-background-color-transparent: rgba(0, 0, 0, 0.5);
+
   /* TODO: Improve this color. Maybe darker or more transparent? */
-  --background-sub-section-color: rgba(25, 25, 25, 0.8);
-  /* --background-sub-section-color: #e6e6e6; */
-  /* --border-main-color: #3d3d3d; */
-  /* --border-main-color: #cacaca; */
-  --border-main-color: rgba(68, 68, 68, 0.25);
-  --border-light-color: rgb(57, 57, 57);
-  --border-lighter-color: rgb(78, 78, 78);
-  --separator-main-color: rgb(66, 66, 66);
-  --separator-dark-color: rgb(37, 37, 37);
-  --separator-accent-color: rgb(166, 33, 57);
-  /* Shadow can be lighter/darker than accent, if desired */
-  --shadow-main-color: rgb(166, 33, 57);
-  /* Specific-purpose colors */
-  --text-main-color: rgb(175, 175, 175);
-  --text-dark-color: rgb(119, 119, 119);
-  --link-main-color: rgb(219, 90, 127);
-  --link-hover-color: rgb(217, 147, 167);
-  --menu-link-main-color: rgb(157, 157, 157);
-  --menu-link-hover-color: rgb(255, 255, 255);
+  --primary-container-color: rgba(25, 25, 25, 0.8);
+  --secondary-container-color: rgb(36, 36, 36);
+  --accent-container-color: rgb(43, 43, 43);
+  /* Also good, but couldn't decide between them */
+  /* --accent-container-color: rgb(45, 45, 45); */
+
+  --primary-border-color: rgba(68, 68, 68, 0.25);
+  /* --primary-border-color: rgb(61, 61, 61); */
+  --secondary-border-color: rgb(51, 51, 51);
+  --accent-border-color: rgb(93, 93, 93);
+  /* Also good? */
+  /* --accent-border-color: rgb(79, 79, 79); */
+  --primary-separator-color: rgb(66, 66, 66);
+  --secondary-separator-color: rgb(37, 37, 37);
+
+  /* Accent colors that make the theme "pop" */
+  --primary-accent-color: rgb(166, 33, 57);
+  /* Mainly used as shadow and can be lighter/darker than
+   * primary accent, if desired. */
+  --secondary-accent-color: rgb(166, 33, 57);
+
+  /* Text colors */
+  --primary-text-color: rgb(175, 175, 175);
+  --secondary-text-color: rgb(119, 119, 119);
+  --primary-link-color: rgb(219, 90, 127);
+  --secondary-link-color: rgb(217, 147, 167);
+  --primary-menu-link-color: rgb(157, 157, 157);
+  --secondary-menu-link-color: rgb(255, 255, 255);
 }
 
 /* -----------------------------------
@@ -48,8 +52,8 @@ Author:  Phixyn
 ----------------------------------- */
 
 body {
-  background: var(--background-main-color) url('../images/zwartevilt.png');
-  color: var(--text-main-color);
+  background: var(--primary-background-color) url('../images/zwartevilt.png');
+  color: var(--primary-text-color);
 }
 
 h3,
@@ -60,32 +64,32 @@ h4,
 }
 
 a {
-  color: var(--link-main-color);
+  color: var(--primary-link-color);
 }
 
 a:focus,
 a:hover {
-  color: var(--link-hover-color);
+  color: var(--secondary-link-color);
   text-decoration: none;
 }
 
 hr {
-  border-bottom: 1px solid var(--separator-main-color);
+  border-bottom: 1px solid var(--primary-separator-color);
 }
 
 code {
-  border: 1px solid var(--border-lighter-color);
-  background-color: var(--background-lighter-color);
-  color: var(--text-main-color);
+  border: 1px solid var(--secondary-border-color);
+  background-color: var(--secondary-background-color);
+  color: var(--primary-text-color);
 }
 
 pre {
-  border: 2px solid var(--border-light-color);
-  background-color: var(--background-light-color);
+  border: 2px solid var(--secondary-border-color);
+  background-color: var(--secondary-background-color);
 }
 
 label {
-  color: var(--text-main-color);
+  color: var(--primary-text-color);
   font-weight: bold;
   font-size: 1.0em;
 }
@@ -110,15 +114,15 @@ label {
 /* End of FOUC prevention for top bar */
 
 .top-bar {
-  border-bottom: 2px solid var(--separator-accent-color);
-  box-shadow: 0 0 7px 2px var(--shadow-main-color);
+  border-bottom: 2px solid var(--primary-accent-color);
+  box-shadow: 0 0 7px 2px var(--secondary-accent-color);
   padding: 0.1rem;
 }
 
 .top-bar,
 .top-bar ul {
-  background-color: var(--background-dark-color);
-  color: var(--menu-link-main-color);
+  background-color: var(--accent-background-color);
+  color: var(--primary-menu-link-color);
 }
 
 /* -----------------------------------
@@ -134,51 +138,51 @@ label {
 
 .menu a,
 .dropdown > li > a {
-  color: var(--menu-link-main-color);
+  color: var(--primary-menu-link-color);
 }
 
 .menu a:focus,
 .menu a:hover,
 .dropdown > li > a:focus,
 .dropdown > li > a:hover {
-  color: var(--menu-link-hover-color);
+  color: var(--secondary-menu-link-color);
 }
 
 .dropdown > li > a:focus,
 .dropdown > li > a:hover {
-  box-shadow: 0 -2px 0 0 var(--shadow-main-color) inset;
+  box-shadow: 0 -2px 0 0 var(--secondary-accent-color) inset;
 }
 
 /* TODO: Add a pink box-shadow bottom to active links? */
 /* .dropdown.menu > li.is-active > a,
 .dropdown.menu > li.is-active > a:focus,
 .dropdown.menu > li.is-active > a:hover {
-  box-shadow: 0 -2px 0 0 var(--shadow-main-color) inset;
+  box-shadow: 0 -2px 0 0 var(--secondary-accent-color) inset;
 } */
 
 .dropdown.menu > li.is-active > a,
 .dropdown.menu > li.is-active > a:focus {
-  color: var(--separator-accent-color);
+  color: var(--primary-accent-color);
 }
 
 .dropdown.menu > li.is-active > a:hover {
-  color: var(--separator-accent-color);
+  color: var(--primary-accent-color);
 }
 
 /* Down arrow for opening sub-menus */
 .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
-  border-color: var(--shadow-main-color) transparent transparent;
+  border-color: var(--secondary-accent-color) transparent transparent;
 }
 
 .is-dropdown-submenu.js-dropdown-active {
-  border: 1px solid var(--border-main-color);
-  background: var(--background-dark-transparent-color);
+  border: 1px solid var(--primary-border-color);
+  background: var(--accent-background-color-transparent);
   margin-top: 0.3rem;
 }
 
 li.is-submenu-item > a:focus,
 li.is-submenu-item > a:hover {
-  background: var(--background-dark-color);
+  background: var(--accent-background-color);
 }
 
 /* -----------------------------------
@@ -186,9 +190,9 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .thumbnail {
-  /* border: 1px solid var(--border-main-color); */
+  /* border: 1px solid var(--primary-border-color); */
   /* For now, 4px border around it is fine */
-  border-color: var(--border-main-color);
+  border-color: var(--primary-border-color);
 }
 
 .thumbnail > img {
@@ -200,9 +204,9 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .callout {
-  border: 1px solid var(--border-main-color);
-  background-color: var(--background-sub-section-color);
-  color: var(--text-main-color);
+  border: 1px solid var(--primary-border-color);
+  background-color: var(--primary-container-color);
+  color: var(--primary-text-color);
 }
 
 /* -----------------------------------
@@ -210,13 +214,13 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .card {
-  border: 1px solid var(--border-main-color);
+  border: 1px solid var(--primary-border-color);
 }
 
 .card,
 .card-divider {
-  background-color: var(--background-sub-section-color);
-  color: var(--text-main-color);
+  background-color: var(--primary-container-color);
+  color: var(--primary-text-color);
 }
 
 /* -----------------------------------
@@ -225,7 +229,7 @@ li.is-submenu-item > a:hover {
 
 .button {
   --button-main-color: rgb(25, 25, 25);
-  --button-hover-color: rgb(36, 36, 36);
+  --button-hover-color: var(--secondary-container-color);
   /* Could also add transparency to button on hover */
   /* --button-hover-color: rgba(36, 36, 36, 0.8); */
   --button-border-color: rgba(85, 85, 85, 0.25);
@@ -235,39 +239,28 @@ li.is-submenu-item > a:hover {
 .button.primary {
   border: 1px solid var(--button-border-color);
   background-color: var(--button-main-color);
-  color: var(--text-main-color);
+  color: var(--primary-text-color);
 }
 
 .button.primary:hover,
 .button.primary:active,
 .button.primary:focus {
   background-color: var(--button-hover-color);
-  color: var(--text-main-color);
+  color: var(--primary-text-color);
 }
 
 /* -----------------------------------
     FORMS
 ----------------------------------- */
 
-input {
-  --input-bg-color: rgb(36, 36, 36);
-  --input-border-color: rgb(51, 51, 51);
-  --input-focus-bg-color: rgb(43, 43, 43);
-  /* Also good, but couldn't decide between them */
-  /* --input-focus-bg-color: rgb(45, 45, 45); */
-  --input-focus-border-color: rgb(93, 93, 93);
-  /* Also good? */
-  /* --input-focus-border-color: rgb(79, 79, 79); */
-}
-
 [type="color"], [type="date"], [type="datetime-local"],
 [type="datetime"], [type="email"], [type="month"],
 [type="number"], [type="password"], [type="search"],
 [type="tel"], [type="text"], [type="time"],
 [type="url"], [type="week"], textarea {
-  background-color: var(--input-bg-color);
-  color: var(--text-main-color);
-  border: 1px solid var(--input-border-color);
+  background-color: var(--secondary-container-color);
+  color: var(--primary-text-color);
+  border: 1px solid var(--secondary-border-color);
 }
 
 [type="color"]:focus, [type="date"]:focus,
@@ -277,16 +270,16 @@ input {
 [type="search"]:focus, [type="tel"]:focus,
 [type="text"]:focus, [type="time"]:focus,
 [type="url"]:focus, [type="week"]:focus, textarea:focus {
-  background-color: var(--input-focus-bg-color);
-  color: var(--text-main-color);
-  border-color: var(--input-focus-border-color);
+  background-color: var(--accent-container-color);
+  color: var(--primary-text-color);
+  border-color: var(--accent-border-color);
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 /* 'placeholder=' HTML attribute */
 ::placeholder {
-  color: var(--menu-link-main-color);
+  color: var(--primary-menu-link-color);
 }
 
 /* -----------------------------------
@@ -294,23 +287,19 @@ input {
 ----------------------------------- */
 
 .slider {
-  /* TODO #29 reuse the button/input vars once we do the renaming
-     task? Could not be worth because of the transparency value
-     but we could add the same transparency to the buttons. */
-  --handle-main-color: rgba(25, 25, 25, 0.8);
   --handle-hover-color: rgba(36, 36, 36, 0.8);
-  background-color: var(--separator-main-color);
+  background-color: var(--accent-container-color);
 }
 
 .slider-fill {
-  background-color: var(--separator-accent-color);
-  /* box-shadow: 0 0 5px var(--shadow-main-color); */
-  box-shadow: 0 0 10px var(--shadow-main-color);
+  background-color: var(--primary-accent-color);
+  /* box-shadow: 0 0 5px var(--secondary-accent-color); */
+  box-shadow: 0 0 10px var(--secondary-accent-color);
 }
 
 .slider-handle {
-  border: 1px solid var(--border-main-color);
-  background-color: var(--handle-main-color);
+  border: 1px solid var(--primary-border-color);
+  background-color: var(--primary-container-color);
 }
 
 .slider-handle:hover,
@@ -324,18 +313,18 @@ input {
 ----------------------------------- */
 
 #footer {
-  background-color: var(--background-dark-color);
-  border-top: 2px solid var(--separator-accent-color);
-  box-shadow: 0 0 5px 2px var(--shadow-main-color);
+  background-color: var(--accent-background-color);
+  border-top: 2px solid var(--primary-accent-color);
+  box-shadow: 0 0 5px 2px var(--secondary-accent-color);
   /* margin-top: 6em; */
   padding: 1.11em 0;
 }
 
 .copyright-msg {
-  border-top: 1px solid var(--separator-dark-color);
+  border-top: 1px solid var(--secondary-separator-color);
   margin: 1.18rem 5.967rem; /* 1.48em 7.4em */
   padding-top: 0.85rem; /* 1.04em */
-  color: var(--text-dark-color);
+  color: var(--secondary-text-color);
   font-size: 0.8em;
   text-align: right;
 }
