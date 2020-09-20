@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.4.0 (no bs edition)
+Version: 0.4.1 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -261,10 +261,14 @@ li.is-submenu-item > a:hover {
 [type="text"]:focus, [type="time"]:focus,
 [type="url"]:focus, [type="week"]:focus, textarea:focus {
   background-color: var(--accent-container-color);
-  color: var(--primary-text-color);
-  border-color: var(--accent-border-color);
+  /* border-color: var(--accent-border-color); */
+  /* Trying out using theme accent as :focus border,
+   * not sure if I like it yet. */
+   border-width: 2px;
+   border-color: var(--primary-accent-color);
   -webkit-box-shadow: none;
   box-shadow: none;
+  color: var(--primary-text-color);
 }
 
 /* 'placeholder=' HTML attribute */
