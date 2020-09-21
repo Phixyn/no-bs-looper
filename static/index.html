@@ -25,7 +25,9 @@
     </div> <!-- .top-bar #top-navbar -->
 
     <!-- MAIN CONTENT -->
-    <div class="grid-container">
+    <!-- TODO #22: Add 'fluid' class for wider player. Might need a separate,
+                   non-fluid container for the form though -->
+    <div class="grid-container" id="main-content">
       <div class="grid-x grid-padding-x grid-padding-y">
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
           <div class="responsive-embed widescreen">
@@ -150,14 +152,14 @@
     </div> <!-- .grid-container -->
 
     <!-- FOOTER -->
-    <!-- <div class="grid-container full" id="footer">
-      <div class="grid-x">
-        <div class="cell">
-          <p class="copyright-msg">No Bullshit Software by Phixyn. No bullshit, no rights reserved. Also, no warranty.<br />
-          v1.0.0</p>
-        </div> .cell
-      </div> .grid-x
-    </div> .grid-container -->
+    <div class="grid-y grid-margin-y" id="footer">
+      <div class="cell">
+        <p class="copyright-msg">
+          No Bullshit Software by Phixyn. No bullshit, no rights reserved. Also, no warranty.<br />
+          v1.0.0
+        </p>
+      </div> <!-- .cell -->
+    </div> <!-- .grid-y -->
 
     <script src="lib/jquery.js"></script>
     <script src="lib/what-input.js"></script>

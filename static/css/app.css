@@ -310,7 +310,7 @@ li.is-submenu-item > a:hover {
   background-color: var(--accent-background-color);
   border-top: 2px solid var(--primary-accent-color);
   box-shadow: 0 0 5px 2px var(--secondary-accent-color);
-  /* margin-top: 6em; */
+  margin-top: 5em;
   padding: 1.11em 0;
 }
 
@@ -331,27 +331,6 @@ sticks to the bottom of the page no
 matter how much content the page has.
 ----------------------------------- */
 
-html {
-	height: 100%;
-}
-
-body {
-	position: relative;
-	/* margin: 0; */ /* already present */
-	min-height: 100%;
-  /* Must be the same as the margin-bottom of the element that is
-  before the footer element. */
-	padding-bottom: 6em;
-}
-
-.grid-container {
-	/* Must be the same as the padding-bottom of the body element */
-  margin-bottom: 6em;
-}
-
-#footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
+#main-content {
+  min-height: 100vh;
 }
