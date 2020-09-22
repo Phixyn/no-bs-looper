@@ -6,8 +6,7 @@ const startTimeInput = $("#start-time");
 const endTimeInput = $("#end-time");
 
 const sliderDiv = $("#loop-portion-slider");
-// TODO Could improve initialization to remove data-* params from
-// HTML <div> element
+// TODO #44: Improve initialization of Foundation Slider element
 const loopPortionSlider = new Foundation.Slider(sliderDiv);
 const startTimeSliderHandle = $("#start-time-handle");
 const endTimeSliderHandle = $("#end-time-handle");
@@ -129,8 +128,8 @@ function onPlayerStateChange(event) {
       }
     }, 1000);
   }
-  // TODO This also affects things like PlayerState == buffering,
-  // and if so maybe do 'if (event.data == YT.PlayerState.PAUSED)' ?
+  // TODO #45: This also affects things like PlayerState == buffering, so
+  // maybe do 'if (event.data == YT.PlayerState.PAUSED)' ?
   else {
     if (timer != null) {
       console.debug("Interval cleared from onPlayerStateChange.");
@@ -215,10 +214,8 @@ websocketClient.onmessage = (event) => {
   console.debug("Received data from websocket server.");
   console.debug(event.data);
   var msg = JSON.parse(event.data);
-  // TODO Check msg type before setting endTime
+  // TODO #46: Check message payload in client's onmessage handler
   endTime = parseInt(msg.lengthSeconds);
-  // TODO check message contents for errors, unrecognized data, etc,
-  // and handle those.
   updateSliderAndInputAttributes(0, endTime);
 };
 
@@ -236,15 +233,13 @@ websocketClient.onopen = (event) => {
  * Websocket client 'onclose' event handler. Called when the connection to the
  * websocket server is closed.
  *
- * TODO needs improvement. Maybe pinging the server every x seconds?
+ * TODO #47: Implement a proper websocket client onclose handler
  *
  * @param {event} event An event object containing event data.
  */
 websocketClient.onclose = (event) => {
   console.log("Websocket server connection closed.");
   console.debug(event);
-  // TODO this doesn't work. Find another way to reconnect
-  // websocketClient = new WebSocket("ws://192.168.1.71:14670");
 };
 
 /**
@@ -269,9 +264,10 @@ websocketClient.onclose = (event) => {
  * YouTube won't allow our cross-origin requests :(. So instead, we send a
  * message to our Python server, asking it to perform the HTTP GET request on
  * our behalf and send us the video info back via websocket.
+ *
+ * TODO #48: Rename updatePlayer to be more descriptive?
  */
 function updatePlayer() {
-  // TODO rename function, maybe updatePlayerWithNewVideo or updatePlayerVideo?
   console.debug("Updating player.");
   videoId = videoIdInput.val();
   player.loadVideoById(videoId);
@@ -280,7 +276,7 @@ function updatePlayer() {
   startTime = 0;
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
-  // TODO check if websocket connection is open first, if not, wait some seconds?
+  // TODO #49: Improve usage of websocket client in updatePlayer()
   websocketClient.send(JSON.stringify({ request_video_info: videoId }));
 }
 
