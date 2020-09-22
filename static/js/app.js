@@ -7,15 +7,14 @@ var videoId = document.getElementById("video-id").value;
 var startTime = 0;
 var endTime;
 
-// TODO: these can be const
-var startTimeInput = document.getElementById("start-time");
-var endTimeInput = document.getElementById("end-time");
+const startTimeInput = document.getElementById("start-time");
+const endTimeInput = document.getElementById("end-time");
 
-var sliderDiv = document.getElementById("loop-portion-slider");
+const sliderDiv = document.getElementById("loop-portion-slider");
 // TODO Could improve initialization to remove data-* params from HTML <div> element
-var loopPortionSlider = new Foundation.Slider($(sliderDiv));
-var startTimeSliderHandle = document.getElementById("start-time-handle");
-var endTimeSliderHandle = document.getElementById("end-time-handle");
+const loopPortionSlider = new Foundation.Slider($(sliderDiv));
+const startTimeSliderHandle = document.getElementById("start-time-handle");
+const endTimeSliderHandle = document.getElementById("end-time-handle");
 
 // TODO arrow
 $(sliderDiv).on("moved.zf.slider", function () {
@@ -42,9 +41,9 @@ $(sliderDiv).on("changed.zf.slider", () => {
 });
 
 // Load the IFrame Player API code asynchronously
-var tag = document.createElement("script");
+const tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName("script")[0];
+const firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
@@ -189,7 +188,7 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
 }
 
 // TODO move this either to another JS file or to top
-var websocketClient = new WebSocket("ws://192.168.1.71:14670");
+const websocketClient = new WebSocket("ws://192.168.1.71:14670");
 
 // TODO: these can all be arrow functions now
 
