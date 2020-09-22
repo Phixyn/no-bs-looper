@@ -1,21 +1,20 @@
 // Initialize all Foundation plugins
 $(document).foundation();
 
-var state;
+const videoIdInput = $("#video-id");
+const startTimeInput = $("#start-time");
+const endTimeInput = $("#end-time");
 
-var videoId = document.getElementById("video-id").value;
-var startTime = 0;
-var endTime;
-
-// TODO jQuery selectors?
-const startTimeInput = document.getElementById("start-time");
-const endTimeInput = document.getElementById("end-time");
-
-const sliderDiv = document.getElementById("loop-portion-slider");
+const sliderDiv = $("#loop-portion-slider");
 // TODO Could improve initialization to remove data-* params from HTML <div> element
-const loopPortionSlider = new Foundation.Slider($(sliderDiv));
-const startTimeSliderHandle = document.getElementById("start-time-handle");
-const endTimeSliderHandle = document.getElementById("end-time-handle");
+const loopPortionSlider = new Foundation.Slider(sliderDiv);
+const startTimeSliderHandle = $("#start-time-handle");
+const endTimeSliderHandle = $("#end-time-handle");
+
+var state;
+var videoId = videoIdInput.val();
+var startTime = 0; // startTimeInput.val()
+var endTime; // endTimeInput.val()
 
 $(sliderDiv).on("moved.zf.slider", () => {
   updateLoopPortion();
@@ -81,7 +80,7 @@ function onYouTubeIframeAPIReady() {
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
  */
 function onPlayerReady(event) {
-  startTime = parseInt(startTimeInput.value);
+  startTime = parseInt(startTimeInput.val());
   // Probably don't need this, see note in onPlayerStateChange setInterval callback
   // event.target.setLoop(true);
 
@@ -145,26 +144,23 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // JavaScript amirite?
   endTimeString = newEndTime.toString();
 
-  endTimeInput.setAttribute("max", endTimeString);
+  endTimeInput.attr("max", endTimeString);
   // Don't want start portion slider to be able to go all the way to the end
-  startTimeInput.setAttribute("max", (newEndTime - 1).toString());
+  startTimeInput.attr("max", (newEndTime - 1).toString());
 
-  startTimeInput.value = newStartTime.toString();
+  startTimeInput.val(newStartTime.toString());
   // By default, we'll put the end slider at the end of video time
-  endTimeInput.value = endTimeString;
+  endTimeInput.val(endTimeString);
 
   // Update logical end value of slider
   loopPortionSlider.options.end = newEndTime;
   // Update visual end value of slider
-  sliderDiv.setAttribute("data-end", endTimeString);
+  sliderDiv.attr("data-end", endTimeString);
 
   // Update ARIA 'valuemax' data for time slider handles. Entirely for
   // accessibility purposes, has no effect on handles' functionality.
-  startTimeSliderHandle.setAttribute(
-    "aria-valuemax",
-    (newEndTime - 1).toString()
-  );
-  endTimeSliderHandle.setAttribute("aria-valuemax", endTimeString);
+  startTimeSliderHandle.attr("aria-valuemax", (newEndTime - 1).toString());
+  endTimeSliderHandle.attr("aria-valuemax", endTimeString);
 
   /* Changing an input element's value as done above does not trigger an
    * onchange event. Thus the sliders bound to the input elements will not
@@ -178,11 +174,10 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * to use a jQuery selector (as opposed to something DOM native like
    * document.getElementById).
    */
-  // TODO should probably make variables for these
-  $("#start-time").change();
+  startTimeInput.change();
   // Do this only after setting logical and visual end values for slider,
   // otherwise the second handle's position won't match the endTime value.
-  $("#end-time").change();
+  endTimeInput.change();
 }
 
 // TODO move this either to another JS file or to top
@@ -245,7 +240,7 @@ websocketClient.onclose = (event) => {
 function updatePlayer() {
   // TODO rename function, maybe updatePlayerWithNewVideo? e_e
   console.debug("Updating player.");
-  videoId = document.getElementById("video-id").value;
+  videoId = videoIdInput.val();
   player.loadVideoById(videoId);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
@@ -261,8 +256,8 @@ function updatePlayer() {
  */
 function updateLoopPortion() {
   console.debug("Setting new loop start and end times.");
-  startTime = parseInt(startTimeInput.value);
-  endTime = parseInt(endTimeInput.value);
+  startTime = parseInt(startTimeInput.val());
+  endTime = parseInt(endTimeInput.val());
   if (
     player.getCurrentTime() >= endTime ||
     player.getCurrentTime() < startTime
@@ -293,17 +288,11 @@ function updateState(videoId, startTime, endTime) {
 }
 
 /**
- * TODO
+ * Toggles the player iframe visibility with a fancy fade animation.
  */
 function togglePlayer() {
   console.debug("Toggling player visibility.");
-  const playerDiv = document.getElementById("player");
-  // TODO Get rid of first condition by assigning display: block to #player in CSS?
-  if (playerDiv.style.display === "" || playerDiv.style.display !== "none") {
-    playerDiv.style.display = "none";
-  } else {
-    playerDiv.style.display = "block";
-  }
+  $("#player").fadeToggle();
 }
 
 /**
@@ -311,8 +300,8 @@ function togglePlayer() {
  */
 function setStartTimeToCurrent() {
   startTime = parseInt(player.getCurrentTime());
-  startTimeInput.value = startTime.toString();
-  $("#start-time").change();
+  startTimeInput.val(startTime.toString());
+  startTimeInput.change();
 }
 
 /**
@@ -320,6 +309,6 @@ function setStartTimeToCurrent() {
  */
 function setEndTimeToCurrent() {
   endTime = parseInt(player.getCurrentTime());
-  endTimeInput.value = endTime.toString();
-  $("#end-time").change();
+  endTimeInput.val(endTime.toString());
+  endTimeInput.change();
 }
