@@ -82,8 +82,11 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
   startTime = parseInt(startTimeInput.value);
-  // event.target.setLoop(true); // Probably don't need this, see note in eventCallback
-  // event.target.getDuration() = 1634.781  ... might need to change precision of slider and also data type?
+  // Probably don't need this, see note in onPlayerStateChange setInterval callback
+  // event.target.setLoop(true);
+
+  // TODO #4: might need to change precision of slider and also data type?
+  // event.target.getDuration() = 1634.781
   // For now use parseInt()
   updateSliderAndInputAttributes(
     startTime,
@@ -100,7 +103,22 @@ var timer = null;
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
     console.debug("Interval started.");
-    timer = setInterval(eventCallback, 1000);
+    timer = setInterval(() => {
+      /* TODO #4 bug:
+       * Need to make sure endTime is using the 3 decimal points float
+       * for precision, otherwise comparisons are not 100% accurate
+       * (could be a few milliseconds off). Doesn't matter as much now
+       * that we've added loop: 1 and playlist: id to the player params,
+       * but still worth fixing.
+       * Update: still an issue on mobile, so worth fixing
+       */
+      if (
+        player.getCurrentTime() >= endTime ||
+        player.getCurrentTime() < startTime
+      ) {
+        player.seekTo(startTime, true);
+      }
+    }, 1000);
   }
   // TODO Check if this also affects things like player state == buffering,
   // and if so, maybe improve it.
@@ -110,26 +128,6 @@ function onPlayerStateChange(event) {
       console.debug("Interval cleared from onPlayerStateChange.");
       clearInterval(timer);
     }
-  }
-}
-
-/**
- * TODO
- *  can probably be an arrow function
- */
-function eventCallback() {
-  // TODO #4 bug:
-  // Need to make sure endTime is using the 3 decimal points float
-  // for precision, otherwise comparisons are not 100% accurate
-  // (could be a few milliseconds off). Doesn't matter as much now
-  // that we've added loop: 1 and playlist: id to the player params,
-  // but still worth fixing.
-  // Update: still an issue on mobile, so worth fixing
-  if (
-    player.getCurrentTime() >= endTime ||
-    player.getCurrentTime() < startTime
-  ) {
-    player.seekTo(startTime, true);
   }
 }
 
