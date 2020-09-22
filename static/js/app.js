@@ -6,7 +6,8 @@ const startTimeInput = $("#start-time");
 const endTimeInput = $("#end-time");
 
 const sliderDiv = $("#loop-portion-slider");
-// TODO Could improve initialization to remove data-* params from HTML <div> element
+// TODO Could improve initialization to remove data-* params from
+// HTML <div> element
 const loopPortionSlider = new Foundation.Slider(sliderDiv);
 const startTimeSliderHandle = $("#start-time-handle");
 const endTimeSliderHandle = $("#end-time-handle");
@@ -16,11 +17,12 @@ var videoId = videoIdInput.val();
 var startTime = 0; // startTimeInput.val()
 var endTime; // endTimeInput.val()
 
+// Fired when one of the slider's handles is moved
 $(sliderDiv).on("moved.zf.slider", () => {
   updateLoopPortion();
 });
 
-/* This event fires when the value has not been changed for a given time.
+/* This event fires when the slider has not been moved for a given time.
  * The given time is 500 milliseconds by default, and can be overriden by
  * adding a data-changed-delay attribute to the slider element in the HTML.
  * Currently, it is set to 2000 milliseconds.
@@ -78,10 +80,13 @@ function onYouTubeIframeAPIReady() {
  * But if user seeks, endSeconds becomes invalidated.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
+ *
+ * @param {event} event An event object containing event data.
  */
 function onPlayerReady(event) {
   startTime = parseInt(startTimeInput.val());
-  // Probably don't need this, see note in onPlayerStateChange setInterval callback
+  // Probably don't need this, see note in onPlayerStateChange
+  // setInterval() callback
   // event.target.setLoop(true);
 
   // TODO #4: might need to change precision of slider and also data type?
@@ -98,10 +103,15 @@ var timer = null;
  * Called by the API when the video player's state changes.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
+ *
+ * @param {event} event An event object containing event data.
  */
 function onPlayerStateChange(event) {
+  // TODO === ?
   if (event.data == YT.PlayerState.PLAYING) {
     console.debug("Interval started.");
+    // Every 1 second, check if we need to go back to the start of the
+    // loop portion.
     timer = setInterval(() => {
       /* TODO #4 bug:
        * Need to make sure endTime is using the 3 decimal points float
@@ -119,9 +129,8 @@ function onPlayerStateChange(event) {
       }
     }, 1000);
   }
-  // TODO Check if this also affects things like player state == buffering,
-  // and if so, maybe improve it.
-  // Update: It does. Maybe do if (event.data == YT.PlayerState.PAUSED) ?
+  // TODO This also affects things like PlayerState == buffering,
+  // and if so maybe do 'if (event.data == YT.PlayerState.PAUSED)' ?
   else {
     if (timer != null) {
       console.debug("Interval cleared from onPlayerStateChange.");
@@ -131,19 +140,31 @@ function onPlayerStateChange(event) {
 }
 
 /**
- * TODO
+ * Updates slider and input attributes using the given new start time
+ * and new end time. Whenever a new video is loaded and the start/end
+ * times change, attributes such as max value and data-end need to be
+ * updated so that users can correctly input and set start and end times.
  *
- * Remember both inputs and both handles have to be updated everytime the
- * video changes, otherwise user might not be able to use text fields to
- * new times properly and will be forced to use the slider. We want users
- * to have a choice and for both choices to work 100% all the time.
+ * If these are not updated, there is a large chance that the slider will
+ * no longer match the length of the video, and that users will not be
+ * able to enter the expected end time values. The logical end value of
+ * the slider also needs to be updated with the new end time of the video
+ * (see Foundation slider docs for more information).
+ *
+ * Remember both numeric inputs and both slider handles have to be updated
+ * everytime the video changes. If only the slider attributes are updated,
+ * users might not be able to use input fields to set new times properly and
+ * will be forced to use the slider. We want users to have a choice and for
+ * both inputs and slider to work 100% all the time.
+ *
+ * @param {number} newStartTime The new start time for the loop portion.
+ * @param {number} newEndTime The new end time of the video (i.e. video
+ *     duration).
  */
 function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.log("Updating slider and input data.");
 
-  // JavaScript amirite?
   endTimeString = newEndTime.toString();
-
   endTimeInput.attr("max", endTimeString);
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.attr("max", (newEndTime - 1).toString());
@@ -183,16 +204,18 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
 // TODO move this either to another JS file or to top
 const websocketClient = new WebSocket("ws://192.168.1.71:14670");
 
-// TODO: these can all be arrow functions now
-
 /**
- * onmessage handler for websocket.
+ * Websocket client 'onmessage' event handler. Called whenever a message is
+ * received from the websocket server.
+ *
+ * @param {event} event An event object containing event data.
  */
 websocketClient.onmessage = (event) => {
   // We got a new video endTime, so update the slider and input elements
   console.debug("Received data from websocket server.");
   console.debug(event.data);
   var msg = JSON.parse(event.data);
+  // TODO Check msg type before setting endTime
   endTime = parseInt(msg.lengthSeconds);
   // TODO check message contents for errors, unrecognized data, etc,
   // and handle those.
@@ -200,17 +223,22 @@ websocketClient.onmessage = (event) => {
 };
 
 /**
- * onopen handler for websocket.
+ * Websocket client 'onopen' event handler. Called when a connection to the
+ * websocket server is successfully opened.
+ *
+ * @param {event} event An event object containing event data.
  */
 websocketClient.onopen = (event) => {
   console.log("Successfully opened websocket connection.");
-  // console.debug("onopen event:");
-  // console.debug(event);
 };
 
 /**
- * onclose handler for websocket.
+ * Websocket client 'onclose' event handler. Called when the connection to the
+ * websocket server is closed.
+ *
  * TODO needs improvement. Maybe pinging the server every x seconds?
+ *
+ * @param {event} event An event object containing event data.
  */
 websocketClient.onclose = (event) => {
   console.log("Websocket server connection closed.");
@@ -220,44 +248,53 @@ websocketClient.onclose = (event) => {
 };
 
 /**
- * TODO
+ * Updates the YouTube player with a new video. Called when the user clicks
+ * the "Update" button. The video ID is taken from the text input element
+ * in the HTML form. This function also requests video info from our backend
+ * server via websocket (see why this is necessary below), which hopefully
+ * causes the websocket client's "onmessage" handler to get called.
  *
- * We can't update the slider/input elements here because we can't get the
- * duration of the video yet. This happens because of this little gem from
- * the YouTube IFrame API:
- * "getDuration() will return 0 until the video's metadata is loaded, which
+ * Normally, we'd update the slider and input attributes with new max values
+ * based on the video duration here. However, we can't update them here
+ * because we can't get the duration of the video yet. Check out this little
+ * gem from the YouTube IFrame API:
+ *
+ * > "getDuration() will return 0 until the video's metadata is loaded, which
  * normally happens just after the video starts playing."
  * Thanks Google, really helpful and really nice UX for my users, eh.
  *
  * As a workaround we could perform this GET request to get video info:
  * https://www.youtube.com/get_video_info?html5=1&video_id=orxvTsPW10k
- * However, because of CORS, we can't do this from the web application,
- * as YouTube won't allow our cross-origin requests :(. So instead,
- * we wrote an entirely new Python application just to perform the
- * request on the behalf of this web app, and send it the video info
- * via websocket.
+ * However, because of CORS, we can't do this from the web application, as
+ * YouTube won't allow our cross-origin requests :(. So instead, we send a
+ * message to our Python server, asking it to perform the HTTP GET request on
+ * our behalf and send us the video info back via websocket.
  */
 function updatePlayer() {
-  // TODO rename function, maybe updatePlayerWithNewVideo? e_e
+  // TODO rename function, maybe updatePlayerWithNewVideo or updatePlayerVideo?
   console.debug("Updating player.");
   videoId = videoIdInput.val();
   player.loadVideoById(videoId);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
   startTime = 0;
-  // Get fucked CORS. We'll use a separate application to make our GET request muahahaha
-  // Get me that illegal video info data >:)
+  // Request the Python server to make a GET request for video info and send
+  // us the data back via the websocket.
   // TODO check if websocket connection is open first, if not, wait some seconds?
   websocketClient.send(JSON.stringify({ request_video_info: videoId }));
 }
 
 /**
- * TODO
+ * Updates the start and end times for the video's loop portion based on the
+ * values in the HTML input elements (i.e. set by the user!).
  */
 function updateLoopPortion() {
   console.debug("Setting new loop start and end times.");
+
   startTime = parseInt(startTimeInput.val());
   endTime = parseInt(endTimeInput.val());
+
+  // If needed, seek to the desired start time for the loop portion
   if (
     player.getCurrentTime() >= endTime ||
     player.getCurrentTime() < startTime
@@ -267,11 +304,15 @@ function updateLoopPortion() {
 }
 
 /**
- * Update the application's state object with the given video ID, start time
+ * Updates the application's state object with the given video ID, start time
  * and end time. Replace the current state stored in the browser (using the
  * History API) with the updated state. This will also update the URL's
  * querystring with the object's data, which is useful for sharing and
  * bookmarking URLs to specific loops.
+ *
+ * @param {string} videoId The ID of the YouTube video.
+ * @param {number} startTime The video loop portion's start time.
+ * @param {number} endTime The video loop portion's end time.
  */
 function updateState(videoId, startTime, endTime) {
   console.debug("Updating and replacing state.");
@@ -296,7 +337,7 @@ function togglePlayer() {
 }
 
 /**
- * TODO
+ * Sets the loop portion's start time to the current time of the video.
  */
 function setStartTimeToCurrent() {
   startTime = parseInt(player.getCurrentTime());
@@ -305,7 +346,7 @@ function setStartTimeToCurrent() {
 }
 
 /**
- * TODO
+ * Sets the loop portion's end time to the current time of the video.
  */
 function setEndTimeToCurrent() {
   endTime = parseInt(player.getCurrentTime());
