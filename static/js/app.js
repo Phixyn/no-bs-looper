@@ -1,10 +1,13 @@
 // Initialize all Foundation plugins
 $(document).foundation();
 
+var state;
+
 var videoId = document.getElementById("video-id").value;
 var startTime = 0;
 var endTime;
 
+// TODO: these can be const
 var startTimeInput = document.getElementById("start-time");
 var endTimeInput = document.getElementById("end-time");
 
@@ -14,15 +17,34 @@ var loopPortionSlider = new Foundation.Slider($(sliderDiv));
 var startTimeSliderHandle = document.getElementById("start-time-handle");
 var endTimeSliderHandle = document.getElementById("end-time-handle");
 
-$(sliderDiv).on("moved.zf.slider", function() {
-  // console.log("Slider moved!");
+// TODO arrow
+$(sliderDiv).on("moved.zf.slider", function () {
   updateLoopPortion();
 });
 
+/* This event fires when the value has not been changed for a given time.
+ * The given time is 500 milliseconds by default, and can be overriden by
+ * adding a data-changed-delay attribute to the slider element in the HTML.
+ * Currently, it is set to 2000 milliseconds.
+ */
+$(sliderDiv).on("changed.zf.slider", () => {
+  /* Only update state (used to set the search/querystring portion of the URL)
+   * after the start/end times haven't been updated for 2000ms. The idea is to
+   * reduce lag and overhead when updating the state. Updating the state
+   * everytime the slider is moved causes massive lag. Updating it every 500ms
+   * is slightly better, but can be laggy if a browser is already under heavy
+   * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
+   * larger values could leave users confused as to why the sharable URL they
+   * copied (which is set based on state) is wrong if they copy it too fast.
+   */
+  console.debug("Changed triggered.");
+  updateState(videoId, startTime, endTime);
+});
+
 // Load the IFrame Player API code asynchronously
-var tag = document.createElement('script');
+var tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
+var firstScriptTag = document.getElementsByTagName("script")[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 var player;
@@ -31,9 +53,9 @@ var player;
  * is downloaded.
  */
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player', {
-    height: '390',
-    width: '640',
+  player = new YT.Player("player", {
+    height: "390",
+    width: "640",
     videoId: videoId,
     playerVars: {
       version: 3,
@@ -41,12 +63,12 @@ function onYouTubeIframeAPIReady() {
       start: startTime,
       modestBranding: 1,
       playlist: videoId,
-      loop: 1
+      loop: 1,
     },
     events: {
-      'onReady': onPlayerReady,
-      'onStateChange': onPlayerStateChange
-    }
+      onReady: onPlayerReady,
+      onStateChange: onPlayerStateChange,
+    },
   });
 }
 
@@ -64,7 +86,10 @@ function onPlayerReady(event) {
   // event.target.setLoop(true); // Probably don't need this, see note in eventCallback
   // event.target.getDuration() = 1634.781  ... might need to change precision of slider and also data type?
   // For now use parseInt()
-  updateSliderAndInputAttributes(startTime, parseInt(event.target.getDuration()));
+  updateSliderAndInputAttributes(
+    startTime,
+    parseInt(event.target.getDuration())
+  );
 }
 
 var timer = null;
@@ -91,16 +116,20 @@ function onPlayerStateChange(event) {
 
 /**
  * TODO
+ *  can probably be an arrow function
  */
 function eventCallback() {
-  // TODO Trivial bug:
+  // TODO #4 bug:
   // Need to make sure endTime is using the 3 decimal points float
   // for precision, otherwise comparisons are not 100% accurate
   // (could be a few milliseconds off). Doesn't matter as much now
   // that we've added loop: 1 and playlist: id to the player params,
   // but still worth fixing.
   // Update: still an issue on mobile, so worth fixing
-  if (player.getCurrentTime() >= endTime || player.getCurrentTime() < startTime) {
+  if (
+    player.getCurrentTime() >= endTime ||
+    player.getCurrentTime() < startTime
+  ) {
     player.seekTo(startTime, true);
   }
 }
@@ -134,7 +163,10 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
 
   // Update ARIA 'valuemax' data for time slider handles. Entirely for
   // accessibility purposes, has no effect on handles' functionality.
-  startTimeSliderHandle.setAttribute("aria-valuemax", (newEndTime - 1).toString());
+  startTimeSliderHandle.setAttribute(
+    "aria-valuemax",
+    (newEndTime - 1).toString()
+  );
   endTimeSliderHandle.setAttribute("aria-valuemax", endTimeString);
 
   /* Changing an input element's value as done above does not trigger an
@@ -154,16 +186,17 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // Do this only after setting logical and visual end values for slider,
   // otherwise the second handle's position won't match the endTime value.
   $("#end-time").change();
-
 }
 
 // TODO move this either to another JS file or to top
 var websocketClient = new WebSocket("ws://192.168.1.71:14670");
 
+// TODO: these can all be arrow functions now
+
 /**
  * onmessage handler for websocket.
  */
-websocketClient.onmessage = function(event) {
+websocketClient.onmessage = function (event) {
   // We got a new video endTime, so update the slider and input elements
   console.debug("Received data from websocket server.");
   console.debug(event.data);
@@ -172,27 +205,27 @@ websocketClient.onmessage = function(event) {
   // TODO check message contents for errors, unrecognized data, etc,
   // and handle those.
   updateSliderAndInputAttributes(0, endTime);
-}
+};
 
 /**
  * onopen handler for websocket.
  */
-websocketClient.onopen = function(event) {
+websocketClient.onopen = function (event) {
   console.log("Successfully opened websocket connection.");
   // console.debug("onopen event:");
   // console.debug(event);
-}
+};
 
 /**
  * onclose handler for websocket.
  * TODO needs improvement. Maybe pinging the server every x seconds?
  */
-websocketClient.onclose = function(event) {
+websocketClient.onclose = function (event) {
   console.log("Websocket server connection closed.");
   console.debug(event);
   // TODO this doesn't work. Find another way to reconnect
   // websocketClient = new WebSocket("ws://192.168.1.71:14670");
-}
+};
 
 /**
  * TODO
@@ -209,8 +242,8 @@ websocketClient.onclose = function(event) {
  * However, because of CORS, we can't do this from the web application,
  * as YouTube won't allow our cross-origin requests :(. So instead,
  * we wrote an entirely new Python application just to perform the
- * request on the behalf of this web app, and send us the video info
- * via HTTP. This will eventually be replaced with websocket for IPC.
+ * request on the behalf of this web app, and send it the video info
+ * via websocket.
  */
 function updatePlayer() {
   // TODO rename function, maybe updatePlayerWithNewVideo? e_e
@@ -223,7 +256,7 @@ function updatePlayer() {
   // Get fucked CORS. We'll use a separate application to make our GET request muahahaha
   // Get me that illegal video info data >:)
   // TODO check if websocket connection is open first, if not, wait some seconds?
-  websocketClient.send(JSON.stringify({"request_video_info": videoId}));
+  websocketClient.send(JSON.stringify({ request_video_info: videoId }));
 }
 
 /**
@@ -233,9 +266,33 @@ function updateLoopPortion() {
   console.debug("Setting new loop start and end times.");
   startTime = parseInt(startTimeInput.value);
   endTime = parseInt(endTimeInput.value);
-  if (player.getCurrentTime() >= endTime || player.getCurrentTime() < startTime) {
+  if (
+    player.getCurrentTime() >= endTime ||
+    player.getCurrentTime() < startTime
+  ) {
     player.seekTo(startTime, true);
   }
+}
+
+/**
+ * Update the application's state object with the given video ID, start time
+ * and end time. Replace the current state stored in the browser (using the
+ * History API) with the updated state. This will also update the URL's
+ * querystring with the object's data, which is useful for sharing and
+ * bookmarking URLs to specific loops.
+ */
+function updateState(videoId, startTime, endTime) {
+  console.debug("Updating and replacing state.");
+
+  state = {
+    video_id: videoId,
+    start_time: startTime,
+    end_time: endTime,
+  };
+  // jQuery's param() serializes an object into a string that can be used in
+  // an URL query string or an API query. Also see MDN's page on the History
+  // API for info on replaceState().
+  history.replaceState(state, "", "?" + $.param(state));
 }
 
 /**
