@@ -7,6 +7,7 @@ var videoId = document.getElementById("video-id").value;
 var startTime = 0;
 var endTime;
 
+// TODO jQuery selectors?
 const startTimeInput = document.getElementById("start-time");
 const endTimeInput = document.getElementById("end-time");
 
@@ -16,8 +17,7 @@ const loopPortionSlider = new Foundation.Slider($(sliderDiv));
 const startTimeSliderHandle = document.getElementById("start-time-handle");
 const endTimeSliderHandle = document.getElementById("end-time-handle");
 
-// TODO arrow
-$(sliderDiv).on("moved.zf.slider", function () {
+$(sliderDiv).on("moved.zf.slider", () => {
   updateLoopPortion();
 });
 
@@ -193,7 +193,7 @@ const websocketClient = new WebSocket("ws://192.168.1.71:14670");
 /**
  * onmessage handler for websocket.
  */
-websocketClient.onmessage = function (event) {
+websocketClient.onmessage = (event) => {
   // We got a new video endTime, so update the slider and input elements
   console.debug("Received data from websocket server.");
   console.debug(event.data);
@@ -207,7 +207,7 @@ websocketClient.onmessage = function (event) {
 /**
  * onopen handler for websocket.
  */
-websocketClient.onopen = function (event) {
+websocketClient.onopen = (event) => {
   console.log("Successfully opened websocket connection.");
   // console.debug("onopen event:");
   // console.debug(event);
@@ -217,7 +217,7 @@ websocketClient.onopen = function (event) {
  * onclose handler for websocket.
  * TODO needs improvement. Maybe pinging the server every x seconds?
  */
-websocketClient.onclose = function (event) {
+websocketClient.onclose = (event) => {
   console.log("Websocket server connection closed.");
   console.debug(event);
   // TODO this doesn't work. Find another way to reconnect
@@ -297,7 +297,7 @@ function updateState(videoId, startTime, endTime) {
  */
 function togglePlayer() {
   console.debug("Toggling player visibility.");
-  var playerDiv = document.getElementById("player");
+  const playerDiv = document.getElementById("player");
   // TODO Get rid of first condition by assigning display: block to #player in CSS?
   if (playerDiv.style.display === "" || playerDiv.style.display !== "none") {
     playerDiv.style.display = "none";
