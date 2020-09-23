@@ -1,20 +1,20 @@
 // Initialize all Foundation plugins
-$(document).foundation();
+$(document).foundation(); // TODO not sure if it should go on document.ready
 
 const websocket = new WebSocket("ws://192.168.1.71:14670");
 
-const videoIdInput = $("#video-id");
-const startTimeInput = $("#start-time");
-const endTimeInput = $("#end-time");
-const sliderDiv = $("#loop-portion-slider");
-// TODO #44: Improve initialization of Foundation Slider element
-const loopPortionSlider = new Foundation.Slider(sliderDiv);
-const startTimeSliderHandle = $("#start-time-handle");
-const endTimeSliderHandle = $("#end-time-handle");
+var player;
+var videoIdInput;
+var startTimeInput;
+var endTimeInput;
+var sliderDiv;
+var loopPortionSlider;
+var startTimeSliderHandle;
+var endTimeSliderHandle;
 
 var state;
-var videoId = videoIdInput.val();
-var startTime = 0; // parseInt(startTimeInput.val())
+var videoId;
+var startTime;
 var endTime; // parseInt(endTimeInput.val())
 
 // Websocket client
@@ -58,42 +58,68 @@ websocket.onclose = (event) => {
   console.debug(event);
 };
 
-// Slider event listeners
-
-// Fired when one of the slider's handles is moved
-$(sliderDiv).on("moved.zf.slider", () => {
-  // TODO Function is not re-used, so consider moving all the code here
-  updateLoopPortion();
-});
-
-/* This event fires when the slider has not been moved for a given time.
- * The given time is 500 milliseconds by default, and can be overriden by
- * adding a data-changed-delay attribute to the slider element in the HTML.
- * Currently, it is set to 2000 milliseconds.
+/**
+ * Handler for jQuery .ready() called.
+ * For stuff that needs to happen only after the document is ready.
  */
-$(sliderDiv).on("changed.zf.slider", () => {
-  /* Only update state (used to set the search/querystring portion of the URL)
-   * after the start/end times haven't been updated for 2000ms. The idea is to
-   * reduce lag and overhead when updating the state. Updating the state
-   * everytime the slider is moved causes massive lag. Updating it every 500ms
-   * is slightly better, but can be laggy if a browser is already under heavy
-   * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
-   * larger values could leave users confused as to why the sharable URL they
-   * copied (which is set based on state) is wrong if they copy it too fast.
-   */
-  console.debug("Changed triggered.");
-  updateState(videoId, startTime, endTime);
+$(() => {
+  videoIdInput = $("#video-id");
+  startTimeInput = $("#start-time");
+  endTimeInput = $("#end-time");
+  sliderDiv = $("#loop-portion-slider");
+  // TODO #44: Improve initialization of Foundation Slider element
+  loopPortionSlider = new Foundation.Slider(sliderDiv);
+  startTimeSliderHandle = $("#start-time-handle");
+  endTimeSliderHandle = $("#end-time-handle");
+
+  videoId = videoIdInput.val();
+  startTime = 0; // parseInt(startTimeInput.val())
+  // endTime; // parseInt(endTimeInput.val())
+
+  // Load the IFrame Player API code asynchronously
+  let tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  let firstScriptTag = document.getElementsByTagName("script")[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
 });
 
-// YouTube Player
+/**
+ * Event listener for window load event.
+ * Stuff that needs to happen after full load goes here.
+ */
+$(window).on("load", () => {
+  // Add slider event listeners
+  // Fired when one of the slider's handles is moved
+  $(sliderDiv).on("moved.zf.slider", () => {
+    // TODO Function is not re-used, so consider moving all the code here
+    updateLoopPortion();
+  });
 
-// Load the IFrame Player API code asynchronously
-const tag = document.createElement("script");
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName("script")[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  /* This event fires when the slider has not been moved for a given time.
+   * The given time is 500 milliseconds by default, and can be overriden by
+   * adding a data-changed-delay attribute to the slider element in the HTML.
+   * Currently, it is set to 2000 milliseconds.
+   */
+  $(sliderDiv).on("changed.zf.slider", () => {
+    /* Only update state (used to set the search/querystring portion of the URL)
+     * after the start/end times haven't been updated for 2000ms. The idea is to
+     * reduce lag and overhead when updating the state. Updating the state
+     * everytime the slider is moved causes massive lag. Updating it every 500ms
+     * is slightly better, but can be laggy if a browser is already under heavy
+     * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
+     * larger values could leave users confused as to why the sharable URL they
+     * copied (which is set based on state) is wrong if they copy it too fast.
+     */
+    console.debug("Changed triggered.");
+    updateState(videoId, startTime, endTime);
+  });
+});
 
-var player;
+
+
+// YouTube Player event handlers
+
 /**
  * Creates an <iframe> element (and YouTube player) after the API code
  * is downloaded.
