@@ -408,10 +408,15 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   startTimeInput.attr("max", (newEndTime - 1).toString());
   console.debug("[DEBUG] Finished setting numeric input max attributes.");
 
-  // Update logical end value of slider
+  // Update logical end values of slider
   loopPortionSlider.options.end = newEndTime;
-  // Update visual end value of slider
+  loopPortionSlider.options.initialEnd = newEndTime;
+  console.debug("[DEBUG] Updated logical end value of slider.");
+
+  // Update visual end values of slider
   sliderDiv.attr("data-end", endTimeString);
+  sliderDiv.attr("data-initial-end", endTimeString);
+  console.debug("[DEBUG] Updated visual end value of slider.");
 
   // Update ARIA 'valuemax' data for time slider handles. Entirely for
   // accessibility purposes, has no effect on handles' functionality.
