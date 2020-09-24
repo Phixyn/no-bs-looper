@@ -80,7 +80,9 @@ $(() => {
   endTimeSliderHandle = $("#end-time-handle");
 
   // Load the Iframe Player API code asynchronously
-  console.debug("[DEBUG] Adding script tag for YouTube Iframe API script to DOM.");
+  console.debug(
+    "[DEBUG] Adding script tag for YouTube Iframe API script to DOM."
+  );
   let tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   let firstScriptTag = document.getElementsByTagName("script")[0];
@@ -91,7 +93,7 @@ $(() => {
 
   // State setting and updating
   let queryString = location.search;
-	if (queryString !== "") {
+  if (queryString !== "") {
     console.debug("[DEBUG] Parsing URL querystring:");
     console.debug(queryString);
 
@@ -107,13 +109,15 @@ $(() => {
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
-    // Just in case history.state doesn't get automatically set from querystring
+    // Do this just in case history.state doesn't get automatically set
+    // from the URL's querystring. Same applies to the call below.
     updateState();
 
-    // Update text input for video ID (remember we can't update numeric inputs
-    // here yet, because we need to set the "max" attributes. We can only set
-    // those once the YT player is ready, so that we can get the video duration
-    // and set the "max" attributes to that.
+    /* Update text input for video ID (remember we can't update numeric inputs
+     * here yet, because we need to set the "max" attributes. We can only set
+     * those once the YT player is ready, so that we can get the video duration
+     * and set the "max" attributes to that.
+     */
     console.debug("[DEBUG] Setting video ID input field.");
     videoIdInput.val(state.video_id);
   } else {
@@ -129,19 +133,8 @@ $(() => {
   }
 });
 
-/**
- * Event listener for window load event. This event is fired when all content
- * on the page has finished loading (including images and iframes). Stuff that
- * needs to happen after full load goes here.
- */
-$(window).on("load", () => {
-  console.debug("[DEBUG] Full content loaded.");
-
-  // This is a fucking useless event now lol
-});
-
 // YouTube Player event handlers
-// TODO consider doing this in .ready()
+// TODO consider doing this in .ready() (test it out?)
 
 /**
  * Creates an <iframe> element (and YouTube player) after the API code
@@ -186,11 +179,9 @@ function onPlayerReady(event) {
   // setInterval() callback
   // event.target.setLoop(true);
 
-  // Add slider event listeners
+  // Add slider event handlers
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
-    // TODO Function is not re-used, so consider moving all the code here
-    // TODO check if YT.ready/loaded?
     updateLoopPortion();
   });
 
@@ -200,14 +191,15 @@ function onPlayerReady(event) {
    * Currently, it is set to 2000 milliseconds.
    */
   $(sliderDiv).on("changed.zf.slider", () => {
-    /* Only update state (used to set the search/querystring portion of the URL)
-     * after the start/end times haven't been updated for 2000ms. The idea is to
+    /* Only update state (used to set the querystring portion of the URL) after
+     * the start/end times haven't been updated for 2000ms. The idea is to
      * reduce lag and overhead when updating the state. Updating the state
-     * everytime the slider is moved causes massive lag. Updating it every 500ms
-     * is slightly better, but can be laggy if a browser is already under heavy
-     * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
-     * larger values could leave users confused as to why the sharable URL they
-     * copied (which is set based on state) is wrong if they copy it too fast.
+     * everytime the slider is moved causes massive lag. Updating it every
+     * 500ms is slightly better, but can be laggy if a browser is already under
+     * heavy load (e.g. many tabs loaded). 2000 to 5000ms seems like a good
+     * value, but larger values could leave users confused as to why the
+     * sharable URL they copied (which is set based on state) is wrong if they
+     * copy it too fast after moving the slider.
      */
     console.debug("[DEBUG] Slider 'changed' triggered.");
     updateState();
@@ -346,24 +338,24 @@ function updateLoopPortion() {
 }
 
 /**
- * Updates the application's state object with the given video ID, start time
- * and end time. Replace the current state stored in the browser (using the
- * History API) with the updated state. This will also update the URL's
- * querystring with the object's data, which is useful for sharing and
- * bookmarking URLs to specific loops.
+ * Replaces the browser's history state object with the current application
+ * state object. This will also update the URL's querystring with the state's
+ * data, which is useful for sharing and bookmarking URLs to specific loops.
  *
  * @param {string} videoId The ID of the YouTube video.
  * @param {number} startTime The video loop portion's start time.
  * @param {number} endTime The video loop portion's end time.
  */
 function updateState() {
+  // TODO rename this to updateHistoryState() ?
   console.debug("[DEBUG] Updating and replacing history.state.");
   console.debug("[DEBUG] Old history.state:");
   console.debug(history.state);
 
-  // jQuery's param() serializes an object into a string that can be used in
-  // an URL query string or an API query. Also see MDN's page on the History
-  // API for info on replaceState().
+  /* jQuery's param() serializes an object into a string that can be used in
+   * an URL query string or an API query. Also see MDN's page on the History
+   * API for info on replaceState().
+   */
   history.replaceState(state, "", "?" + $.param(state));
   console.debug("[DEBUG] New history.state:");
   console.debug(history.state);
@@ -409,7 +401,9 @@ function setEndTimeToCurrent() {
  */
 function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.log("[INFO] Updating slider and input data.");
-  console.debug(`[DEBUG] newStartTime: ${newStartTime} ; newEndTime: ${newEndTime}`);
+  console.debug(
+    `[DEBUG] newStartTime: ${newStartTime} ; newEndTime: ${newEndTime}`
+  );
 
   endTimeString = newEndTime.toString();
   console.debug(`[DEBUG] endTimeString: ${endTimeString}`);
@@ -436,11 +430,10 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
     "[DEBUG] Finished setting slider handle aria-valuemax attributes."
   );
 
+  // Update number input elements
   console.debug(
     "[DEBUG] Setting numeric input values from updateSliderAndInputAttributes."
   );
-
-  // Update number input elements
   /* Note on the .change() chaining:
    *
    * Changing an input element's value with val() does not trigger a change
