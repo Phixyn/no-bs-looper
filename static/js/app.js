@@ -31,8 +31,7 @@ websocket.onmessage = (event) => {
   state.end_time = parseInt(msg.lengthSeconds);
   updateSliderAndInputAttributes(state.start_time, state.end_time);
 
-  // TODO Temp workaround for slider fill bug e_e
-  //    Make an issue to look into this separately.
+  // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
     // endTimeInput.change();
     loopPortionSlider._reflow();
@@ -213,14 +212,12 @@ function onPlayerReady(event) {
     parseInt(event.target.getDuration())
   );
 
-  // TODO: Shouldn't be needed because of call to
-  //    updateSliderAndInputAttributes? Weird that it only affects start time.
-  //    Make an issue for this.
+  // TODO #54: This shouldn't be needed because it's already set in
+  //    updateSliderAndInputAttributes(). But the app breaks without it.
   console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
   startTimeInput.val(state.start_time.toString()).change();
 
-  // TODO Temp workaround for slider fill bug e_e
-  //    Make an issue to look into this separately.
+  // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
     // endTimeInput.change();
     loopPortionSlider._reflow();
