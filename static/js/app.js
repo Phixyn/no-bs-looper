@@ -4,6 +4,7 @@ $(document).foundation(); // TODO not sure if it should go on document.ready
 const websocket = new WebSocket("ws://192.168.1.71:14670");
 
 var player;
+var state;
 var videoIdInput;
 var startTimeInput;
 var endTimeInput;
@@ -11,11 +12,6 @@ var sliderDiv;
 var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
-
-var state;
-var videoId;
-var startTime;
-var endTime; // parseInt(endTimeInput.val())
 
 // Websocket client
 
@@ -26,13 +22,14 @@ var endTime; // parseInt(endTimeInput.val())
  * @param {event} event An event object containing event data.
  */
 websocket.onmessage = (event) => {
-  // We got a new video endTime, so update the slider and input elements
   console.debug("Received data from websocket server.");
   console.debug(event.data);
+
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
-  endTime = parseInt(msg.lengthSeconds);
-  updateSliderAndInputAttributes(0, endTime);
+  // We got a new video endTime, so update the slider and input elements
+  state.end_time = parseInt(msg.lengthSeconds);
+  updateSliderAndInputAttributes(0, state.end_time);
 };
 
 /**
@@ -63,6 +60,8 @@ websocket.onclose = (event) => {
  * For stuff that needs to happen only after the document is ready.
  */
 $(() => {
+  console.debug("Document ready.");
+
   videoIdInput = $("#video-id");
   startTimeInput = $("#start-time");
   endTimeInput = $("#end-time");
@@ -72,27 +71,57 @@ $(() => {
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
 
-  videoId = videoIdInput.val();
-  startTime = 0; // parseInt(startTimeInput.val())
-  // endTime; // parseInt(endTimeInput.val())
-
   // Load the IFrame Player API code asynchronously
   let tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  // State setting and updating
+  // 1. Check if querystring is present
+  let queryString = location.search;
+  console.debug(queryString);
+	if (queryString !== "") {
+    // 2. If it is, use Qs to parse it and set parsed data as state
+    let qsParse = Qs.parse(queryString, { ignoreQueryPrefix: true });
+    state = {
+      video_id: qsParse.video_id,
+      start_time: parseInt(qsParse.start_time),
+      end_time: parseInt(qsParse.end_time),
+    };
+    // TODO check history.state before and after
+    console.debug("State replaced using querystring. Current state:");
+    console.debug(state);
+
+    // 3. Update text input for video ID (remember we can't update numeric
+    // inputs here yet, because we need to set the "max" attributes. We can
+    // only set those once the YT player is ready, so that we can get the
+    // video duration and set the "max" attributes to that.
+    console.debug("Setting video ID input field.");
+    videoIdInput.val(state.video_id);
+  } else {
+    // Get state data from HTML form (i.e. default values)
+    state = {
+      video_id: videoIdInput.val(),
+      start_time: parseInt(startTimeInput.val()),
+      end_time: parseInt(endTimeInput.val()),
+    };
+  }
 });
 
 /**
- * Event listener for window load event.
- * Stuff that needs to happen after full load goes here.
+ * Event listener for window load event. This event is fired when all content
+ * on the page has finished loading (including images and iframes). Stuff that
+ * needs to happen after full load goes here.
  */
 $(window).on("load", () => {
+  console.debug("Full content loaded.");
+
   // Add slider event listeners
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
     // TODO Function is not re-used, so consider moving all the code here
+    // TODO check if YT.ready/loaded?
     updateLoopPortion();
   });
 
@@ -112,13 +141,13 @@ $(window).on("load", () => {
      * copied (which is set based on state) is wrong if they copy it too fast.
      */
     console.debug("Changed triggered.");
-    updateState(videoId, startTime, endTime);
+    // TODO Function is not re-used, so consider moving all the code here
+    updateState();
   });
 });
 
-
-
 // YouTube Player event handlers
+// TODO consider doing this in .ready()
 
 /**
  * Creates an <iframe> element (and YouTube player) after the API code
@@ -128,13 +157,13 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "390",
     width: "640",
-    videoId: videoId,
+    videoId: state.video_id,
     playerVars: {
       version: 3,
       rel: 0,
-      start: startTime,
+      start: state.start_time,
       modestBranding: 1,
-      playlist: videoId,
+      playlist: state.video_id,
       loop: 1,
     },
     events: {
@@ -156,7 +185,6 @@ function onYouTubeIframeAPIReady() {
  * @param {event} event An event object containing event data.
  */
 function onPlayerReady(event) {
-  startTime = parseInt(startTimeInput.val());
   // Probably don't need this, see note in onPlayerStateChange
   // setInterval() callback
   // event.target.setLoop(true);
@@ -165,9 +193,17 @@ function onPlayerReady(event) {
   // event.target.getDuration() = 1634.781
   // For now use parseInt()
   updateSliderAndInputAttributes(
-    startTime,
+    state.start_time,
     parseInt(event.target.getDuration())
   );
+
+  // TODO: Shouldn't be needed because of call to updateSliderAndInputAttributes?
+  //     If it is, at least use chaining with .val().change()
+  console.debug("Setting numeric input fields.");
+  startTimeInput.val(state.start_time);
+  endTimeInput.val(state.end_time);
+  startTimeInput.change();
+  endTimeInput.change();
 }
 
 var timer = null;
@@ -194,10 +230,10 @@ function onPlayerStateChange(event) {
        * Update: still an issue on mobile, so worth fixing
        */
       if (
-        player.getCurrentTime() >= endTime ||
-        player.getCurrentTime() < startTime
+        player.getCurrentTime() >= state.end_time ||
+        player.getCurrentTime() < state.start_time
       ) {
-        player.seekTo(startTime, true);
+        player.seekTo(state.start_time, true);
       }
     }, 1000);
   }
@@ -238,15 +274,15 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("Updating player.");
-  videoId = videoIdInput.val();
-  player.loadVideoById(videoId);
+  state.video_id = videoIdInput.val();
+  player.loadVideoById(state.video_id);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
-  startTime = 0;
+  state.start_time = 0;
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
-  websocket.send(JSON.stringify({ request_video_info: videoId }));
+  websocket.send(JSON.stringify({ request_video_info: state.video_id }));
 }
 
 /**
@@ -266,15 +302,15 @@ function togglePlayer() {
 function updateLoopPortion() {
   console.debug("Setting new loop start and end times.");
 
-  startTime = parseInt(startTimeInput.val());
-  endTime = parseInt(endTimeInput.val());
+  state.start_time = parseInt(startTimeInput.val());
+  state.end_time = parseInt(endTimeInput.val());
 
   // If needed, seek to the desired start time for the loop portion
   if (
-    player.getCurrentTime() >= endTime ||
-    player.getCurrentTime() < startTime
+    player.getCurrentTime() >= state.end_time ||
+    player.getCurrentTime() < state.start_time
   ) {
-    player.seekTo(startTime, true);
+    player.seekTo(state.start_time, true);
   }
 }
 
@@ -289,26 +325,25 @@ function updateLoopPortion() {
  * @param {number} startTime The video loop portion's start time.
  * @param {number} endTime The video loop portion's end time.
  */
-function updateState(videoId, startTime, endTime) {
+function updateState() {
   console.debug("Updating and replacing state.");
+  console.debug("Old state:");
+  console.debug(history.state);
 
-  state = {
-    video_id: videoId,
-    start_time: startTime,
-    end_time: endTime,
-  };
   // jQuery's param() serializes an object into a string that can be used in
   // an URL query string or an API query. Also see MDN's page on the History
   // API for info on replaceState().
   history.replaceState(state, "", "?" + $.param(state));
+  console.debug("New state:");
+  console.debug(history.state);
 }
 
 /**
  * Sets the loop portion's start time to the current time of the video.
  */
 function setStartTimeToCurrent() {
-  startTime = parseInt(player.getCurrentTime());
-  startTimeInput.val(startTime.toString());
+  state.start_time = parseInt(player.getCurrentTime());
+  startTimeInput.val(state.start_time.toString());
   startTimeInput.change();
 }
 
@@ -316,8 +351,8 @@ function setStartTimeToCurrent() {
  * Sets the loop portion's end time to the current time of the video.
  */
 function setEndTimeToCurrent() {
-  endTime = parseInt(player.getCurrentTime());
-  endTimeInput.val(endTime.toString());
+  state.end_time = parseInt(player.getCurrentTime());
+  endTimeInput.val(state.end_time.toString());
   endTimeInput.change();
 }
 
@@ -351,10 +386,6 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.attr("max", (newEndTime - 1).toString());
 
-  startTimeInput.val(newStartTime.toString());
-  // By default, we'll put the end slider at the end of video time
-  endTimeInput.val(endTimeString);
-
   // Update logical end value of slider
   loopPortionSlider.options.end = newEndTime;
   // Update visual end value of slider
@@ -364,6 +395,12 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // accessibility purposes, has no effect on handles' functionality.
   startTimeSliderHandle.attr("aria-valuemax", (newEndTime - 1).toString());
   endTimeSliderHandle.attr("aria-valuemax", endTimeString);
+
+  startTimeInput.val(newStartTime.toString());
+  // By default, we could put the end slider at the end of video time, but if
+  // the URL's querystring has a different end_time, we should honor that, so
+  // that's why we use the state here.
+  endTimeInput.val(state.end_time.toString());
 
   /* Changing an input element's value as done above does not trigger an
    * onchange event. Thus the sliders bound to the input elements will not
