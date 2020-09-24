@@ -100,6 +100,8 @@ $(() => {
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
+    // Just in case history.state doesn't get automatically set from querystring
+    updateState();
 
     // Update text input for video ID (remember we can't update numeric inputs
     // here yet, because we need to set the "max" attributes. We can only set
@@ -116,6 +118,7 @@ $(() => {
       start_time: parseInt(startTimeInput.val()),
       end_time: parseInt(endTimeInput.val()),
     };
+    updateState();
   }
 });
 
