@@ -109,7 +109,7 @@ $(() => {
     console.debug(state);
     // Do this just in case history.state doesn't get automatically set
     // from the URL's querystring. Same applies to the call below.
-    updateState();
+    updateHistoryState();
 
     /* Update text input for video ID (remember we can't update numeric inputs
      * here yet, because we need to set the "max" attributes. We can only set
@@ -127,7 +127,7 @@ $(() => {
       start_time: parseInt(startTimeInput.val()),
       end_time: parseInt(endTimeInput.val()),
     };
-    updateState();
+    updateHistoryState();
   }
 });
 
@@ -200,7 +200,7 @@ function onPlayerReady(event) {
      * copy it too fast after moving the slider.
      */
     console.debug("[DEBUG] Slider 'changed' triggered.");
-    updateState();
+    updateHistoryState();
   });
 
   // TODO #4: Might need to change precision of slider and also data type?
@@ -340,8 +340,7 @@ function updateLoopPortion() {
  * @param {number} startTime The video loop portion's start time.
  * @param {number} endTime The video loop portion's end time.
  */
-function updateState() {
-  // TODO rename this to updateHistoryState() ?
+function updateHistoryState() {
   console.debug("[DEBUG] Updating and replacing history.state.");
   console.debug("[DEBUG] Old history.state:");
   console.debug(history.state);
