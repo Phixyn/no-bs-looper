@@ -33,7 +33,6 @@ websocket.onmessage = (event) => {
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
-    // endTimeInput.change();
     loopPortionSlider._reflow();
   }, 2000);
 };
@@ -204,7 +203,7 @@ function onPlayerReady(event) {
     updateState();
   });
 
-  // TODO #4: might need to change precision of slider and also data type?
+  // TODO #4: Might need to change precision of slider and also data type?
   // event.target.getDuration() = 1634.781
   // For now use parseInt()
   updateSliderAndInputAttributes(
@@ -219,7 +218,6 @@ function onPlayerReady(event) {
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
-    // endTimeInput.change();
     loopPortionSlider._reflow();
   }, 2000);
 }
@@ -233,8 +231,7 @@ var timer = null;
  * @param {event} event An event object containing event data.
  */
 function onPlayerStateChange(event) {
-  // TODO === ?
-  if (event.data == YT.PlayerState.PLAYING) {
+  if (event.data === YT.PlayerState.PLAYING) {
     console.debug("[DEBUG] Interval started from onPlayerStateChange.");
     // Every 1 second, check if we need to go back to the start of the
     // loop portion.
@@ -255,8 +252,8 @@ function onPlayerStateChange(event) {
       }
     }, 1000);
   }
-  // TODO #45: This also affects things like PlayerState == buffering, so
-  // maybe do 'if (event.data == YT.PlayerState.PAUSED)' ?
+  // TODO #45: This also affects things like PlayerState === buffering, so
+  // maybe do 'if (event.data === YT.PlayerState.PAUSED)' ?
   else {
     if (timer != null) {
       console.debug("[DEBUG] Interval cleared from onPlayerStateChange.");
