@@ -30,8 +30,9 @@ websocket.onmessage = (event) => {
   // We got a new video endTime, so update the slider and input elements
   state.end_time = parseInt(msg.lengthSeconds);
   updateSliderAndInputAttributes(state.start_time, state.end_time);
+
   // TODO Temp workaround for slider fill bug e_e
-  // TODO make an issue to look into this separately
+  //    Make an issue to look into this separately.
   setTimeout(() => {
     // endTimeInput.change();
     loopPortionSlider._reflow();
@@ -220,11 +221,14 @@ function onPlayerReady(event) {
     parseInt(event.target.getDuration())
   );
 
-  // TODO: Shouldn't be needed because of call to updateSliderAndInputAttributes?
-  //     It is, but doesn't make sense. Maybe investigate why we need it twice.
+  // TODO: Shouldn't be needed because of call to
+  //    updateSliderAndInputAttributes? Weird that it only affects start time.
+  //    Make an issue for this.
   console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
-  startTimeInput.val(state.start_time).change();
+  startTimeInput.val(state.start_time.toString()).change();
+
   // TODO Temp workaround for slider fill bug e_e
+  //    Make an issue to look into this separately.
   setTimeout(() => {
     // endTimeInput.change();
     loopPortionSlider._reflow();
@@ -298,10 +302,9 @@ function onPlayerStateChange(event) {
  * TODO #48: Rename updatePlayer to be more descriptive?
  */
 function updatePlayer() {
-  console.debug(
-    "[DEBUG] Updating player (state.video_id, loadVideoById, state.start_time)"
-  );
+  console.debug("[DEBUG] Updating player (state.video_id, state.start_time).");
   state.video_id = videoIdInput.val();
+  console.debug("[DEBUG] Loading new video in player...");
   player.loadVideoById(state.video_id);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
@@ -354,15 +357,15 @@ function updateLoopPortion() {
  * @param {number} endTime The video loop portion's end time.
  */
 function updateState() {
-  console.debug("[DEBUG] Updating and replacing state.");
-  console.debug("[DEBUG] Old state:");
+  console.debug("[DEBUG] Updating and replacing history.state.");
+  console.debug("[DEBUG] Old history.state:");
   console.debug(history.state);
 
   // jQuery's param() serializes an object into a string that can be used in
   // an URL query string or an API query. Also see MDN's page on the History
   // API for info on replaceState().
   history.replaceState(state, "", "?" + $.param(state));
-  console.debug("[DEBUG] New state:");
+  console.debug("[DEBUG] New history.state:");
   console.debug(history.state);
 }
 
@@ -371,8 +374,7 @@ function updateState() {
  */
 function setStartTimeToCurrent() {
   state.start_time = parseInt(player.getCurrentTime());
-  startTimeInput.val(state.start_time.toString());
-  startTimeInput.change();
+  startTimeInput.val(state.start_time.toString()).change();
 }
 
 /**
@@ -380,8 +382,7 @@ function setStartTimeToCurrent() {
  */
 function setEndTimeToCurrent() {
   state.end_time = parseInt(player.getCurrentTime());
-  endTimeInput.val(state.end_time.toString());
-  endTimeInput.change();
+  endTimeInput.val(state.end_time.toString()).change();
 }
 
 /**
@@ -431,20 +432,21 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // accessibility purposes, has no effect on handles' functionality.
   startTimeSliderHandle.attr("aria-valuemax", (newEndTime - 1).toString());
   endTimeSliderHandle.attr("aria-valuemax", endTimeString);
-  console.debug("[DEBUG] Finished setting slider handle aria-valuemax attributes.");
+  console.debug(
+    "[DEBUG] Finished setting slider handle aria-valuemax attributes."
+  );
 
-  console.debug("[DEBUG] Setting numeric input values from updateSliderAndInputAttributes().");
-  startTimeInput.val(newStartTime.toString());
-  // By default, we could put the end slider at the end of video time, but if
-  // the URL's querystring has a different end_time, we should honor that, so
-  // that's why we use the state here.
-  endTimeInput.val(state.end_time.toString());
+  console.debug(
+    "[DEBUG] Setting numeric input values from updateSliderAndInputAttributes."
+  );
 
-  console.debug("[DEBUG] Triggering numeric input elements change() from updateSliderAndInputAttributes().");
-  /* Changing an input element's value as done above does not trigger an
-   * onchange event. Thus the sliders bound to the input elements will not
-   * update their position to reflect the new values. To fix this, we can
-   * trigger the onchange event.
+  // Update number input elements
+  /* Note on the .change() chaining:
+   *
+   * Changing an input element's value with val() does not trigger a change
+   * event. Thus the sliders bound to the input elements will not update their
+   * position to reflect the new values. To fix this, we can trigger the change
+   * event after we set the input's value.
    *
    * Note that this is a jQuery function and does NOT trigger a native onchange
    * event. Instead, it will only fire on all the onchange listeners that are
@@ -453,8 +455,13 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * to use a jQuery selector (as opposed to something DOM native like
    * document.getElementById).
    */
-  startTimeInput.change();
-  // Do this only after setting logical and visual end values for slider,
-  // otherwise the second handle's position won't match the endTime value.
-  endTimeInput.change();
+  startTimeInput.val(newStartTime.toString()).change();
+  /* By default, we could put the end slider at the end of video time, but if
+   * the URL's querystring has a different end_time, we should honor that, so
+   * that's why we use the state here.
+   *
+   * Note: Do this only after setting logical and visual end values for slider,
+   * otherwise the second handle's position won't match the endTime value.
+   */
+  endTimeInput.val(state.end_time.toString()).change();
 }
