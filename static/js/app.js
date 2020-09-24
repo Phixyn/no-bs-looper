@@ -128,35 +128,35 @@ $(() => {
  * needs to happen after full load goes here.
  */
 $(window).on("load", () => {
-  console.debug("Full content loaded.");
+  console.debug("[DEBUG] Full content loaded.");
 
-  // Add slider event listeners
-  // Fired when one of the slider's handles is moved
-  $(sliderDiv).on("moved.zf.slider", () => {
-    // TODO Function is not re-used, so consider moving all the code here
-    // TODO check if YT.ready/loaded?
-    updateLoopPortion();
-  });
+  // // Add slider event listeners
+  // // Fired when one of the slider's handles is moved
+  // $(sliderDiv).on("moved.zf.slider", () => {
+  //   // TODO Function is not re-used, so consider moving all the code here
+  //   // TODO check if YT.ready/loaded?
+  //   updateLoopPortion();
+  // });
 
-  /* This event fires when the slider has not been moved for a given time.
-   * The given time is 500 milliseconds by default, and can be overriden by
-   * adding a data-changed-delay attribute to the slider element in the HTML.
-   * Currently, it is set to 2000 milliseconds.
-   */
-  $(sliderDiv).on("changed.zf.slider", () => {
-    /* Only update state (used to set the search/querystring portion of the URL)
-     * after the start/end times haven't been updated for 2000ms. The idea is to
-     * reduce lag and overhead when updating the state. Updating the state
-     * everytime the slider is moved causes massive lag. Updating it every 500ms
-     * is slightly better, but can be laggy if a browser is already under heavy
-     * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
-     * larger values could leave users confused as to why the sharable URL they
-     * copied (which is set based on state) is wrong if they copy it too fast.
-     */
-    console.debug("Changed triggered.");
-    // TODO Function is not re-used, so consider moving all the code here
-    updateState();
-  });
+  // /* This event fires when the slider has not been moved for a given time.
+  //  * The given time is 500 milliseconds by default, and can be overriden by
+  //  * adding a data-changed-delay attribute to the slider element in the HTML.
+  //  * Currently, it is set to 2000 milliseconds.
+  //  */
+  // $(sliderDiv).on("changed.zf.slider", () => {
+  //   /* Only update state (used to set the search/querystring portion of the URL)
+  //    * after the start/end times haven't been updated for 2000ms. The idea is to
+  //    * reduce lag and overhead when updating the state. Updating the state
+  //    * everytime the slider is moved causes massive lag. Updating it every 500ms
+  //    * is slightly better, but can be laggy if a browser is already under heavy
+  //    * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
+  //    * larger values could leave users confused as to why the sharable URL they
+  //    * copied (which is set based on state) is wrong if they copy it too fast.
+  //    */
+  //   console.debug("[DEBUG] Slider 'changed' triggered.");
+  //   // TODO Function is not re-used, so consider moving all the code here
+  //   updateState();
+  // });
 });
 
 // YouTube Player event handlers
@@ -204,6 +204,36 @@ function onPlayerReady(event) {
   // Probably don't need this, see note in onPlayerStateChange
   // setInterval() callback
   // event.target.setLoop(true);
+
+  // Add slider event listeners
+  // Fired when one of the slider's handles is moved
+  $(sliderDiv).on("moved.zf.slider", () => {
+    // TODO Function is not re-used, so consider moving all the code here
+    // TODO check if YT.ready/loaded?
+    updateLoopPortion();
+  });
+
+  /* This event fires when the slider has not been moved for a given time.
+   * The given time is 500 milliseconds by default, and can be overriden by
+   * adding a data-changed-delay attribute to the slider element in the HTML.
+   * Currently, it is set to 2000 milliseconds.
+   */
+  $(sliderDiv).on("changed.zf.slider", () => {
+    /* Only update state (used to set the search/querystring portion of the URL)
+     * after the start/end times haven't been updated for 2000ms. The idea is to
+     * reduce lag and overhead when updating the state. Updating the state
+     * everytime the slider is moved causes massive lag. Updating it every 500ms
+     * is slightly better, but can be laggy if a browser is already under heavy
+     * load (e.g. many tabs loaded). 2000 to 5000ms seems like a good value, but
+     * larger values could leave users confused as to why the sharable URL they
+     * copied (which is set based on state) is wrong if they copy it too fast.
+     */
+    console.debug("[DEBUG] Slider 'changed' triggered.");
+    // TODO Function is not re-used, so consider moving all the code here
+    updateState();
+    // TODO Nice meme kekw, workaround kinda works but would be nice to find another fix
+    // loopPortionSlider.$fill.css("min-width", ((((state.end_time - state.start_time) * 100) / state.end_time) - 1.01).toFixed(2) + "%");
+  });
 
   // TODO #4: might need to change precision of slider and also data type?
   // event.target.getDuration() = 1634.781
