@@ -29,7 +29,13 @@ websocket.onmessage = (event) => {
   // TODO #46: Check message payload in client's onmessage handler
   // We got a new video endTime, so update the slider and input elements
   state.end_time = parseInt(msg.lengthSeconds);
-  updateSliderAndInputAttributes(0, state.end_time);
+  updateSliderAndInputAttributes(state.start_time, state.end_time);
+  // TODO Temp workaround for slider fill bug e_e
+  // TODO make an issue to look into this separately
+  setTimeout(() => {
+    // endTimeInput.change();
+    loopPortionSlider._reflow();
+  }, 2000);
 };
 
 /**
@@ -215,12 +221,14 @@ function onPlayerReady(event) {
   );
 
   // TODO: Shouldn't be needed because of call to updateSliderAndInputAttributes?
-  //     If it is, at least use chaining with .val().change()
-  console.debug("Setting numeric input fields.");
-  startTimeInput.val(state.start_time);
-  endTimeInput.val(state.end_time);
-  startTimeInput.change();
-  endTimeInput.change();
+  //     It is, but doesn't make sense. Maybe investigate why we need it twice.
+  console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
+  startTimeInput.val(state.start_time).change();
+  // TODO Temp workaround for slider fill bug e_e
+  setTimeout(() => {
+    // endTimeInput.change();
+    loopPortionSlider._reflow();
+  }, 2000);
 }
 
 var timer = null;
