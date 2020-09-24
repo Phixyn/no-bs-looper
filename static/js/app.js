@@ -200,6 +200,7 @@ function onYouTubeIframeAPIReady() {
  * @param {event} event An event object containing event data.
  */
 function onPlayerReady(event) {
+  console.debug("[DEBUG] YouTube player ready.");
   // Probably don't need this, see note in onPlayerStateChange
   // setInterval() callback
   // event.target.setLoop(true);
@@ -397,12 +398,15 @@ function setEndTimeToCurrent() {
  *     duration).
  */
 function updateSliderAndInputAttributes(newStartTime, newEndTime) {
-  console.log("Updating slider and input data.");
+  console.log("[INFO] Updating slider and input data.");
+  console.debug(`[DEBUG] newStartTime: ${newStartTime} ; newEndTime: ${newEndTime}`);
 
   endTimeString = newEndTime.toString();
+  console.debug(`[DEBUG] endTimeString: ${endTimeString}`);
   endTimeInput.attr("max", endTimeString);
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.attr("max", (newEndTime - 1).toString());
+  console.debug("[DEBUG] Finished setting numeric input max attributes.");
 
   // Update logical end value of slider
   loopPortionSlider.options.end = newEndTime;
@@ -413,13 +417,16 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   // accessibility purposes, has no effect on handles' functionality.
   startTimeSliderHandle.attr("aria-valuemax", (newEndTime - 1).toString());
   endTimeSliderHandle.attr("aria-valuemax", endTimeString);
+  console.debug("[DEBUG] Finished setting slider handle aria-valuemax attributes.");
 
+  console.debug("[DEBUG] Setting numeric input values from updateSliderAndInputAttributes().");
   startTimeInput.val(newStartTime.toString());
   // By default, we could put the end slider at the end of video time, but if
   // the URL's querystring has a different end_time, we should honor that, so
   // that's why we use the state here.
   endTimeInput.val(state.end_time.toString());
 
+  console.debug("[DEBUG] Triggering numeric input elements change() from updateSliderAndInputAttributes().");
   /* Changing an input element's value as done above does not trigger an
    * onchange event. Thus the sliders bound to the input elements will not
    * update their position to reflect the new values. To fix this, we can
