@@ -66,7 +66,7 @@ websocket.onclose = (event) => {
  * For stuff that needs to happen only after the document is ready.
  */
 $(() => {
-  console.debug("[DEBUG] Document ready.");
+  console.log("[INFO] Document ready.");
 
   videoIdInput = $("#video-id");
   startTimeInput = $("#start-time");
@@ -139,7 +139,7 @@ $(() => {
  * is downloaded.
  */
 function onYouTubeIframeAPIReady() {
-  console.debug("[DEBUG] YouTube Iframe API ready.");
+  console.log("[INFO] YouTube Iframe API ready.");
 
   player = new YT.Player("player", {
     height: "390",
@@ -172,7 +172,7 @@ function onYouTubeIframeAPIReady() {
  * @param {event} event An event object containing event data.
  */
 function onPlayerReady(event) {
-  console.debug("[DEBUG] YouTube player ready.");
+  console.log("[INFO] YouTube player ready.");
   // Probably don't need this, see note in onPlayerStateChange
   // setInterval() callback
   // event.target.setLoop(true);
@@ -290,7 +290,7 @@ function onPlayerStateChange(event) {
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
   state.v = videoIdInput.val();
-  console.debug("[DEBUG] Loading new video in player...");
+  console.log("[INFO] Loading new video in player...");
   player.loadVideoById(state.v);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
@@ -394,12 +394,8 @@ function setEndTimeToCurrent() {
  */
 function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.log("[INFO] Updating slider and input data.");
-  console.debug(
-    `[DEBUG] newStartTime: ${newStartTime} ; newEndTime: ${newEndTime}`
-  );
 
   endTimeString = newEndTime.toString();
-  console.debug(`[DEBUG] endTimeString: ${endTimeString}`);
   endTimeInput.attr("max", endTimeString);
   // Don't want start portion slider to be able to go all the way to the end
   startTimeInput.attr("max", (newEndTime - 1).toString());
