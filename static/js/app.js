@@ -22,7 +22,7 @@ var endTimeSliderHandle;
  * @param {event} event An event object containing event data.
  */
 websocket.onmessage = (event) => {
-  console.debug("Received data from websocket server.");
+  console.log("[INFO] Received data from websocket server.");
   console.debug(event.data);
 
   let msg = JSON.parse(event.data);
@@ -39,7 +39,8 @@ websocket.onmessage = (event) => {
  * @param {event} event An event object containing event data.
  */
 websocket.onopen = (event) => {
-  console.log("Successfully opened websocket connection.");
+  console.log("[INFO] Successfully opened websocket connection.");
+  console.debug(event);
 };
 
 /**
@@ -51,7 +52,7 @@ websocket.onopen = (event) => {
  * @param {event} event An event object containing event data.
  */
 websocket.onclose = (event) => {
-  console.log("Websocket server connection closed.");
+  console.log("[INFO] Websocket server connection closed.");
   console.debug(event);
 };
 
@@ -60,7 +61,7 @@ websocket.onclose = (event) => {
  * For stuff that needs to happen only after the document is ready.
  */
 $(() => {
-  console.debug("Document ready.");
+  console.debug("[DEBUG] Document ready.");
 
   videoIdInput = $("#video-id");
   startTimeInput = $("#start-time");
@@ -71,35 +72,44 @@ $(() => {
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
 
-  // Load the IFrame Player API code asynchronously
+  // Load the Iframe Player API code asynchronously
+  console.debug("[DEBUG] Adding script tag for YouTube Iframe API script to DOM.");
   let tag = document.createElement("script");
   tag.src = "https://www.youtube.com/iframe_api";
   let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  console.debug("[DEBUG] Current history.state object is:");
+  console.debug(history.state);
+
   // State setting and updating
-  // 1. Check if querystring is present
   let queryString = location.search;
-  console.debug(queryString);
 	if (queryString !== "") {
-    // 2. If it is, use Qs to parse it and set parsed data as state
+    console.debug("[DEBUG] Parsing URL querystring:");
+    console.debug(queryString);
+
+    // Use Qs to parse querystring and set state using parsed data
     let qsParse = Qs.parse(queryString, { ignoreQueryPrefix: true });
+    console.debug("[DEBUG] Qs parsed querystring to object:");
+    console.debug(qsParse);
+
     state = {
       video_id: qsParse.video_id,
       start_time: parseInt(qsParse.start_time),
       end_time: parseInt(qsParse.end_time),
     };
-    // TODO check history.state before and after
-    console.debug("State replaced using querystring. Current state:");
+    console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
 
-    // 3. Update text input for video ID (remember we can't update numeric
-    // inputs here yet, because we need to set the "max" attributes. We can
-    // only set those once the YT player is ready, so that we can get the
-    // video duration and set the "max" attributes to that.
-    console.debug("Setting video ID input field.");
+    // Update text input for video ID (remember we can't update numeric inputs
+    // here yet, because we need to set the "max" attributes. We can only set
+    // those once the YT player is ready, so that we can get the video duration
+    // and set the "max" attributes to that.
+    console.debug("[DEBUG] Setting video ID input field.");
     videoIdInput.val(state.video_id);
   } else {
+    console.debug("[DEBUG] No querystring in URL, setting default values.");
+
     // Get state data from HTML form (i.e. default values)
     state = {
       video_id: videoIdInput.val(),
@@ -154,6 +164,8 @@ $(window).on("load", () => {
  * is downloaded.
  */
 function onYouTubeIframeAPIReady() {
+  console.debug("[DEBUG] YouTube Iframe API ready.");
+
   player = new YT.Player("player", {
     height: "390",
     width: "640",
@@ -217,7 +229,7 @@ var timer = null;
 function onPlayerStateChange(event) {
   // TODO === ?
   if (event.data == YT.PlayerState.PLAYING) {
-    console.debug("Interval started.");
+    console.debug("[DEBUG] Interval started from onPlayerStateChange.");
     // Every 1 second, check if we need to go back to the start of the
     // loop portion.
     timer = setInterval(() => {
@@ -241,7 +253,7 @@ function onPlayerStateChange(event) {
   // maybe do 'if (event.data == YT.PlayerState.PAUSED)' ?
   else {
     if (timer != null) {
-      console.debug("Interval cleared from onPlayerStateChange.");
+      console.debug("[DEBUG] Interval cleared from onPlayerStateChange.");
       clearInterval(timer);
     }
   }
@@ -273,7 +285,9 @@ function onPlayerStateChange(event) {
  * TODO #48: Rename updatePlayer to be more descriptive?
  */
 function updatePlayer() {
-  console.debug("Updating player.");
+  console.debug(
+    "[DEBUG] Updating player (state.video_id, loadVideoById, state.start_time)"
+  );
   state.video_id = videoIdInput.val();
   player.loadVideoById(state.video_id);
 
@@ -282,14 +296,15 @@ function updatePlayer() {
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
+  console.debug("[DEBUG] Sending request for video info to Python server.");
   websocket.send(JSON.stringify({ request_video_info: state.video_id }));
 }
 
 /**
- * Toggles the player iframe visibility with a fancy fade animation.
+ * Toggles the player Iframe visibility with a fancy fade animation.
  */
 function togglePlayer() {
-  console.debug("Toggling player visibility.");
+  console.debug("[DEBUG] Toggling player visibility.");
   $("#player").fadeToggle();
 }
 
@@ -300,7 +315,7 @@ function togglePlayer() {
  * Note: The slider and input elements are data bound.
  */
 function updateLoopPortion() {
-  console.debug("Setting new loop start and end times.");
+  console.debug("[DEBUG] Setting new loop start and end times (state change)");
 
   state.start_time = parseInt(startTimeInput.val());
   state.end_time = parseInt(endTimeInput.val());
@@ -326,15 +341,15 @@ function updateLoopPortion() {
  * @param {number} endTime The video loop portion's end time.
  */
 function updateState() {
-  console.debug("Updating and replacing state.");
-  console.debug("Old state:");
+  console.debug("[DEBUG] Updating and replacing state.");
+  console.debug("[DEBUG] Old state:");
   console.debug(history.state);
 
   // jQuery's param() serializes an object into a string that can be used in
   // an URL query string or an API query. Also see MDN's page on the History
   // API for info on replaceState().
   history.replaceState(state, "", "?" + $.param(state));
-  console.debug("New state:");
+  console.debug("[DEBUG] New state:");
   console.debug(history.state);
 }
 
