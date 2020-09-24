@@ -28,8 +28,8 @@ websocket.onmessage = (event) => {
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
   // We got a new video endTime, so update the slider and input elements
-  state.end_time = parseInt(msg.lengthSeconds);
-  updateSliderAndInputAttributes(state.start_time, state.end_time);
+  state.end = parseInt(msg.lengthSeconds);
+  updateSliderAndInputAttributes(state.start, state.end);
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
@@ -101,9 +101,9 @@ $(() => {
     console.debug(qsParse);
 
     state = {
-      video_id: qsParse.video_id,
-      start_time: parseInt(qsParse.start_time),
-      end_time: parseInt(qsParse.end_time),
+      v: qsParse.v,
+      start: parseInt(qsParse.start),
+      end: parseInt(qsParse.end),
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
@@ -117,15 +117,15 @@ $(() => {
      * and set the "max" attributes to that.
      */
     console.debug("[DEBUG] Setting video ID input field.");
-    videoIdInput.val(state.video_id);
+    videoIdInput.val(state.v);
   } else {
     console.debug("[DEBUG] No querystring in URL, setting default values.");
 
     // Get state data from HTML form (i.e. default values)
     state = {
-      video_id: videoIdInput.val(),
-      start_time: parseInt(startTimeInput.val()),
-      end_time: parseInt(endTimeInput.val()),
+      v: videoIdInput.val(),
+      start: parseInt(startTimeInput.val()),
+      end: parseInt(endTimeInput.val()),
     };
     updateHistoryState();
   }
@@ -144,13 +144,13 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player("player", {
     height: "390",
     width: "640",
-    videoId: state.video_id,
+    videoId: state.v,
     playerVars: {
       version: 3,
       rel: 0,
-      start: state.start_time,
+      start: state.start,
       modestBranding: 1,
-      playlist: state.video_id,
+      playlist: state.v,
       loop: 1,
     },
     events: {
@@ -207,14 +207,14 @@ function onPlayerReady(event) {
   // event.target.getDuration() = 1634.781
   // For now use parseInt()
   updateSliderAndInputAttributes(
-    state.start_time,
+    state.start,
     parseInt(event.target.getDuration())
   );
 
   // TODO #54: This shouldn't be needed because it's already set in
   //    updateSliderAndInputAttributes(). But the app breaks without it.
   console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
-  startTimeInput.val(state.start_time.toString()).change();
+  startTimeInput.val(state.start.toString()).change();
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
@@ -245,10 +245,10 @@ function onPlayerStateChange(event) {
        * Update: still an issue on mobile, so worth fixing
        */
       if (
-        player.getCurrentTime() >= state.end_time ||
-        player.getCurrentTime() < state.start_time
+        player.getCurrentTime() >= state.end ||
+        player.getCurrentTime() < state.start
       ) {
-        player.seekTo(state.start_time, true);
+        player.seekTo(state.start, true);
       }
     }, 1000);
   }
@@ -288,18 +288,18 @@ function onPlayerStateChange(event) {
  * TODO #48: Rename updatePlayer to be more descriptive?
  */
 function updatePlayer() {
-  console.debug("[DEBUG] Updating player (state.video_id, state.start_time).");
-  state.video_id = videoIdInput.val();
+  console.debug("[DEBUG] Updating player (state.v, state.start).");
+  state.v = videoIdInput.val();
   console.debug("[DEBUG] Loading new video in player...");
-  player.loadVideoById(state.video_id);
+  player.loadVideoById(state.v);
 
   // On new videos, reset startTime to 0 and set endTime to new video's length
-  state.start_time = 0;
+  state.start = 0;
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
   console.debug("[DEBUG] Sending request for video info to Python server.");
-  websocket.send(JSON.stringify({ request_video_info: state.video_id }));
+  websocket.send(JSON.stringify({ request_video_info: state.v }));
 }
 
 /**
@@ -319,15 +319,15 @@ function togglePlayer() {
 function updateLoopPortion() {
   console.debug("[DEBUG] Setting new loop start and end times (state change)");
 
-  state.start_time = parseInt(startTimeInput.val());
-  state.end_time = parseInt(endTimeInput.val());
+  state.start = parseInt(startTimeInput.val());
+  state.end = parseInt(endTimeInput.val());
 
   // If needed, seek to the desired start time for the loop portion
   if (
-    player.getCurrentTime() >= state.end_time ||
-    player.getCurrentTime() < state.start_time
+    player.getCurrentTime() >= state.end ||
+    player.getCurrentTime() < state.start
   ) {
-    player.seekTo(state.start_time, true);
+    player.seekTo(state.start, true);
   }
 }
 
@@ -358,16 +358,16 @@ function updateHistoryState() {
  * Sets the loop portion's start time to the current time of the video.
  */
 function setStartTimeToCurrent() {
-  state.start_time = parseInt(player.getCurrentTime());
-  startTimeInput.val(state.start_time.toString()).change();
+  state.start = parseInt(player.getCurrentTime());
+  startTimeInput.val(state.start.toString()).change();
 }
 
 /**
  * Sets the loop portion's end time to the current time of the video.
  */
 function setEndTimeToCurrent() {
-  state.end_time = parseInt(player.getCurrentTime());
-  endTimeInput.val(state.end_time.toString()).change();
+  state.end = parseInt(player.getCurrentTime());
+  endTimeInput.val(state.end.toString()).change();
 }
 
 /**
@@ -449,5 +449,5 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * Note: Do this only after setting logical and visual end values for slider,
    * otherwise the second handle's position won't match the endTime value.
    */
-  endTimeInput.val(state.end_time.toString()).change();
+  endTimeInput.val(state.end.toString()).change();
 }
