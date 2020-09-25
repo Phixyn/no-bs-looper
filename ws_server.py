@@ -96,14 +96,14 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
 
     if not parsed_message:
         return json.dumps({"error": "Server did not understand received message."})
-    elif not "request_video_info" in parsed_message.keys():
+    elif not "get_video_info" in parsed_message.keys():
         # This is a bit lazy, so probably should be improved. But for now, we
-        # only care about one message: {"request_video_info": "video_id"}
+        # only care about one message: {"get_video_info": "video_id"}
         # TODO probably need better error lulw
         return json.dumps({"error": "Unsupported message."})
     else:
         # TODO add more logging and could probably go to a separate function
-        video_id = parsed_message["request_video_info"]
+        video_id = parsed_message["get_video_info"]
         url = f"https://www.youtube.com/get_video_info?html5=1&video_id={video_id}"
         # Perform request to YouTube server. It replies with a formencoded string,
         # which can be parsed with parse_qs.

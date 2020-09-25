@@ -298,7 +298,7 @@ function updatePlayer() {
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
   console.debug("[DEBUG] Sending request for video info to Python server.");
-  websocket.send(JSON.stringify({ request_video_info: state.v }));
+  websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
 
 /**
