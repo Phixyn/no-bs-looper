@@ -1,5 +1,11 @@
 #!/usr/bin/env python
-"""WS backend server for the no BS looper."""
+"""Backend server for the no BS YouTube looper.
+
+Provides a way to send GET requests to YouTube, bypassing CORS. Uses
+websocket to communicate with clients. Scroll to the bottom to find
+and change the IP address and port number to bind the websocket
+server to.
+"""
 
 
 __author__ = "Phixyn"
