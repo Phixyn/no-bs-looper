@@ -10,16 +10,16 @@ import asyncio
 import json
 import logging
 import sys
-import urllib.request
 import urllib.parse
-import websockets
-
+import urllib.request
 from json.decoder import JSONDecodeError
+from typing import Any, Dict
 from urllib.error import URLError
+
+import websockets
 from websockets.client import WebSocketClientProtocol
 
-
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
 
 # Create a Formatter to specify how logging messages are displayed
 # e.g. [2017-10-20 02:28:14][INFO] Initializing...
@@ -56,7 +56,7 @@ def get_raw_html(url: str) -> str:
 
     try:
         with urllib.request.urlopen(http_request) as response:
-            print(response.info())
+            # print(response.info())
             # TODO honestly not sure whether to use utf-8 or ascii
             # raw_html = response.read().decode("utf-8")
             raw_html = response.read().decode("ascii")
@@ -73,13 +73,17 @@ def get_raw_html(url: str) -> str:
     return raw_html
 
 
-def process_message(message: str) -> str:
-    """
-    TODO
+def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
+    """Processes a received message from a client. If the message is not
+    supported or valid, returns an error object. Otherwise, performs a
+    GET request to get the video info from YouTube and returns an object
+    containing said info.
 
-    This should probably accept and work with bytes instead of str.
-    If we can easily send byte data from the web app, it should be
-    done.
+    Args:
+        message: A JSON object containing the message.
+
+    Returns:
+        A JSON object containing YouTube video info, or an error.
     """
     parsed_message = None
 
@@ -116,7 +120,9 @@ def process_message(message: str) -> str:
 
 
 async def server_handler(websocket, path):
-    """Handler function for the websocket server."""
+    """Handler function for the websocket server. Processes each message
+    received and sends back a response to the client.
+    """
     async for request_message in websocket:
         # request_message = await websocket.recv()
         logger.info(f"Received: {request_message}")
@@ -127,6 +133,7 @@ async def server_handler(websocket, path):
 
 
 if __name__ == "__main__":
+    # TODO Move to config file
     # wuauw I commited an IP address some hacker is gonna hack my pc oh no
     HOST = "192.168.1.71"
     PORT = 14670
