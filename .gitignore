@@ -103,6 +103,8 @@ tags
 *.txt
 !requirements.txt
 
-# Summary/other output files and devlog.md
+# Summary/other output files
 *.md
+
 !README.md
+!devlog.md
