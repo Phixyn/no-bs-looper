@@ -176,6 +176,17 @@ li.is-submenu-item > a:hover {
 }
 
 /* -----------------------------------
+    MAIN CONTENT
+----------------------------------- */
+
+#main-content {
+  /* Makes it possible to have a footer that sticks to
+   * the bottom of the page no matter how much content
+   * the page has. */
+  min-height: 100vh;
+}
+
+/* -----------------------------------
     THUMBNAIL
 ----------------------------------- */
 
@@ -321,16 +332,4 @@ li.is-submenu-item > a:hover {
   color: var(--secondary-text-color);
   font-size: 0.8em;
   text-align: right;
-}
-
-/* -----------------------------------
-    STICKY FOOTER
-
-Required for having a footer div that
-sticks to the bottom of the page no
-matter how much content the page has.
------------------------------------ */
-
-#main-content {
-  min-height: 100vh;
 }
