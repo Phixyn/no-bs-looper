@@ -14,12 +14,12 @@ import urllib.parse
 import urllib.request
 from json.decoder import JSONDecodeError
 from typing import Any, Dict
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-LOG_LEVEL = logging.INFO
+LOG_LEVEL = logging.DEBUG
 
 # Create a Formatter to specify how logging messages are displayed
 # e.g. [2017-10-20 02:28:14][INFO] Initializing...
@@ -44,12 +44,14 @@ def get_raw_html(url: str) -> str:
         url: The URL of the webpage to get the HTML from.
 
     Returns:
-        The decoded response from the urllib request. If the request fails,
+        The response, in bytes, from the urllib request. This contains the
+        raw HTML, which can be passed to a HTML parser. If the request fails,
         an error is printed and None is returned.
     """
     # TODO move to config/const
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0"
 
+    logger.debug("Making GET request to '{}'...".format(url))
     http_request = urllib.request.Request(url)
     http_request.add_header("User-Agent", user_agent)
     raw_html = None
@@ -60,15 +62,14 @@ def get_raw_html(url: str) -> str:
             # TODO honestly not sure whether to use utf-8 or ascii
             # raw_html = response.read().decode("utf-8")
             raw_html = response.read().decode("ascii")
-    except URLError as e:
-        if hasattr(e, "reason"):
-            # TODO replace with logger
-            print("Failed to reach server.")
-            print("Reason: ", e.reason)
-        # HTTPError
-        elif hasattr(e, "code"):
-            print("The server couldn't fullfil the request.")
-            print("HTTP error code: ", e.code)
+    except HTTPError as http_error:
+        logger.error("The server couldn't fullfil the request.")
+        logger.error("HTTP error code: %d", http_error.code)
+    except URLError as url_error:
+        logger.error("An error occurred in the HTTP request.")
+        if hasattr(url_error, "reason"):
+            logger.error("Failed to reach server.")
+            logger.error("Reason: %s", url_error.reason)
 
     return raw_html
 
