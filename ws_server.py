@@ -116,6 +116,10 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         parsed_qs = urllib.parse.parse_qs(get_raw_html(url))
         # Video details are in the player_response object
         player_response = json.loads(parsed_qs["player_response"][0])
+        # Debug - Write JSON to file
+        # with open("debug_player_response.json", "w") as jsonFile:
+        #     logger.debug("Wrote parsed response JSON to debug file.")
+        #     json.dump(player_response, jsonFile, indent=2)
         video_length = player_response["videoDetails"]["lengthSeconds"]
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
