@@ -19,7 +19,7 @@ from urllib.error import HTTPError, URLError
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-LOG_LEVEL = logging.DEBUG
+LOG_LEVEL = logging.INFO
 
 # Create a Formatter to specify how logging messages are displayed
 # e.g. [2017-10-20 02:28:14][INFO] Initializing...
@@ -111,13 +111,9 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         # Video details are in the player_response object
         player_response = json.loads(parsed_qs["player_response"][0])
         video_length = player_response["videoDetails"]["lengthSeconds"]
-        response_for_client = {
-            "lengthSeconds": video_length
-        }
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
-
-        return json.dumps(response_for_client)
+        return json.dumps({"length_seconds": video_length})
 
 
 async def server_handler(websocket, path):

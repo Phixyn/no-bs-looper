@@ -28,7 +28,7 @@ websocket.onmessage = (event) => {
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
   // We got a new video duration, so update the slider and input elements
-  state.end = parseInt(msg.lengthSeconds);
+  state.end = parseInt(msg.length_seconds);
   updateSliderAndInputAttributes(state.start, state.end);
 
   // TODO #52: Workaround for slider fill bug
