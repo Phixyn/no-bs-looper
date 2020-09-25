@@ -1,5 +1,5 @@
 // Initialize all Foundation plugins
-$(document).foundation(); // TODO not sure if it should go on document.ready
+$(document).foundation();
 
 const websocket = new WebSocket("ws://192.168.1.71:14670");
 
@@ -132,7 +132,6 @@ $(() => {
 });
 
 // YouTube Player event handlers
-// TODO consider doing this in .ready() (test it out?)
 
 /**
  * Creates an <iframe> element (and YouTube player) after the API code
