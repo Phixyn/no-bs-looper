@@ -27,7 +27,7 @@ websocket.onmessage = (event) => {
 
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
-  // We got a new video endTime, so update the slider and input elements
+  // We got a new video duration, so update the slider and input elements
   state.end = parseInt(msg.lengthSeconds);
   updateSliderAndInputAttributes(state.start, state.end);
 
@@ -62,8 +62,8 @@ websocket.onclose = (event) => {
 };
 
 /**
- * Handler for jQuery .ready() called.
- * For stuff that needs to happen only after the document is ready.
+ * Event handler for jQuery's ready event. Everything that we want to execute
+ * only after the DOM is ready should go here.
  */
 $(() => {
   console.log("[INFO] Document ready.");
@@ -86,10 +86,10 @@ $(() => {
   let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  // State setting and updating
   console.debug("[DEBUG] Current history.state object is:");
   console.debug(history.state);
 
-  // State setting and updating
   let queryString = location.search;
   if (queryString !== "") {
     console.debug("[DEBUG] Parsing URL querystring:");
@@ -161,10 +161,10 @@ function onYouTubeIframeAPIReady() {
 
 /**
  * Called by the API when the video player is ready.
- * Updates the slider and form input elements with the video's duration.
+ * Updates the slider and form input elements based on state.
  *
- * Could use player.loadVideoById with endSeconds here.
- * But if user seeks, endSeconds becomes invalidated.
+ * We could use `player.loadVideoById` with `state.end` here. But if user
+ * seeks, `state.end` becomes stale.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
  *
@@ -172,11 +172,12 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
   console.log("[INFO] YouTube player ready.");
-  // Probably don't need this, see note in onPlayerStateChange
-  // setInterval() callback
+  // We don't need this, see note in onPlayerStateChange setInterval() callback
   // event.target.setLoop(true);
 
-  // Add slider event handlers
+  // Add slider event handlers. Why are these here? See commit 0628275:
+  // https://github.com/Phixyn/no-bs-looper/commit/06282756b8712a2c2012f48238b97497a0a2b62a
+
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
     updateLoopPortion();
@@ -198,13 +199,12 @@ function onPlayerReady(event) {
      * sharable URL they copied (which is set based on state) is wrong if they
      * copy it too fast after moving the slider.
      */
-    console.debug("[DEBUG] Slider 'changed' triggered.");
     updateHistoryState();
   });
 
   // TODO #4: Might need to change precision of slider and also data type?
   // event.target.getDuration() = 1634.781
-  // For now use parseInt()
+  // For now use parseInt(), but later we'll need parseFloat().
   updateSliderAndInputAttributes(
     state.start,
     parseInt(event.target.getDuration())
@@ -236,7 +236,7 @@ function onPlayerStateChange(event) {
     // loop portion.
     timer = setInterval(() => {
       /* TODO #4 bug:
-       * Need to make sure endTime is using the 3 decimal points float
+       * Need to make sure state.end is using the 3 decimal points float
        * for precision, otherwise comparisons are not 100% accurate
        * (could be a few milliseconds off). Doesn't matter as much now
        * that we've added loop: 1 and playlist: id to the player params,
@@ -292,7 +292,7 @@ function updatePlayer() {
   console.log("[INFO] Loading new video in player...");
   player.loadVideoById(state.v);
 
-  // On new videos, reset startTime to 0 and set endTime to new video's length
+  // On new videos, reset start time to 0 and set end to new video's length
   state.start = 0;
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
@@ -334,10 +334,6 @@ function updateLoopPortion() {
  * Replaces the browser's history state object with the current application
  * state object. This will also update the URL's querystring with the state's
  * data, which is useful for sharing and bookmarking URLs to specific loops.
- *
- * @param {string} videoId The ID of the YouTube video.
- * @param {number} startTime The video loop portion's start time.
- * @param {number} endTime The video loop portion's end time.
  */
 function updateHistoryState() {
   console.debug("[DEBUG] Updating and replacing history.state.");
@@ -438,11 +434,11 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    */
   startTimeInput.val(newStartTime.toString()).change();
   /* By default, we could put the end slider at the end of video time, but if
-   * the URL's querystring has a different end_time, we should honor that, so
+   * the URL's querystring has a different `end=`, we should honor that, so
    * that's why we use the state here.
    *
    * Note: Do this only after setting logical and visual end values for slider,
-   * otherwise the second handle's position won't match the endTime value.
+   * otherwise the second handle's position won't match the end time value.
    */
   endTimeInput.val(state.end.toString()).change();
 }
