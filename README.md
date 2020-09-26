@@ -2,12 +2,10 @@
 
 <div align="center">
   <!-- TODO project logo here once we have one -->
-  <h4>Loop YouTube videos easily and without any distractions.</h4>
+  <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <!-- TODO needs adding more badges? -->
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-880000" alt="No BS software badge" />
-  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-770000" alt="No BS software badge" />
   <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" alt="Python 3.7+ badge" />
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
@@ -17,7 +15,10 @@
   <a href="http://ytlooper.phixyn.com/" title="Live App">Live App</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issues/Feature Request</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a>
 
   <!-- TODO: Screenshot here, or above h4. Could also add a GIF (Poro video maybe?) -->
-  ![Preview Screenshot](screenshots/demo1.png?raw=true)
+  <!-- Side-by-side mobile screenshot -->
+  <img src="screenshots/demo1.png?raw=true" width="66%">
+  <img src="screenshots/mobile/mobile_demo_full.jpg?raw=true" style="width:270px;height:585px;" />
+  <!-- ![Preview Screenshot](screenshots/demo1.png?raw=true) -->
 </div>
 
 - - -
