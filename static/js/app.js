@@ -163,8 +163,9 @@ function onYouTubeIframeAPIReady() {
  * Called by the API when the video player is ready.
  * Updates the slider and form input elements based on state.
  *
- * We could use `player.loadVideoById` with `state.end` here. But if user
- * seeks, `state.end` becomes stale.
+ * We could use `player.loadVideoById()` with the `endSeconds` parameter here.
+ * But if user seeks, `endSeconds` becomes invalidated, so it's kinda pointless
+ * and better to control the loop portion ourselves.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
  *
@@ -172,11 +173,12 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
   console.log("[INFO] YouTube player ready.");
-  // We don't need this, see note in onPlayerStateChange setInterval() callback
-  // event.target.setLoop(true);
 
-  // Add slider event handlers. Why are these here? See commit 0628275:
-  // https://github.com/Phixyn/no-bs-looper/commit/06282756b8712a2c2012f48238b97497a0a2b62a
+  /* Add slider event handlers. Why are these here? See commit 0628275:
+   * https://github.com/Phixyn/no-bs-looper/commit/06282756b8712a2c2012f48238b97497a0a2b62a
+   * Could also addEventListener("load", ...) to the Iframe, but it's
+   * effectively the same as this.
+   */
 
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
