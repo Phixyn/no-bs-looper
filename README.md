@@ -16,8 +16,8 @@
 
   <!-- TODO: Screenshot here, or above h4. Could also add a GIF (Poro video maybe?) -->
   <!-- Side-by-side mobile screenshot -->
-  <img src="screenshots/demo1.png?raw=true" width="66%" />
-  <img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="22%" />
+  <img src="screenshots/demo1.png?raw=true" width="72%" />
+  <img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />
   <!-- ![Preview Screenshot](screenshots/demo1.png?raw=true) -->
 </div>
 
