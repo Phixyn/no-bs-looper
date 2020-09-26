@@ -95,6 +95,7 @@ tags
 .vim
 
 ### Misc ###
+*.drawio
 .vscode
 resources/
 
