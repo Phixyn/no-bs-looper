@@ -96,6 +96,7 @@ tags
 
 ### Misc ###
 .vscode
+resources/
 
 # Debug output files
 *.json
