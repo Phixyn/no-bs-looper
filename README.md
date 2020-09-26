@@ -5,8 +5,8 @@
   <h4>Loop YouTube videos easily and without any distractions.</h4>
 
   <!-- TODO needs adding more badges? -->
-  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-440000" alt="No BS software badge" />
-  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-660000" alt="No BS software badge" />
+  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
+  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-880000" alt="No BS software badge" />
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-770000" alt="No BS software badge" />
   <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" alt="Python 3.7+ badge" />
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
