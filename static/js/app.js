@@ -163,8 +163,9 @@ function onYouTubeIframeAPIReady() {
  * Called by the API when the video player is ready.
  * Updates the slider and form input elements based on state.
  *
- * We could use `player.loadVideoById` with `state.end` here. But if user
- * seeks, `state.end` becomes stale.
+ * We could use `player.loadVideoById()` with the `endSeconds` parameter here.
+ * But if user seeks, `endSeconds` becomes invalidated, so it's kinda pointless
+ * and better to control the loop portion ourselves.
  *
  * Reference: https://developers.google.com/youtube/iframe_api_reference#Events
  *
@@ -172,11 +173,12 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
   console.log("[INFO] YouTube player ready.");
-  // We don't need this, see note in onPlayerStateChange setInterval() callback
-  // event.target.setLoop(true);
 
-  // Add slider event handlers. Why are these here? See commit 0628275:
-  // https://github.com/Phixyn/no-bs-looper/commit/06282756b8712a2c2012f48238b97497a0a2b62a
+  /* Add slider event handlers. Why are these here? See commit 0628275:
+   * https://github.com/Phixyn/no-bs-looper/commit/06282756b8712a2c2012f48238b97497a0a2b62a
+   * Could also addEventListener("load", ...) to the Iframe, but it's
+   * effectively the same as this.
+   */
 
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
@@ -202,9 +204,6 @@ function onPlayerReady(event) {
     updateHistoryState();
   });
 
-  // TODO #4: Might need to change precision of slider and also data type?
-  // event.target.getDuration() = 1634.781
-  // For now use parseInt(), but later we'll need parseFloat().
   updateSliderAndInputAttributes(
     state.start,
     parseInt(event.target.getDuration())
@@ -235,14 +234,6 @@ function onPlayerStateChange(event) {
     // Every 1 second, check if we need to go back to the start of the
     // loop portion.
     timer = setInterval(() => {
-      /* TODO #4 bug:
-       * Need to make sure state.end is using the 3 decimal points float
-       * for precision, otherwise comparisons are not 100% accurate
-       * (could be a few milliseconds off). Doesn't matter as much now
-       * that we've added loop: 1 and playlist: id to the player params,
-       * but still worth fixing.
-       * Update: still an issue on mobile, so worth fixing
-       */
       if (
         player.getCurrentTime() >= state.end ||
         player.getCurrentTime() < state.start
@@ -290,7 +281,33 @@ function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
   state.v = videoIdInput.val();
   console.log("[INFO] Loading new video in player...");
-  player.loadVideoById(state.v);
+  /* loadPlaylist() and setLoop() are required to make infinite loops of full
+   * videos (i.e. not portions of a video). It's for this same reason that we
+   * set 'playlist' and 'loop' in the 'playerVars' (see
+   * onYouTubeIframeAPIReady()).
+   *
+   * Normally, we'd use player.loadVideoById(state.v), but then the video
+   * wouldn't loop unless users explicitly set a loop portion using the slider.
+   *
+   * With loadPlaylist(), if the listType argument value is 'playlist'
+   * (which is the default), then the first argument of loadPlaylist() can
+   * either be a playlist ID, or an array of video IDs. A single video ID
+   * string also works, and the player will create a playlist with that single
+   * video. However, I was seeing some issues with full videos sometimes not
+   * looping when just using a single video ID string. For now, it seems more
+   * consistent with an array and two elements of the same video ID. This makes
+   * a playlist with 2 copies of the same video, which is also the same
+   * behaviour caused by having 'playlist' in the 'playerVars' mentioned above.
+   *
+   * If we start to see the same issues again, use an array of 1 video ID, or
+   * just a video ID string again.
+   *
+   * For more info on loading and queueing videos, see:
+   * https://developers.google.com/youtube/iframe_api_reference#Queueing_Functions
+   */
+  // player.loadPlaylist(state.v);
+  player.loadPlaylist([state.v, state.v]);
+  player.setLoop(true);
 
   // On new videos, reset start time to 0 and set end to new video's length
   state.start = 0;
