@@ -1,26 +1,29 @@
-# No BS YouTube Looper
+<h1 align="center">No BS YouTube Looper</h1>
 
 <div align="center">
   <!-- TODO project logo here once we have one -->
-  <h4> 🔂 Loop YouTube videos easily and without any distractions. 📽️ </h4>
+  <h4>Loop YouTube videos easily and without any distractions.</h4>
 
-  <!--TODO needs updating links/badges-->
-
-  <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" alt="Python 3.7+" />
-
+  <!-- TODO needs adding more badges? -->
+  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-770000" alt="No BS software badge" />
+  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-660000" alt="No BS software badge" />
+  <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" alt="Python 3.7+ badge" />
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
-    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="License" />
+    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
   </a>
 
-  <a href="http://ytlooper.phixyn.com/" title="Demo">Demo</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issues/Feature Request</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a>
+  <!-- TODO could use some better links -->
+  <a href="http://ytlooper.phixyn.com/" title="Live App">Live App</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issues/Feature Request</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a>
 
   <!-- TODO: Screenshot here, or above h4. Could also add a GIF (Poro video maybe?) -->
+  ![Preview Screenshot](screenshots/demo1.png?raw=true)
 </div>
 
 - - -
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Overview](#overview)
     - [Features](#features)
 - [Getting Started](#getting-started)
@@ -43,16 +46,13 @@ This is a mobile-friendly website that loops YouTube videos. It can loop an enti
 
 I made this out of frustration with the current YouTube loopers out there. Most of them are full of ad banners and other intrusive elements, or are very broken on mobile. Some of them don't even work anymore.
 
-This is still a work in progress. The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with. All contributions are **greatly appreciated**!
-
 ### Features
 
-* Loop full videos or customize loops using a two-sided slider
+* Loop full YouTube videos or customize loops using a slider
 * Mobile friendly
 * **Play videos while your phone is locked!** <!-- TODO showcase this in one of the screenshots -->
 * Save and share your loops using URLs
-* Sleek dark theme with no ads, no banners and no distractions
-* Minimal design and easy on the eyes (hopefully, [let me know](https://github.com/Phixyn/no-bs-looper/issues) if not!)
+* Sleek dark theme with no ads, no banners and no distractions. Hopefully easy on the eyes.
 * No BS! **Simple, elegant and does the job**.
 
 ## Getting Started
@@ -120,8 +120,7 @@ You can save and share your loop by copying the URL in your address bar (it chan
 
 It's usually after the `v=` portion of a YouTube link. For example:
 
-<!-- TODO screenshot here -->
-`https://www.youtube.com/watch?v=dQw4w9WgXcQ`
+![https://www.youtube.com/watch?v=dQw4w9WgXcQ](screenshots/video_id_example.png?raw=true)
 
 For the above video, the video ID is `dQw4w9WgXcQ`.
 
@@ -141,7 +140,9 @@ See [milestones](https://github.com/Phixyn/no-bs-looper/milestones).
 
 ## Contributing
 
-Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping! Any contributions you make are **greatly appreciated**.
+This is still a work in progress. The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
+
+Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping! All contributions are **greatly appreciated**!
 
 <!-- TODO: CONTRIBUTING.md file -->
 
@@ -153,7 +154,9 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 ## Contact
 
-> Twitter [@phixyn](https://twitter.com/phixyn) • [phixyn.com](http://phixyn.com)
+> Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](http://phixyn.com)
+
+[![Twitter Badge](https://img.shields.io/twitter/follow/phixyn.svg?label=Phixyn&style=social)](https://twitter.com/Phixyn)
 
 ## Acknowledgements
 
