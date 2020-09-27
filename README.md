@@ -22,9 +22,10 @@
   <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
   <!-- Side-by-side mobile screenshot -->
-  <img src="screenshots/desktop_demo_full2.png?raw=true" width="72%" />
-  <img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />
+  <!--<img src="screenshots/desktop_demo_full2.png?raw=true" />-->
+  <!--<img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />-->
   <!-- ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true) -->
+  ![Preview Screenshot](screenshots/desktop_demo_full2.png?raw=true)
 </div>
 
 - - -
@@ -50,9 +51,9 @@
 
 ## Overview
 
-<img src="screenshots/mobile/lock_screen_notification1.jpg?raw=true" align="right" width="20%" />
+<img src="screenshots/mobile/lock_screen_notification1.jpg?raw=true" align="right" width="18%" />
 
-A **mobile-friendly** website that loops YouTube videos. It can loop an entire video or a portion of it. Try it out **[here!](http://ytlooper.phixyn.com/)**
+A **mobile-friendly** website that **loops YouTube videos**. It can loop an entire video or a portion of it. Try it out **[here!](http://ytlooper.phixyn.com/)**
 
 I made this out of frustration with the current YouTube loopers out there. Most of them are full of ad banners and other intrusive elements, and don't work very well on mobile.
 
@@ -67,8 +68,6 @@ I made this out of frustration with the current YouTube loopers out there. Most 
 ## Getting Started
 
 To get a local instance up and running follow these steps. If it's too complicated (it kinda is right now tbh), feel free to use a [public instance](#public-instances) of the website instead.
-
-**If you decide to host this website, feel free to submit a PR adding a link to your instance in this README.**
 
 ### Prerequisites
 
@@ -115,15 +114,15 @@ This project does have a work-in-progress `Dockerfile` that you can use to spin 
 docker container run --name no-bs-looper -d -p 14666:80 -v E:\Phixyn\Projects\no-bs-looper\static:/usr/share/nginx/html phixyn/no-bs-looper
 ```
 
-Obviously replace the path to the static folder with your own path. Note that it has to be an absolute path.
+Obviously replace the path to the static folder with your own path. Note that it has to be an **absolute path**.
 
 ## Usage
 
-Depending on your HTTP server's setup, this may vary. If you followed all the steps in the [Installation](#installation) section, you'll be able to access the website using your local IP address, or localhost. If you can't get it set up, use one of the [public instances](#public-instances) listed below.
+Depending on your HTTP server's setup, this may vary. If you followed all the steps in the [Installation](#installation) section, you'll be able to access the website using your **local IP address**, or localhost. If you can't get it set up, use one of the [public instances](#public-instances) listed below.
 
 Once you're in the website, paste a **video ID** onto the video ID text field and click **"Update"**. Move the slider handles to loop a specific portion of the video, or leave them at the start and end to loop the full video.
 
-You can save and share your loop by copying the URL in your address bar (it changes everytime you customize the loop or load a new video).
+You can **save and share** your loop by copying the URL in your address bar. The URL changes everytime you customize the loop or load a new video.
 
 ### How to find the video ID?
 
@@ -143,13 +142,15 @@ If you can't host your own instance of the website, use any of the public instan
 | ------ | ------------------------------------------------ | ---------------------------------------------------------- |
 | Phixyn | [v1.0.0](https://github.com/Phixyn/no-bs-looper) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
 
+If you decide to **host your own** public instance, feel free to update the README with a link to it and **make a PR**.
+
 ## Roadmap
 
-See [milestones](https://github.com/Phixyn/no-bs-looper/milestones).
+See [milestones](https://github.com/Phixyn/no-bs-looper/milestones) for a list of planned releases and associated issues.
 
 ## Contributing
 
-This is still a work in progress. The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
+This is still a **work in progress**. The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
 
 Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping! All contributions are **greatly appreciated**!
 
@@ -164,8 +165,6 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 ## Contact
 
 > Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](http://phixyn.com)
-
-[![Twitter Badge](https://img.shields.io/twitter/follow/phixyn.svg?label=Phixyn&style=social)](https://twitter.com/Phixyn)
 
 ## Acknowledgements
 
