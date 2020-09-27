@@ -4,27 +4,15 @@
   <!-- TODO project logo here once we have one -->
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
-  <!-- Flat style badges -->
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
   <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
   </a>
 
-  <!-- Flat-square style badges -->
-  <!--
-  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000?style=flat-square" alt="No BS software badge" />
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper?style=flat-square">
-  <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
-    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square" alt="GPLv3 badge" />
-  </a>
-  -->
-
   <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
-  <!-- Side-by-side mobile screenshot -->
-  <!-- <img src="screenshots/desktop_demo_full1.png?raw=true" width="69%" /> -->
-  ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true)
+  ![Preview Screenshot](screenshots/desktop_demo_yt_controls.png?raw=true)
 </div>
 
 - - -
@@ -58,8 +46,8 @@ I made this out of frustration with the current YouTube loopers out there. Most 
 
 * Loop full YouTube videos or customize what to loop
 * Mobile friendly
-* Play videos while your phone is **locked**!
-* **Save** and share your loops
+* Play videos while your phone is **locked**
+* **Save and share** your loops
 * Sleek **dark theme** with no ads, no banners and no distractions
 
 ## Getting Started
@@ -129,7 +117,7 @@ It's usually after the `v=` portion of a YouTube link. For example:
 
 For the above video, the video ID is `dQw4w9WgXcQ`.
 
-Don't worry, you'll be allowed to use full video URLs [soon(TM)](https://github.com/Phixyn/no-bs-looper/issues/24).
+Don't worry, you'll be allowed to use full video URLs [soon](https://github.com/Phixyn/no-bs-looper/issues/24).
 
 ## Public Instances
 
