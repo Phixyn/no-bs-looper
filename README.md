@@ -4,21 +4,27 @@
   <!-- TODO project logo here once we have one -->
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
-  <!-- TODO needs adding more badges? -->
+  <!-- Flat style badges -->
+  <!--
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <img src="https://img.shields.io/badge/python-v3.7+-blue.svg" alt="Python 3.7+ badge" />
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
+  </a> -->
+
+  <!-- Flat-square style badges -->
+  <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000?style=flat-square" alt="No BS software badge" />
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper?style=flat-square">
+  <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
+    <img src="https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square" alt="GPLv3 badge" />
   </a>
 
-  <!-- TODO could use some better links -->
-  <a href="http://ytlooper.phixyn.com/" title="Live App">Live App</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issues/Feature Request</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a>
+  <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
-  <!-- TODO: Screenshot here, or above h4. Could also add a GIF (Poro video maybe?) -->
   <!-- Side-by-side mobile screenshot -->
   <img src="screenshots/desktop_demo_full2.png?raw=true" width="72%" />
   <img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />
-  <!-- ![Preview Screenshot](screenshots/demo1.png?raw=true) -->
+  <!-- ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true) -->
 </div>
 
 - - -
@@ -27,7 +33,7 @@
 
 - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
-    - [Features](#features)
+- [Features](#features)
 - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -44,22 +50,23 @@
 
 ## Overview
 
-This is a mobile-friendly website that loops YouTube videos. It can loop an entire video over and over again, or a portion of a video. **[See it in action here!](http://ytlooper.phixyn.com/)**
+<img src="screenshots/mobile/lock_screen_notification1.jpg?raw=true" align="right" width="20%" />
 
-I made this out of frustration with the current YouTube loopers out there. Most of them are full of ad banners and other intrusive elements, or are very broken on mobile. Some of them don't even work anymore.
+A **mobile-friendly** website that loops YouTube videos. It can loop an entire video or a portion of it. Try it out **[here!](http://ytlooper.phixyn.com/)**
 
-### Features
+I made this out of frustration with the current YouTube loopers out there. Most of them are full of ad banners and other intrusive elements, and don't work very well on mobile.
 
-* Loop full YouTube videos or customize loops using a slider
+## Features
+
+* Loop full YouTube videos or customize what to loop
 * Mobile friendly
-* **Play videos while your phone is locked!** <!-- TODO showcase this in one of the screenshots -->
-* Save and share your loops using URLs
-* Sleek dark theme with no ads, no banners and no distractions. Hopefully easy on the eyes.
-* No BS! **Simple, elegant and does the job**.
+* Play videos while your phone is **locked**!
+* **Save** and share your loops
+* Sleek **dark theme** with no ads, no banners and no distractions
 
 ## Getting Started
 
-To get a local instance up and running follow these steps. If it's too complicated (it kinda is right now tbh), feel free to use a [public instance](#public-instances) of the project instead.
+To get a local instance up and running follow these steps. If it's too complicated (it kinda is right now tbh), feel free to use a [public instance](#public-instances) of the website instead.
 
 **If you decide to host this website, feel free to submit a PR adding a link to your instance in this README.**
 
