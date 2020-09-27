@@ -5,26 +5,25 @@
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <!-- Flat style badges -->
-  <!--
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
   <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
-  </a> -->
+  </a>
 
   <!-- Flat-square style badges -->
+  <!--
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000?style=flat-square" alt="No BS software badge" />
   <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper?style=flat-square">
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg?style=flat-square" alt="GPLv3 badge" />
   </a>
+  -->
 
   <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
   <!-- Side-by-side mobile screenshot -->
-  <!--<img src="screenshots/desktop_demo_full2.png?raw=true" />-->
-  <!--<img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />-->
-  <!-- ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true) -->
+  <!-- <img src="screenshots/desktop_demo_full1.png?raw=true" width="69%" /> -->
   ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true)
 </div>
 
