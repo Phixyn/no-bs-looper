@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a bug with the website
+about: Report a bug with the website.
 title: ''
 labels: bug
 assignees: ''
