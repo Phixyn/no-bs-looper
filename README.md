@@ -25,7 +25,7 @@
   <!--<img src="screenshots/desktop_demo_full2.png?raw=true" />-->
   <!--<img src="screenshots/mobile/mobile_devtools_full.png?raw=true" align="right" width="24%" />-->
   <!-- ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true) -->
-  ![Preview Screenshot](screenshots/desktop_demo_full2.png?raw=true)
+  ![Preview Screenshot](screenshots/desktop_demo_full1.png?raw=true)
 </div>
 
 - - -
@@ -50,8 +50,6 @@
 - - -
 
 ## Overview
-
-<img src="screenshots/mobile/lock_screen_notification1.jpg?raw=true" align="right" width="18%" />
 
 A **mobile-friendly** website that **loops YouTube videos**. It can loop an entire video or a portion of it. Try it out **[here!](http://ytlooper.phixyn.com/)**
 
