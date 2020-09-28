@@ -34,7 +34,7 @@ websocket.onmessage = (event) => {
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
     loopPortionSlider._reflow();
-  }, 2000);
+  }, 1000);
 };
 
 /**
@@ -217,7 +217,7 @@ function onPlayerReady(event) {
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
     loopPortionSlider._reflow();
-  }, 2000);
+  }, 1000);
 }
 
 var timer = null;
