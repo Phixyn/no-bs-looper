@@ -1,7 +1,9 @@
-<h1 align="center">No BS YouTube Looper</h1>
+<h1 align="center">
+  <!-- TODO #68: Replace with a project logo once we have one -->
+  No BS YouTube Looper
+</h1>
 
 <div align="center">
-  <!-- TODO project logo here once we have one -->
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
@@ -10,9 +12,10 @@
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
   </a>
 
+  <!-- **Website** | Issue Tracker | Releases | Contributing -->
   <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
-  ![Preview Screenshot](screenshots/desktop_demo_yt_controls.png?raw=true)
+  ![Preview Screenshot](docs/screenshots/desktop_demo_yt_controls.png?raw=true)
 </div>
 
 - - -
@@ -68,7 +71,7 @@ To get a local instance up and running follow these steps. If it's too complicat
 git clone https://github.com/Phixyn/no-bs-looper.git
 ```
 
-2. Install Python dependencies
+2. Install Python dependencies*
 
 ```sh
 pip install -r requirements.txt
@@ -81,7 +84,7 @@ pip install -r requirements.txt
 7. Copy all the files in the `static/` folder to a HTTP server such as Nginx or Apache
 8. Run the backend server: `python ws_server.py` (CTRL + C to quit it).
 
-**Python virtual environment:**
+***Python virtual environment:**
 
 I recommend setting up a virtual environment for the project. It's really easy:
 
@@ -113,11 +116,11 @@ You can **save and share** your loop by copying the URL in your address bar. The
 
 It's usually after the `v=` portion of a YouTube link. For example:
 
-![https://www.youtube.com/watch?v=dQw4w9WgXcQ](screenshots/video_id_example.png?raw=true)
+![https://www.youtube.com/watch?v=dQw4w9WgXcQ](docs/screenshots/video_id_example.png?raw=true)
 
 For the above video, the video ID is `dQw4w9WgXcQ`.
 
-Don't worry, you'll be allowed to use full video URLs [soon](https://github.com/Phixyn/no-bs-looper/issues/24).
+Don't worry, you'll be able to use full video URLs [soon](https://github.com/Phixyn/no-bs-looper/issues/24).
 
 ## Public Instances
 
@@ -139,7 +142,7 @@ This is still a **work in progress**. The Python backend server will soon be rep
 
 Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping! All contributions are **greatly appreciated**!
 
-<!-- TODO: CONTRIBUTING.md file -->
+<!-- TODO: CONTRIBUTING.md file and a short Development section? -->
 
 ## License
 
@@ -155,7 +158,7 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 This software uses the following open source ❤︎ projects:
 
-* [Foundation for Sites](https://foundation.zurb.com/sites.html)
+* [GitHub - foundation/foundation-sites: The most advanced responsive front-end framework in the world](https://github.com/foundation/foundation-sites)
 * [GitHub - jquery/jquery: jQuery JavaScript Library](https://github.com/jquery/jquery/)
 * [GitHub - ljharb/qs: A querystring parser with nesting support](https://github.com/ljharb/qs/)
 * [GitHub - aaugustin/websockets: Library for building WebSocket servers and clients in Python](https://github.com/aaugustin/websockets)
