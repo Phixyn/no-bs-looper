@@ -15,7 +15,7 @@
   <!-- **Website** | Issue Tracker | Releases | Contributing -->
   <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/projects/2">Sprint Board</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
 
-  ![Preview Screenshot](docs/screenshots/desktop_demo_yt_controls2.png?raw=true)
+  ![Preview Screenshot](docs/screenshots/desktop_demo_yt_controls.png?raw=true)
 </div>
 
 - - -
