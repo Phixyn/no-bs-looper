@@ -104,9 +104,3 @@ resources/
 *.log
 *.txt
 !requirements.txt
-
-# Summary/other output files
-*.md
-
-!README.md
-!devlog.md
