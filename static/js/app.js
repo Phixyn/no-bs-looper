@@ -1,7 +1,8 @@
 // Initialize all Foundation plugins
 $(document).foundation();
 
-const websocket = new WebSocket("ws://192.168.1.71:14670");
+// Add your websocket server IP address here
+const websocket = new WebSocket("ws://<server IP address here>:14670");
 
 var player;
 var state;

@@ -141,8 +141,8 @@ async def server_handler(websocket, path):
 
 if __name__ == "__main__":
     # TODO Move to config file
-    # wuauw I commited an IP address some hacker is gonna hack my pc oh no
-    HOST = "192.168.1.71"
+    # Add your local IP address here
+    HOST = ""
     PORT = 14670
 
     start_server = websockets.serve(server_handler, HOST, PORT)
