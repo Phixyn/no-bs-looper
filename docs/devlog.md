@@ -19,7 +19,7 @@ Devlog template: 1.1.0
 - [Links](#links)
     - [General](#general)
     - [YouTube Player API](#youtube-player-api)
-    - [Actual BS Adware Loopers](#actual-bs-adware-loopers)
+    - [Actual BS Loopers](#actual-bs-loopers)
     - [Docker](#docker)
     - [Foundation](#foundation)
     - [Design and UX](#design-and-ux)
@@ -30,9 +30,15 @@ Devlog template: 1.1.0
     - [Similar Projects](#similar-projects)
     - [Websockets](#websockets)
     - [Libraries/modules](#librariesmodules)
+    - [Testing](#testing)
     - [Chrome Web App](#chrome-web-app)
+    - [Meta tag stuff](#meta-tag-stuff)
+        - [Validators/testing](#validatorstesting)
     - [Life-Saving StackOverflow Answers](#life-saving-stackoverflow-answers)
+    - [Inspiring README Files](#inspiring-readme-files)
+    - [Contributing and other `.github` files](#contributing-and-other-github-files)
 - [Notepad](#notepad)
+    - [Test links](#test-links)
 - [Scrap Paper](#scrap-paper)
     - [Build the Nginx Container](#build-the-nginx-container)
     - [Parsing YouTube Video URLs To Get ID](#parsing-youtube-video-urls-to-get-id)
@@ -45,24 +51,13 @@ Devlog template: 1.1.0
 
 > ✅ List of what needs to be done. Try to keep this short and actionable. Most tasks should be in Trello, Jira or whatever the most hip and trendy tool is.
 
-* [x] Markify the links in the [Links](#links) section
-* [ ] Add task for: Add Your Web App to a User's Home Screen
-* [ ] Add stuff from this list to GitHub issues and remove from here
-* [ ] YT.loaded and YT.ready might be useful?
-* [ ] Add HTTPS?
-* [ ] Improve Python websocket server with [graceful shutdown](https://websockets.readthedocs.io/en/stable/deployment.html)
-* [ ] Improvement: Log websocket errors on JavaScript client (need to add a onerror function to socket object) (easy/short task, [see this snippet](#simple-websocket-onerror-handler))
-* [ ] Investigate websocket channels to send messages to multiple connected clients (not sure if needed)
-* [ ] **Delete reverse_proxy.py once we're confident with websocket approach**
-* [ ] Server: Address all TODO comments
-* [ ] Better align slider with video seek player control
-* [ ] Investigate if we can get around only being able to play copyright protected videos on localhost rather than 192.168.1.71 (try to block YouTube server requests that check if video is copyright protected before they reach our client?)
 * [ ] Document Websocket/IPC messages/communication protocol in this devlog and/or `docs/` folder
-* [ ] Add callouts or w/e the dismissable box is, to below the slider explaining how to use the slider and number input fields?
-* [ ] QoL: Show player controls while moving slider?
-* [ ] Slider movement should be in steps of 5 or more when video length >1000 seconds? And should be in steps of 1 or 2 when video length is 1-999 seconds. Maybe 10 seconds for very long videos like 1 hour+ videos
-* [ ] GitHub wiki pages for project with guides/demo, and a page for a list of hosted instances that people can add to (just like simiki)
-* [ ] Vertically align video player to center of page
+* [ ] GitHub wiki pages for project with guides/demo/screenshots, and a page for a list of hosted instances that people can add to (just like simiki)
+* [ ] Improve Python websocket server with [graceful shutdown](https://websockets.readthedocs.io/en/stable/deployment.html)
+* [ ] Investigate websocket channels to send messages to multiple connected clients (not sure if needed, seems to work fine?)
+* [ ] Server: Address all TODO comments
+* [ ] Better align slider with video seek player control (I'm not sure this can be any better tbh)
+* [ ] Add HTTPS? Needs to be a Redhawk task tbh.
 
 ## Links
 
@@ -81,7 +76,7 @@ Devlog template: 1.1.0
 * [YouTube API Services Terms of Service  |  Google Developers](https://developers.google.com/youtube/terms/api-services-terms-of-service)
 * [Youtube iFrame Embed API - YouTube](https://www.youtube.com/watch?v=SVSf8fNp_kg)
 
-### Actual BS Adware Loopers
+### Actual BS Loopers
 
 * [https://www.infinitelooper.com/](https://www.infinitelooper.com/)
 * [https://listenonrepeat.com/](https://listenonrepeat.com/)
@@ -160,27 +155,60 @@ Devlog template: 1.1.0
     * [qs - Libraries - cdnjs](https://cdnjs.com/libraries/qs) - for minified qs
 * [noUiSlider - JavaScript Range Slider | Refreshless.com](https://refreshless.com/nouislider/)
 
+### Testing
+
+* [QUnit - JavaScript testing framework](https://qunitjs.com/)
+
 ### Chrome Web App
 
 * [Add Your Web App to a User's Home Screen](https://codelabs.developers.google.com/codelabs/add-to-home-screen/index.html?index=..%2F..index#0)
+
+### Meta tag stuff
+
+* [Meta Tags — Preview, Edit and Generate](https://metatags.io/) - **Warning:** super laggy, open in Chrome
+* [About Twitter Cards | Docs | Twitter Developer](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/abouts-cards)
+
+#### Validators/testing
+
+* [Twitter](https://cards-dev.twitter.com/validator)
+* [Facebook/Open Graph](https://developers.facebook.com/tools/debug/)
+* [LinkedIn](https://www.linkedin.com/post-inspector/inspect/)
+* [Structured Data](https://search.google.com/structured-data/testing-tool/u/0/)
 
 ### Life-Saving StackOverflow Answers
 
 * [javascript - How do I programmatically force an onchange event on an input? - Stack Overflow](https://stackoverflow.com/a/340330)
     * [jQuery change() Method](https://www.w3schools.com/jquery/event_change.asp)
 
+### Inspiring README Files
+
+* [GitHub - matiassingers/awesome-readme: A curated list of awesome READMEs](https://github.com/matiassingers/awesome-readme)
+* https://github.com/ArmynC/ArminC-AutoExec/#readme - Really like the logo at the top with that bottom border
+* https://github.com/nhn/tui.editor#readme - Nice GIF at the top demo'ing the application
+* https://github.com/Redocly/redoc#readme - Nice image showing both the desktop and mobile version
+* https://github.com/sulu/sulu#readme - Usage of bold in the first paragraph, nice GIF showing different states of the CMS
+* https://github.com/thelounge/thelounge#readme - Clean logo, clean header, clean badges, clean screenshot, cleanest README ever
+* https://github.com/choojs/choo#readme - Nice header, badges and links
+* https://github.com/IgorAntun/node-chat#readme - Clean and simple
+* https://github.com/alichtman/stronghold#readme - Clean header
+* https://github.com/anfederico/clairvoyant#readme - Nice logo
+* https://github.com/Hexworks/zircon - Nice header and GIF
+
+### Contributing and other `.github` files
+
+* https://github.com/tylucaskelley/github-templates - Pretty solid templates tbh
+* https://github.com/pahimar/dot-github - Pretty detailed templates, especially for bugs/feature requests. May use in the future.
+
 ## Notepad
 
 > 📓 A section to keep general notes about the project, scribbles and things that don't really fit in any other section.
 
-**Test links:**  
-http://localhost:14669/no-bs-looper/index.html?v=TtsQl_X3cbw&start=828&end=1155
+* `YT.loaded` and `YT.ready` might be useful? Part of the iframe_api script.
 
-**Slider bla:**  
-`data-decimal` can be used to ser floating point precision (also decimal in `loopPortionSlider.options`)
+### Test links
 
-**TODO: This will break... SANITIZE URL QUERYSTRING PLS:**  
-> http://localhost:14669/no-bs-looper/index.html?v= TtsQl_X3cbw&start=828&end=1155
+* http://localhost:14669/no-bs-looper/index.html
+* http://localhost:14669/no-bs-looper/index.html?v=TtsQl_X3cbw&start=828&end=1155
 
 ## Scrap Paper
 
@@ -224,10 +252,10 @@ var yt_video_id = getYoutubeIdByUrl( video_url );
 ### Simple websocket onerror handler
 
 ```javascript
-ws.onerror = function(err) {
-    console.error('Socket encountered error: ', err.message, 'Closing socket');
-    ws.close();
-  };
+websocket.onerror = (err) => {
+  console.error("Socket encountered error: ", err.message, "Closing socket");
+  websocket.close();
+};
 ```
 
 ### querystring bla
