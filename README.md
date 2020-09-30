@@ -124,9 +124,9 @@ Don't worry, you'll be able to use full video URLs [soon](https://github.com/Phi
 
 If you can't host your own instance of the website, use any of the public instances below.
 
-| Owner  | Version                                          | Link                                                       |
-| ------ | ------------------------------------------------ | ---------------------------------------------------------- |
-| Phixyn | [v1.0.0](https://github.com/Phixyn/no-bs-looper) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
+| Owner  | Version                                                             | Link                                                       |
+| ------ | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Phixyn | [v1.0.0](https://github.com/Phixyn/no-bs-looper/releases/tag/1.0.0) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
 
 If you decide to **host your own** public instance, feel free to update the README with a link to it and **make a PR.**
 
