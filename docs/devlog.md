@@ -197,6 +197,7 @@ Devlog template: 1.1.0
 ### Contributing and other `.github` files
 
 * https://github.com/tylucaskelley/github-templates - Pretty solid templates tbh
+* https://github.com/roots/guidelines/blob/master/CONTRIBUTING.md - Short and to the point contributing.md file
 * https://github.com/pahimar/dot-github - Pretty detailed templates, especially for bugs/feature requests. May use in the future.
 
 ## Notepad
