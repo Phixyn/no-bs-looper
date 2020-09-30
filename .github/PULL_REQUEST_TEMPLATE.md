@@ -13,13 +13,13 @@ Thank you for taking the time to contribute to this project! Please take the tim
 
 - Changes go here
 
-## Breaking change?
+## Breaking Change?
 
 > Will these changes cause existing functionality to not work as expected? Will contributors be able to run the project after these changes are merged, without needing to take any additional steps?
 
 - [ ] Please tick if this is a breaking change and **describe why** below
 
-## Merging checklist
+## Merging Checklist
 
 > Lastly, before merging we need to make sure that these are done.
 
