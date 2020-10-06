@@ -48,6 +48,20 @@ Author:  Phixyn
 }
 
 /* -----------------------------------
+    TEXT SELECTION
+----------------------------------- */
+
+::-moz-selection {
+  background: var(--primary-link-color);
+  color:#fff;
+}
+
+::selection {
+  background: var(--primary-link-color);
+  color:#fff;
+}
+
+/* -----------------------------------
     HTML ELEMENTS
 ----------------------------------- */
 
