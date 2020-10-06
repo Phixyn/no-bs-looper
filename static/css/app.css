@@ -51,6 +51,20 @@ Author:  Phixyn
     HTML ELEMENTS
 ----------------------------------- */
 
+::-moz-selection {
+  background: var(--primary-link-color);
+  color:#fff;
+}
+
+::selection {
+  background: var(--primary-link-color);
+  color:#fff;
+}
+
+/* -----------------------------------
+    HTML ELEMENTS
+----------------------------------- */
+
 body {
   background: var(--primary-background-color) url('../images/zwartevilt.png');
   color: var(--primary-text-color);
