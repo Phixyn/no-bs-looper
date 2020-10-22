@@ -257,9 +257,10 @@ function onPlayerStateChange(event) {
 /**
  * Updates the YouTube player with a new video. Called when the user clicks
  * the "Update" button. The video ID is taken from the text input element
- * in the HTML form. This function also requests video info from our backend
- * server via websocket (see why this is necessary below), which hopefully
- * causes the websocket client's "onmessage" handler to get called.
+ * in the HTML form. If the user enters a URL, the ID is extracted from it.
+ * This function also requests video info from our backend server via websocket
+ * (see why this is necessary below), which hopefully causes the websocket
+ * client's "onmessage" handler to get called.
  *
  * Normally, we'd update the slider and input attributes with new max values
  * based on the video duration here. However, we can't update them here
@@ -281,10 +282,12 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
-
   let videoInputVal = videoIdInput.val();
 
   if (isValidHttpUrl(videoInputVal)) {
+    console.debug(
+      "[DEBUG] Found valid URL in input, attempting to extract ID."
+    );
     let videoId = getVideoId(videoInputVal);
     if (videoId !== null) {
       state.v = videoId;
@@ -305,7 +308,7 @@ function updatePlayer() {
     return;
   }
 
-  console.log("[INFO] Loading new video in player...");
+  console.log(`[INFO] Loading new video in player with ID ${state.v}.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
    * set 'playlist' and 'loop' in the 'playerVars' (see
@@ -486,9 +489,14 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
 }
 
 /**
- * TODO
+ * Checks if the given string is a valid HTTP or HTTPS URL.
+ *
+ * @param {string} urlString The string to validate.
+ * @return {boolean} A boolean indicating if the string is a valid HTTP or
+ *     HTTPS URL.
  */
 function isValidHttpUrl(urlString) {
+  console.debug(`[DEBUG] Checking if '${urlString}' is a valid URL.`);
   let urlObj;
 
   try {
@@ -502,10 +510,21 @@ function isValidHttpUrl(urlString) {
 }
 
 /**
- * TODO
+ * Extracts a YouTube video ID from a URL string. The URL can be either a known
+ * YouTube domain (such as youtube.com or youtu.be) or any other URL that
+ * contains a 'v=' in its querystring.
+ *
+ * For 'youtu.be' or 'youtube.com/embed' links, the last part of the URL's
+ * pathname will be extracted as a potential ID. Note that the extracted ID is
+ * validated, and only returned if deemed to be valid. Otherwise, null is
+ * returned.
+ *
+ * @param {string} youtubeUrl A YouTube video URL string.
+ * @return {string} A YouTube video ID, if a valid one is found. Otherwise,
+ *    returns null.
  */
 function getVideoId(youtubeUrl) {
-  console.debug(`getVideoId(${youtubeUrl}) result:`);
+  console.log(`[INFO] Attempting to extract video ID from ${youtubeUrl}.`);
   let videoId;
   let urlObj;
 
@@ -519,23 +538,27 @@ function getVideoId(youtubeUrl) {
 
   // Check if there is a querystring in the URL and parse it
   if (urlObj.search !== "") {
+    console.log("[INFO] Found querystring in URL, parsing it.");
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
     if (qsParse.hasOwnProperty("v") && qsParse.v !== "") {
       videoId = qsParse.v;
+      console.debug(`[DEBUG] Got video ID from querystring: ${videoId}`);
     } else {
       // TODO show error toast to user
       console.error("[ERROR] Could not get video ID from YouTube URL.");
       return null;
     }
   } else if (urlObj.pathname !== "") {
+    console.log("[INFO] Extracting potential video ID from URL pathname.");
     // Handle 'youtu.be/id' and 'youtube.com/embed/id'
     let pathArray = urlObj.pathname.split("/");
     videoId = pathArray[pathArray.length - 1];
   }
 
+  console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
   if (videoId.length === VIDEO_ID_LENGTH) {
-    console.debug(videoId);
+    console.debug(`[DEBUG] Got a valid video ID from URL: ${videoId}`);
     return videoId;
   } else {
     // TODO show error toast to user
