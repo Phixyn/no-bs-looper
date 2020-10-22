@@ -282,33 +282,30 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
-  let videoInputVal = videoIdInput.val();
+  let videoIdInputVal = videoIdInput.val();
 
-  if (isValidHttpUrl(videoInputVal)) {
-    console.debug(
-      "[DEBUG] Found valid URL in input, attempting to extract ID."
-    );
-    let videoId = getVideoId(videoInputVal);
+  if (isValidHttpUrl(videoIdInputVal)) {
+    let videoId = extractVideoId(videoIdInputVal);
     if (videoId !== null) {
       state.v = videoId;
     } else {
       // TODO show error toast to user
       console.error(
-        `[ERROR] Invalid video URL or ID in input: '${videoInputVal}'`
+        `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
       return;
     }
-  } else if (videoInputVal.length === VIDEO_ID_LENGTH) {
-    state.v = videoInputVal;
+  } else if (videoIdInputVal.length === VIDEO_ID_LENGTH) {
+    state.v = videoIdInputVal;
   } else {
     // TODO show error toast to user
     console.error(
-      `[ERROR] Invalid video URL or ID in input: '${videoInputVal}'`
+      `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
     return;
   }
 
-  console.log(`[INFO] Loading new video in player with ID ${state.v}.`);
+  console.log(`[INFO] Loading new video in player with ID '${state.v}'.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
    * set 'playlist' and 'loop' in the 'playerVars' (see
@@ -523,8 +520,8 @@ function isValidHttpUrl(urlString) {
  * @return {string} A YouTube video ID, if a valid one is found. Otherwise,
  *    returns null.
  */
-function getVideoId(youtubeUrl) {
-  console.log(`[INFO] Attempting to extract video ID from ${youtubeUrl}.`);
+function extractVideoId(youtubeUrl) {
+  console.log(`[INFO] Attempting to extract video ID from '${youtubeUrl}'.`);
   let videoId;
   let urlObj;
 
@@ -532,7 +529,7 @@ function getVideoId(youtubeUrl) {
     urlObj = new URL(youtubeUrl);
   } catch (err) {
     // TODO show error toast to user
-    console.error(`[ERROR] ${err.name} : ${err.message}`);
+    console.error(`[ERROR] ${err.name}: ${err.message}`);
     return null;
   }
 
@@ -542,7 +539,7 @@ function getVideoId(youtubeUrl) {
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
     if (qsParse.hasOwnProperty("v") && qsParse.v !== "") {
       videoId = qsParse.v;
-      console.debug(`[DEBUG] Got video ID from querystring: ${videoId}`);
+      console.debug(`[DEBUG] Got video ID from querystring: '${videoId}'.`);
     } else {
       // TODO show error toast to user
       console.error("[ERROR] Could not get video ID from YouTube URL.");
@@ -558,12 +555,12 @@ function getVideoId(youtubeUrl) {
   console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
   if (videoId.length === VIDEO_ID_LENGTH) {
-    console.debug(`[DEBUG] Got a valid video ID from URL: ${videoId}`);
+    console.debug(`[DEBUG] Got a valid video ID from URL: '${videoId}'.`);
     return videoId;
   } else {
     // TODO show error toast to user
-    console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'`);
-    console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'`);
+    console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'.`);
+    console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'.`);
     return null;
   }
 }
