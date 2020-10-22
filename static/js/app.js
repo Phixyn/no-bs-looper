@@ -281,7 +281,30 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
-  state.v = videoIdInput.val();
+
+  let videoInputVal = videoIdInput.val();
+
+  if (isValidHttpUrl(videoInputVal)) {
+    let videoId = getVideoId(videoInputVal);
+    if (videoId !== null) {
+      state.v = videoId;
+    } else {
+      // TODO show error toast to user
+      console.error(
+        `[ERROR] Invalid video URL or ID in input: '${videoInputVal}'`
+      );
+      return;
+    }
+  } else if (videoInputVal.length === VIDEO_ID_LENGTH) {
+    state.v = videoInputVal;
+  } else {
+    // TODO show error toast to user
+    console.error(
+      `[ERROR] Invalid video URL or ID in input: '${videoInputVal}'`
+    );
+    return;
+  }
+
   console.log("[INFO] Loading new video in player...");
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
