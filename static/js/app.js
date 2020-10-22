@@ -286,15 +286,16 @@ function updatePlayer() {
 
   if (isValidHttpUrl(videoIdInputVal)) {
     let videoId = extractVideoId(videoIdInputVal);
-    if (videoId !== null) {
-      state.v = videoId;
-    } else {
+
+    if (videoId === null) {
       // TODO show error toast to user
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
       return;
     }
+
+    state.v = videoId;
   } else if (videoIdInputVal.length === VIDEO_ID_LENGTH) {
     state.v = videoIdInputVal;
   } else {
@@ -536,15 +537,16 @@ function extractVideoId(youtubeUrl) {
   // Check if there is a querystring in the URL and parse it
   if (urlObj.search !== "") {
     console.log("[INFO] Found querystring in URL, parsing it.");
+
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
-    if (qsParse.hasOwnProperty("v") && qsParse.v !== "") {
-      videoId = qsParse.v;
-      console.debug(`[DEBUG] Got video ID from querystring: '${videoId}'.`);
-    } else {
+    if (!qsParse.hasOwnProperty("v") || qsParse.v === "") {
       // TODO show error toast to user
       console.error("[ERROR] Could not get video ID from YouTube URL.");
       return null;
     }
+
+    videoId = qsParse.v;
+    console.debug(`[DEBUG] Got video ID from querystring: '${videoId}'.`);
   } else if (urlObj.pathname !== "") {
     console.log("[INFO] Extracting potential video ID from URL pathname.");
     // Handle 'youtu.be/id' and 'youtube.com/embed/id'
@@ -554,13 +556,13 @@ function extractVideoId(youtubeUrl) {
 
   console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
-  if (videoId.length === VIDEO_ID_LENGTH) {
-    console.debug(`[DEBUG] Got a valid video ID from URL: '${videoId}'.`);
-    return videoId;
-  } else {
+  if (videoId.length !== VIDEO_ID_LENGTH) {
     // TODO show error toast to user
     console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'.`);
     console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'.`);
     return null;
   }
+
+  console.debug(`[DEBUG] Got a valid video ID from URL: '${videoId}'.`);
+  return videoId;
 }
