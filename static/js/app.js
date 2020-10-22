@@ -3,6 +3,7 @@ $(document).foundation();
 
 // Add your websocket server IP address here
 const websocket = new WebSocket("ws://<server IP address here>:14670");
+const VIDEO_ID_LENGTH = 11;
 
 var player;
 var state;
@@ -459,4 +460,64 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * otherwise the second handle's position won't match the end time value.
    */
   endTimeInput.val(state.end.toString()).change();
+}
+
+/**
+ * TODO
+ */
+function isValidHttpUrl(urlString) {
+  let urlObj;
+
+  try {
+    urlObj = new URL(urlString);
+  } catch (err) {
+    console.error(`[ERROR] ${err.name}: ${err.message}`);
+    return false;
+  }
+
+  return urlObj.protocol === "http:" || urlObj.protocol === "https:";
+}
+
+/**
+ * TODO
+ */
+function getVideoId(youtubeUrl) {
+  console.debug(`getVideoId(${youtubeUrl}) result:`);
+  let videoId;
+  let urlObj;
+
+  try {
+    urlObj = new URL(youtubeUrl);
+  } catch (err) {
+    // TODO show error toast to user
+    console.error(`[ERROR] ${err.name} : ${err.message}`);
+    return null;
+  }
+
+  // Check if there is a querystring in the URL and parse it
+  if (urlObj.search !== "") {
+    let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
+    if (qsParse.hasOwnProperty("v") && qsParse.v !== "") {
+      videoId = qsParse.v;
+    } else {
+      // TODO show error toast to user
+      console.error("[ERROR] Could not get video ID from YouTube URL.");
+      return null;
+    }
+  } else if (urlObj.pathname !== "") {
+    // Handle 'youtu.be/id' and 'youtube.com/embed/id'
+    let pathArray = urlObj.pathname.split("/");
+    videoId = pathArray[pathArray.length - 1];
+  }
+
+  // Validate video ID by checking the length
+  if (videoId.length === VIDEO_ID_LENGTH) {
+    console.debug(videoId);
+    return videoId;
+  } else {
+    // TODO show error toast to user
+    console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'`);
+    console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'`);
+    return null;
+  }
 }
