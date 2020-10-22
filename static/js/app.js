@@ -288,7 +288,7 @@ function updatePlayer() {
     let videoId = extractVideoId(videoIdInputVal);
 
     if (videoId === null) {
-      // TODO show error toast to user
+      // TODO #75: Show error toast to the user.
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
@@ -299,7 +299,7 @@ function updatePlayer() {
   } else if (videoIdInputVal.length === VIDEO_ID_LENGTH) {
     state.v = videoIdInputVal;
   } else {
-    // TODO show error toast to user
+    // TODO #75: Show error toast to the user.
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
@@ -529,7 +529,7 @@ function extractVideoId(youtubeUrl) {
   try {
     urlObj = new URL(youtubeUrl);
   } catch (err) {
-    // TODO show error toast to user
+    // TODO #75: Show error toast to the user.
     console.error(`[ERROR] ${err.name}: ${err.message}`);
     return null;
   }
@@ -540,7 +540,7 @@ function extractVideoId(youtubeUrl) {
 
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
     if (!qsParse.hasOwnProperty("v") || qsParse.v === "") {
-      // TODO show error toast to user
+      // TODO #75: Show error toast to the user.
       console.error("[ERROR] Could not get video ID from YouTube URL.");
       return null;
     }
@@ -557,7 +557,7 @@ function extractVideoId(youtubeUrl) {
   console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
   if (videoId.length !== VIDEO_ID_LENGTH) {
-    // TODO show error toast to user
+    // TODO #75: Show error toast to the user.
     console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'.`);
     console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'.`);
     return null;
