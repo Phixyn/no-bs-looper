@@ -27,6 +27,7 @@ Devlog template: 1.1.0
     - [jQuery](#jquery)
     - [CORS](#cors)
     - [Browser History API](#browser-history-api)
+    - [URL API](#url-api)
     - [Similar Projects](#similar-projects)
     - [Websockets](#websockets)
     - [Libraries/modules](#librariesmodules)
@@ -65,7 +66,7 @@ Devlog template: 1.1.0
 
 ### General
 
-* [Current sprint board](https://github.com/Phixyn/no-bs-looper/projects/1)
+* [Current sprint board](https://github.com/Phixyn/no-bs-looper/projects/2)
 * [Convert HH:MM:SS to seconds - Online tools](https://www.tools4noobs.com/online_tools/hh_mm_ss_to_seconds/)
 
 ### YouTube Player API
@@ -135,6 +136,12 @@ Devlog template: 1.1.0
 ### Browser History API
 
 * [Working with the History API - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API)
+
+### URL API
+
+* https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
+* https://developer.mozilla.org/en-US/docs/Web/API/URL
+* https://url.spec.whatwg.org/#dom-url-href
 
 ### Similar Projects
 
