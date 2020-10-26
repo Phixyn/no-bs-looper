@@ -374,35 +374,13 @@ function updateLoopPortion() {
   let startTime = parseInt(startTimeInput.val(), 10);
   let endTime = parseInt(endTimeInput.val(), 10);
 
-  // TODO: causes state to only be updated if BOTH inputs are numbers.
-  // Might not be desired, so consider refactoring/improving logic?
-  // if (isNaN(startTime) || isNaN(endTime)) {
-  //   console.error(
-  //     "[ERROR] Invalid start or end time. Not updating loop and state."
-  //   );
-  //   return;
-  // }
-
   if (!isNaN(startTime) && startTime != state.start) {
-    console.debug("[DEBUG] New start time detected.");
     state.start = startTime;
   }
 
   if (!isNaN(endTime) && endTime != state.end) {
-    console.debug("[DEBUG] New end time detected.");
     state.end = endTime;
   }
-
-  // TODO ternary/conditional assignment
-  // if (startTime != state.start) {
-  //   console.debug("[DEBUG] New start time detected.");
-  //   state.start = startTime;
-  // }
-
-  // if (endTime != state.end) {
-  //   console.debug("[DEBUG] New end time detected.");
-  //   state.end = endTime;
-  // }
 
   // If needed, seek to the desired start time for the loop portion
   if (
@@ -585,7 +563,6 @@ function extractVideoId(youtubeUrl) {
     }
 
     videoId = qsParse.v;
-    console.debug(`[DEBUG] Got video ID from querystring: '${videoId}'.`);
   } else if (urlObj.pathname !== "") {
     console.log("[INFO] Extracting potential video ID from URL pathname.");
     // Handle 'youtu.be/id' and 'youtube.com/embed/id'
