@@ -7,6 +7,7 @@ const VIDEO_ID_LENGTH = 11;
 
 var player;
 var state;
+var videoForm;
 var videoIdInput;
 var startTimeInput;
 var endTimeInput;
@@ -70,6 +71,7 @@ websocket.onclose = (event) => {
 $(() => {
   console.log("[INFO] Document ready.");
 
+  videoForm = $("#video-form");
   videoIdInput = $("#video-id");
   startTimeInput = $("#start-time");
   endTimeInput = $("#end-time");
@@ -289,6 +291,7 @@ function updatePlayer() {
 
     if (videoId === null) {
       // TODO #75: Show error toast to the user.
+      videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
@@ -300,6 +303,7 @@ function updatePlayer() {
     state.v = videoIdInputVal;
   } else {
     // TODO #75: Show error toast to the user.
+    videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
@@ -361,8 +365,44 @@ function togglePlayer() {
 function updateLoopPortion() {
   console.debug("[DEBUG] Setting new loop start and end times (state change)");
 
-  state.start = parseInt(startTimeInput.val());
-  state.end = parseInt(endTimeInput.val());
+  // Foundation Abide plugin validation. Needs to be manually called on slider
+  // change, for all of its bound input elements.
+  // TODO consider moving to the slider moved handler
+  videoForm.foundation("validateInput", startTimeInput);
+  videoForm.foundation("validateInput", endTimeInput);
+
+  let startTime = parseInt(startTimeInput.val(), 10);
+  let endTime = parseInt(endTimeInput.val(), 10);
+
+  // TODO: causes state to only be updated if BOTH inputs are numbers.
+  // Might not be desired, so consider refactoring/improving logic?
+  // if (isNaN(startTime) || isNaN(endTime)) {
+  //   console.error(
+  //     "[ERROR] Invalid start or end time. Not updating loop and state."
+  //   );
+  //   return;
+  // }
+
+  if (!isNaN(startTime) && startTime != state.start) {
+    console.debug("[DEBUG] New start time detected.");
+    state.start = startTime;
+  }
+
+  if (!isNaN(endTime) && endTime != state.end) {
+    console.debug("[DEBUG] New end time detected.");
+    state.end = endTime;
+  }
+
+  // TODO ternary/conditional assignment
+  // if (startTime != state.start) {
+  //   console.debug("[DEBUG] New start time detected.");
+  //   state.start = startTime;
+  // }
+
+  // if (endTime != state.end) {
+  //   console.debug("[DEBUG] New end time detected.");
+  //   state.end = endTime;
+  // }
 
   // If needed, seek to the desired start time for the loop portion
   if (
@@ -540,7 +580,6 @@ function extractVideoId(youtubeUrl) {
 
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
     if (!qsParse.hasOwnProperty("v") || qsParse.v === "") {
-      // TODO #75: Show error toast to the user.
       console.error("[ERROR] Could not get video ID from YouTube URL.");
       return null;
     }
@@ -557,7 +596,6 @@ function extractVideoId(youtubeUrl) {
   console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
   if (videoId.length !== VIDEO_ID_LENGTH) {
-    // TODO #75: Show error toast to the user.
     console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'.`);
     console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'.`);
     return null;
