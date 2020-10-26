@@ -369,8 +369,6 @@ function togglePlayer() {
  * Note: The slider and input elements are data bound.
  */
 function updateLoopPortion() {
-  console.debug("[DEBUG] Setting new loop start and end times (state change)");
-
   let startTime = parseInt(startTimeInput.val(), 10);
   let endTime = parseInt(endTimeInput.val(), 10);
 
