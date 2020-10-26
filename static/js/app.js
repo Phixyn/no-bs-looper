@@ -3,6 +3,8 @@ $(document).foundation();
 
 // Add your websocket server IP address here
 const websocket = new WebSocket("ws://<server IP address here>:14670");
+const TYPE_PROP = "type";
+const TYPE_VIDEO_INFO_MESSAGE = "video_info";
 const VIDEO_ID_LENGTH = 11;
 
 var player;
@@ -29,15 +31,41 @@ websocket.onmessage = (event) => {
   console.debug(event.data);
 
   let msg = JSON.parse(event.data);
-  // TODO #46: Check message payload in client's onmessage handler
-  // We got a new video duration, so update the slider and input elements
-  state.end = parseInt(msg.length_seconds, 10);
-  updateSliderAndInputAttributes(state.start, state.end);
 
-  // TODO #52: Workaround for slider fill bug
-  setTimeout(() => {
-    loopPortionSlider._reflow();
-  }, 1000);
+  if (!msg.hasOwnProperty(TYPE_PROP)) {
+    // TODO #75: Show error toast to the user
+    console.error("[ERROR] Malformed message received from socket server.");
+    console.debug("[DEBUG] Received message:");
+    console.debug(msg);
+    return;
+  }
+
+  switch (msg.type) {
+    case undefined:
+    case null:
+    case "":
+      // TODO #75: Show error toast to the user
+      console.error("[ERROR] Malformed message received from socket server.");
+      console.debug("[DEBUG] Received message:");
+      console.debug(msg);
+      break;
+    case TYPE_VIDEO_INFO_MESSAGE:
+      // We got a new video duration, so update the slider and input elements
+      state.end = parseInt(msg.content.length_seconds, 10);
+      updateSliderAndInputAttributes(state.start, state.end);
+
+      // TODO #52: Workaround for slider fill bug
+      setTimeout(() => {
+        loopPortionSlider._reflow();
+      }, 1000);
+      break;
+    default:
+      // TODO #75: Show error toast to the user
+      console.error("[ERROR] Unsupported message received from socket server.");
+      console.debug("[DEBUG] Received message:");
+      console.debug(msg);
+      break;
+  }
 };
 
 /**
