@@ -1,7 +1,7 @@
 # No BS Looper Development Log
 
 ```
-Version: 1.0.0
+Version: 1.1.0
 Description: A no BS YouTube looper.
 Project start: 2 June 2020
 GitHub: https://github.com/Phixyn/no-bs-looper
@@ -45,6 +45,7 @@ Devlog template: 1.1.0
     - [Parsing YouTube Video URLs To Get ID](#parsing-youtube-video-urls-to-get-id)
     - [Simple websocket onerror handler](#simple-websocket-onerror-handler)
     - [querystring bla](#querystring-bla)
+    - [Foundation Abide plugin API](#foundation-abide-plugin-api)
 
 - - -
 
@@ -276,4 +277,15 @@ $.param(newState); // can also use Qs.stringify()
 // .replaceState might be less laggy
 history.replaceState(newState, "", "?" + $.param(newState));
 history.state;
+```
+
+### Foundation Abide plugin API
+
+```javascript
+// Add error classes to input field
+$("#form-id").foundation("addErrorClasses", $("#input-field-id"), ["pattern"]);
+$("#form-id").foundation("addErrorClasses", $("#input-field-id"), ["required"]);
+
+/// Remove all error classes from input field
+$("#form-id").foundation("removeErrorClasses", $("#input-field-id"));
 ```
