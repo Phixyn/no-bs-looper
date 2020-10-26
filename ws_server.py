@@ -9,7 +9,7 @@ server to.
 
 
 __author__ = "Phixyn"
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 
 import asyncio
@@ -123,7 +123,14 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         video_length = player_response["videoDetails"]["lengthSeconds"]
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
-        return json.dumps({"length_seconds": video_length})
+        response = {
+          "type": "video_info",
+          "content": {
+            "length_seconds": video_length
+          }
+        }
+
+        return json.dumps(response)
 
 
 async def server_handler(websocket, path):
