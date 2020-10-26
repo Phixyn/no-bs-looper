@@ -102,21 +102,21 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
 
     if not parsed_message:
         return json.dumps({
-          "type": "error",
-          "content": {
-            "error": "Malformed message.",
-            "description": "Server did not understand received message."
-          }
+            "type": "error",
+            "content": {
+                "error": "Malformed message.",
+                "description": "Server did not understand received message."
+            }
         })
     elif not "get_video_info" in parsed_message.keys():
         # This is a bit lazy, so probably should be improved. But for now, we
         # only care about one message: {"get_video_info": "video_id"}
         return json.dumps({
-          "type": "error",
-          "content": {
-            "error": "Unsupported message.",
-            "description": "The request made to the server is not supported."
-          }
+            "type": "error",
+            "content": {
+                "error": "Unsupported message.",
+                "description": "The request made to the server is not supported."
+            }
         })
     else:
         # TODO add more logging and could probably go to a separate function
@@ -135,10 +135,10 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
         return json.dumps({
-          "type": "video_info",
-          "content": {
-            "length_seconds": video_length
-          }
+            "type": "video_info",
+            "content": {
+                "length_seconds": video_length
+            }
         })
 
 
