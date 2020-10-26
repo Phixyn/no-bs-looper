@@ -65,6 +65,7 @@ websocket.onmessage = (event) => {
       }, 1000);
       break;
     case TYPE_SERVER_ERROR_MESSAGE:
+      // TODO #75: Show error toast to the user
       console.error("[ERROR] A server error has ocurred.");
       console.error(
         `[ERROR] Server: ${msg.content.error}\n${msg.content.description}`
