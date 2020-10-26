@@ -296,7 +296,7 @@ function updatePlayer() {
     let videoId = extractVideoId(videoIdInputVal);
 
     if (videoId === null) {
-      // TODO #75: Show error toast to the user.
+      // TODO #75: Show error toast to the user
       videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
@@ -308,7 +308,7 @@ function updatePlayer() {
   } else if (videoIdInputVal.length === VIDEO_ID_LENGTH) {
     state.v = videoIdInputVal;
   } else {
-    // TODO #75: Show error toast to the user.
+    // TODO #75: Show error toast to the user
     videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
