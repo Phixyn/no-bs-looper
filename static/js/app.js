@@ -7,6 +7,7 @@ const VIDEO_ID_LENGTH = 11;
 
 var player;
 var state;
+var videoForm;
 var videoIdInput;
 var startTimeInput;
 var endTimeInput;
@@ -30,7 +31,7 @@ websocket.onmessage = (event) => {
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
   // We got a new video duration, so update the slider and input elements
-  state.end = parseInt(msg.length_seconds);
+  state.end = parseInt(msg.length_seconds, 10);
   updateSliderAndInputAttributes(state.start, state.end);
 
   // TODO #52: Workaround for slider fill bug
@@ -70,6 +71,7 @@ websocket.onclose = (event) => {
 $(() => {
   console.log("[INFO] Document ready.");
 
+  videoForm = $("#video-form");
   videoIdInput = $("#video-id");
   startTimeInput = $("#start-time");
   endTimeInput = $("#end-time");
@@ -102,10 +104,11 @@ $(() => {
     console.debug("[DEBUG] Qs parsed querystring to object:");
     console.debug(qsParse);
 
+    // TODO #59: Handle broken querystrings in URL
     state = {
       v: qsParse.v,
-      start: parseInt(qsParse.start),
-      end: parseInt(qsParse.end),
+      start: parseInt(qsParse.start, 10),
+      end: parseInt(qsParse.end, 10),
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
@@ -126,8 +129,8 @@ $(() => {
     // Get state data from HTML form (i.e. default values)
     state = {
       v: videoIdInput.val(),
-      start: parseInt(startTimeInput.val()),
-      end: parseInt(endTimeInput.val()),
+      start: parseInt(startTimeInput.val(), 10),
+      end: parseInt(endTimeInput.val(), 10),
     };
     updateHistoryState();
   }
@@ -184,6 +187,11 @@ function onPlayerReady(event) {
 
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
+    // Foundation Abide plugin validation. Needs to be manually called on slider
+    // change, for all of its bound input elements.
+    videoForm.foundation("validateInput", startTimeInput);
+    videoForm.foundation("validateInput", endTimeInput);
+
     updateLoopPortion();
   });
 
@@ -208,7 +216,7 @@ function onPlayerReady(event) {
 
   updateSliderAndInputAttributes(
     state.start,
-    parseInt(event.target.getDuration())
+    parseInt(event.target.getDuration(), 10)
   );
 
   // TODO #54: This shouldn't be needed because it's already set in
@@ -288,7 +296,8 @@ function updatePlayer() {
     let videoId = extractVideoId(videoIdInputVal);
 
     if (videoId === null) {
-      // TODO #75: Show error toast to the user.
+      // TODO #75: Show error toast to the user
+      videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
@@ -299,7 +308,8 @@ function updatePlayer() {
   } else if (videoIdInputVal.length === VIDEO_ID_LENGTH) {
     state.v = videoIdInputVal;
   } else {
-    // TODO #75: Show error toast to the user.
+    // TODO #75: Show error toast to the user
+    videoForm.foundation("addErrorClasses", videoIdInput, ["pattern"]);
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
@@ -359,10 +369,16 @@ function togglePlayer() {
  * Note: The slider and input elements are data bound.
  */
 function updateLoopPortion() {
-  console.debug("[DEBUG] Setting new loop start and end times (state change)");
+  let startTime = parseInt(startTimeInput.val(), 10);
+  let endTime = parseInt(endTimeInput.val(), 10);
 
-  state.start = parseInt(startTimeInput.val());
-  state.end = parseInt(endTimeInput.val());
+  if (!isNaN(startTime) && startTime != state.start) {
+    state.start = startTime;
+  }
+
+  if (!isNaN(endTime) && endTime != state.end) {
+    state.end = endTime;
+  }
 
   // If needed, seek to the desired start time for the loop portion
   if (
@@ -396,7 +412,7 @@ function updateHistoryState() {
  * Sets the loop portion's start time to the current time of the video.
  */
 function setStartTimeToCurrent() {
-  state.start = parseInt(player.getCurrentTime());
+  state.start = parseInt(player.getCurrentTime(), 10);
   startTimeInput.val(state.start.toString()).change();
 }
 
@@ -404,7 +420,7 @@ function setStartTimeToCurrent() {
  * Sets the loop portion's end time to the current time of the video.
  */
 function setEndTimeToCurrent() {
-  state.end = parseInt(player.getCurrentTime());
+  state.end = parseInt(player.getCurrentTime(), 10);
   endTimeInput.val(state.end.toString()).change();
 }
 
@@ -540,13 +556,11 @@ function extractVideoId(youtubeUrl) {
 
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
     if (!qsParse.hasOwnProperty("v") || qsParse.v === "") {
-      // TODO #75: Show error toast to the user.
       console.error("[ERROR] Could not get video ID from YouTube URL.");
       return null;
     }
 
     videoId = qsParse.v;
-    console.debug(`[DEBUG] Got video ID from querystring: '${videoId}'.`);
   } else if (urlObj.pathname !== "") {
     console.log("[INFO] Extracting potential video ID from URL pathname.");
     // Handle 'youtu.be/id' and 'youtube.com/embed/id'
@@ -557,7 +571,6 @@ function extractVideoId(youtubeUrl) {
   console.log("[INFO] Validating video ID.");
   // Validate video ID by checking the length
   if (videoId.length !== VIDEO_ID_LENGTH) {
-    // TODO #75: Show error toast to the user.
     console.error(`[ERROR] Invalid video ID in URL: '${youtubeUrl}'.`);
     console.debug(`[DEBUG] Got unexpected length in ID: '${videoId}'.`);
     return null;

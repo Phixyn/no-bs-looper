@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.4.1 (no bs edition)
+Version: 0.4.2 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -298,6 +298,20 @@ li.is-submenu-item > a:hover {
 
 /* 'placeholder=' HTML attribute */
 ::placeholder {
+  color: var(--primary-menu-link-color);
+}
+
+.help-text {
+  color: var(--primary-text-color);
+}
+
+/* Foundation Abide plugin error states */
+
+.is-invalid-input:not(:focus) {
+  background-color: var(--accent-container-color);
+}
+
+.is-invalid-input:not(:focus)::placeholder {
   color: var(--primary-menu-link-color);
 }
 
