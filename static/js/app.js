@@ -28,10 +28,18 @@ var endTimeSliderHandle;
  * @param {event} event An event object containing event data.
  */
 websocket.onmessage = (event) => {
+  let msg;
   console.log("[INFO] Received data from websocket server.");
   console.debug(event.data);
 
-  let msg = JSON.parse(event.data);
+  try {
+    msg = JSON.parse(event.data);
+  } catch (err) {
+    // TODO #75: Show error toast to the user
+    console.error("[ERROR] Error parsing received data from the server.");
+    console.error(`[ERROR] ${err.name}: ${err.message}`);
+    return;
+  }
 
   if (!msg.hasOwnProperty(TYPE_PROP)) {
     // TODO #75: Show error toast to the user
