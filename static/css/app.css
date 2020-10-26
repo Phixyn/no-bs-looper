@@ -307,23 +307,12 @@ li.is-submenu-item > a:hover {
 
 /* Foundation Abide plugin error states */
 
-.is-invalid-label {
-
-}
-
 .is-invalid-input:not(:focus) {
-  /* background-color: var(--secondary-container-color); */
   background-color: var(--accent-container-color);
-  /* color: var(--primary-menu-link-color); */
 }
 
 .is-invalid-input:not(:focus)::placeholder {
   color: var(--primary-menu-link-color);
-}
-
-.is-invalid-input {
-  /* background-color: var(--secondary-container-color); */
-  /* background-color: var(--accent-container-color); */
 }
 
 /* -----------------------------------
