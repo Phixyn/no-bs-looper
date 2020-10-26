@@ -31,7 +31,7 @@ websocket.onmessage = (event) => {
   let msg = JSON.parse(event.data);
   // TODO #46: Check message payload in client's onmessage handler
   // We got a new video duration, so update the slider and input elements
-  state.end = parseInt(msg.length_seconds);
+  state.end = parseInt(msg.length_seconds, 10);
   updateSliderAndInputAttributes(state.start, state.end);
 
   // TODO #52: Workaround for slider fill bug
@@ -104,10 +104,11 @@ $(() => {
     console.debug("[DEBUG] Qs parsed querystring to object:");
     console.debug(qsParse);
 
+    // TODO #59: Handle broken querystrings in URL
     state = {
       v: qsParse.v,
-      start: parseInt(qsParse.start),
-      end: parseInt(qsParse.end),
+      start: parseInt(qsParse.start, 10),
+      end: parseInt(qsParse.end, 10),
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
@@ -128,8 +129,8 @@ $(() => {
     // Get state data from HTML form (i.e. default values)
     state = {
       v: videoIdInput.val(),
-      start: parseInt(startTimeInput.val()),
-      end: parseInt(endTimeInput.val()),
+      start: parseInt(startTimeInput.val(), 10),
+      end: parseInt(endTimeInput.val(), 10),
     };
     updateHistoryState();
   }
@@ -210,7 +211,7 @@ function onPlayerReady(event) {
 
   updateSliderAndInputAttributes(
     state.start,
-    parseInt(event.target.getDuration())
+    parseInt(event.target.getDuration(), 10)
   );
 
   // TODO #54: This shouldn't be needed because it's already set in
@@ -436,7 +437,7 @@ function updateHistoryState() {
  * Sets the loop portion's start time to the current time of the video.
  */
 function setStartTimeToCurrent() {
-  state.start = parseInt(player.getCurrentTime());
+  state.start = parseInt(player.getCurrentTime(), 10);
   startTimeInput.val(state.start.toString()).change();
 }
 
@@ -444,7 +445,7 @@ function setStartTimeToCurrent() {
  * Sets the loop portion's end time to the current time of the video.
  */
 function setEndTimeToCurrent() {
-  state.end = parseInt(player.getCurrentTime());
+  state.end = parseInt(player.getCurrentTime(), 10);
   endTimeInput.val(state.end.toString()).change();
 }
 
