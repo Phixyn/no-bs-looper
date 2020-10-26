@@ -62,41 +62,56 @@
         </div> <!-- .cell -->
       </div> <!-- .grid-x -->
 
-      <form class="grid-x grid-padding-x grid-padding-y">
+      <form id="video-form" class="grid-x grid-padding-x grid-padding-y" data-abide novalidate>
         <!-- Video ID -->
         <div class="cell small-12 medium-8 large-8 medium-offset-2 large-offset-2">
           <label>Video URL or ID
             <div class="input-group">
-              <input type="text" id="video-id" class="input-group-field" name="video-id" placeholder="Video ID" value="KcUnXunuDTs">
+              <input type="text" id="video-id" class="input-group-field" name="video-id" placeholder="Video ID" value="KcUnXunuDTs" aria-describedby="video-id-hint" aria-errormessage="video-id-error" required>
               <div class="input-group-button">
                 <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
               </div>
             </div> <!-- .input-group -->
+            <span id="video-id-error" class="form-error" data-form-error-for="video-id" data-form-error-on="required">
+              Bruh. This box can't be empty. Type or paste in a valid YouTube link or video ID.
+            </span>
+            <span class="form-error" data-form-error-for="video-id" data-form-error-on="pattern">
+              This link didn't work :( Make sure it's a link to a video that starts with 'http://' or 'https://'
+            </span>
           </label>
+          <p class="help-text" id="video-id-hint">Paste a YouTube link or video ID here (e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ).</p>
         </div> <!-- .cell -->
 
         <!-- Start time -->
         <div class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2">
           <label>Start time (seconds)
             <div class="input-group">
-              <input type="number" id="start-time" class="input-group-field" name="start-time" placeholder="Start time (seconds)" value="0">
+              <input type="number" id="start-time" class="input-group-field" name="start-time" placeholder="Start time (seconds)" value="0" aria-describedby="start-time-hint" aria-errormessage="start-time-error" required pattern="number">
               <div class="input-group-button">
                 <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
               </div>
             </div> <!-- .input-group -->
+            <span id="start-time-error" class="form-error" data-form-error-for="start-time" data-form-error-on="required">
+              Bruh. You need to enter a valid start time. Numbers only, can't be empty.
+            </span>
           </label>
+          <p class="help-text" id="start-time-hint">The loop starts at this time.</p>
         </div> <!-- .cell -->
 
         <!-- End time -->
         <div class="cell small-6 medium-4 large-4">
           <label>End time (seconds)
             <div class="input-group">
-              <input type="number" id="end-time" class="input-group-field" name="end-time" placeholder="End time (seconds)" value="100" min="1">
+              <input type="number" id="end-time" class="input-group-field" name="end-time" placeholder="End time (seconds)" value="100" min="1" aria-describedby="end-time-hint" aria-errormessage="end-time-error" required pattern="number">
               <div class="input-group-button">
                 <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
               </div>
             </div> <!-- .input-group -->
+            <span id="end-time-error" class="form-error" data-form-error-for="end-time" data-form-error-on="required">
+              Bruh. You need to enter a valid end time. Numbers only, can't be empty.
+            </span>
           </label>
+          <p class="help-text" id="end-time-hint">The loop ends at this time.</p>
         </div> <!-- .cell -->
 
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
