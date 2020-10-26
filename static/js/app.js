@@ -4,6 +4,7 @@ $(document).foundation();
 // Add your websocket server IP address here
 const websocket = new WebSocket("ws://<server IP address here>:14670");
 const TYPE_PROP = "type";
+const TYPE_SERVER_ERROR_MESSAGE = "error";
 const TYPE_VIDEO_INFO_MESSAGE = "video_info";
 const VIDEO_ID_LENGTH = 11;
 
@@ -58,6 +59,12 @@ websocket.onmessage = (event) => {
       setTimeout(() => {
         loopPortionSlider._reflow();
       }, 1000);
+      break;
+    case TYPE_SERVER_ERROR_MESSAGE:
+      console.error("[ERROR] A server error has ocurred.");
+      console.error(
+        `[ERROR] Server: ${msg.content.error}\n${msg.content.description}`
+      );
       break;
     default:
       // TODO #75: Show error toast to the user
