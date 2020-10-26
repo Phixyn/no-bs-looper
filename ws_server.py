@@ -101,12 +101,23 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         logger.error(e)
 
     if not parsed_message:
-        return json.dumps({"error": "Server did not understand received message."})
+        return json.dumps({
+          "type": "error",
+          "content": {
+            "error": "Malformed message.",
+            "description": "Server did not understand received message."
+          }
+        })
     elif not "get_video_info" in parsed_message.keys():
         # This is a bit lazy, so probably should be improved. But for now, we
         # only care about one message: {"get_video_info": "video_id"}
-        # TODO probably need better error lulw
-        return json.dumps({"error": "Unsupported message."})
+        return json.dumps({
+          "type": "error",
+          "content": {
+            "error": "Unsupported message.",
+            "description": "The request made to the server is not supported."
+          }
+        })
     else:
         # TODO add more logging and could probably go to a separate function
         video_id = parsed_message["get_video_info"]
@@ -123,14 +134,12 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         video_length = player_response["videoDetails"]["lengthSeconds"]
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
-        response = {
+        return json.dumps({
           "type": "video_info",
           "content": {
             "length_seconds": video_length
           }
-        }
-
-        return json.dumps(response)
+        })
 
 
 async def server_handler(websocket, path):
