@@ -44,8 +44,6 @@ websocket.onmessage = (event) => {
   if (!msg.hasOwnProperty(TYPE_PROP)) {
     // TODO #75: Show error toast to the user
     console.error("[ERROR] Malformed message received from socket server.");
-    console.debug("[DEBUG] Received message:");
-    console.debug(msg);
     return;
   }
 
@@ -55,8 +53,6 @@ websocket.onmessage = (event) => {
     case "":
       // TODO #75: Show error toast to the user
       console.error("[ERROR] Malformed message received from socket server.");
-      console.debug("[DEBUG] Received message:");
-      console.debug(msg);
       break;
     case TYPE_VIDEO_INFO_MESSAGE:
       // We got a new video duration, so update the slider and input elements
@@ -77,8 +73,6 @@ websocket.onmessage = (event) => {
     default:
       // TODO #75: Show error toast to the user
       console.error("[ERROR] Unsupported message received from socket server.");
-      console.debug("[DEBUG] Received message:");
-      console.debug(msg);
       break;
   }
 };
