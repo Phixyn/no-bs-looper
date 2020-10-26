@@ -187,6 +187,11 @@ function onPlayerReady(event) {
 
   // Fired when one of the slider's handles is moved
   $(sliderDiv).on("moved.zf.slider", () => {
+    // Foundation Abide plugin validation. Needs to be manually called on slider
+    // change, for all of its bound input elements.
+    videoForm.foundation("validateInput", startTimeInput);
+    videoForm.foundation("validateInput", endTimeInput);
+
     updateLoopPortion();
   });
 
@@ -365,12 +370,6 @@ function togglePlayer() {
  */
 function updateLoopPortion() {
   console.debug("[DEBUG] Setting new loop start and end times (state change)");
-
-  // Foundation Abide plugin validation. Needs to be manually called on slider
-  // change, for all of its bound input elements.
-  // TODO consider moving to the slider moved handler
-  videoForm.foundation("validateInput", startTimeInput);
-  videoForm.foundation("validateInput", endTimeInput);
 
   let startTime = parseInt(startTimeInput.val(), 10);
   let endTime = parseInt(endTimeInput.val(), 10);
