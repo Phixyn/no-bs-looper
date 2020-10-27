@@ -105,6 +105,19 @@ websocket.onclose = (event) => {
 };
 
 /**
+ * TODO
+ */
+$("input").on("focus", function() {
+  if ($(this).data("autoselect")) {
+    console.debug("Has autoselect and is true.");
+    $(this).select();
+  } else {
+    console.debug("Has autoselect false or undefined.");
+    console.debug($(this).data("autoselect"));
+  }
+});
+
+/**
  * Event handler for jQuery's ready event. Everything that we want to execute
  * only after the DOM is ready should go here.
  */
