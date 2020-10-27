@@ -121,7 +121,7 @@ $("input").on("focus", function() {
  * Event handler for jQuery's ready event. Everything that we want to execute
  * only after the DOM is ready should go here.
  */
-$(() => {
+$(function() {
   console.log("[INFO] Document ready.");
 
   videoForm = $("#video-form");
