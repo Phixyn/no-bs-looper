@@ -127,9 +127,8 @@
     <div id="share-modal" class="reveal" aria-labelledby="share-modal-header" data-reveal data-animation-in="fade-in fast" data-animation-out="fade-out fast">
       <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
       <form>
-        <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autoselect="true" readonly>
-        <!-- <input type="text" id="share-link" name="share-link" placeholder="Share link" onfocus="this.setSelectionRange(0, this.value.length)" aria-describedby="share-link-hint" readonly> -->
-        <p class="help-text" id="share-link-hint">Save or share this link with your buddies. Note: Copy button may not work on mobile. Select text in box and long-tap it to copy.</p>
+        <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autocopy="true" data-autoselect="true" readonly>
+        <p class="help-text" id="share-link-hint">Save or share this link with your buddies. Select text in box and long-tap it to copy.</p>
       </form>
       <button class="close-button" data-close aria-label="Close share modal" type="button">
         <span aria-hidden="true">&times;</span>
