@@ -296,6 +296,16 @@ li.is-submenu-item > a:hover {
   color: var(--primary-text-color);
 }
 
+input[readonly], textarea[readonly] {
+  background-color: var(--secondary-container-color);
+  /* background-color: var(--accent-container-color); */
+  cursor: auto;
+}
+
+input:disabled, textarea:disabled {
+  background-color: var(--accent-container-color);
+}
+
 /* 'placeholder=' HTML attribute */
 ::placeholder {
   color: var(--primary-menu-link-color);
@@ -339,6 +349,23 @@ li.is-submenu-item > a:hover {
 .slider-handle:active,
 .slider-handle:focus {
   background-color: var(--handle-hover-color);
+}
+
+/* -----------------------------------
+    CLOSE BUTTON
+----------------------------------- */
+
+.close-button:focus, .close-button:hover {
+  color: var(--primary-text-color);
+}
+
+/* -----------------------------------
+    REVEAL
+----------------------------------- */
+
+.reveal {
+  background-color: var(--primary-background-color);
+  border: 1px solid var(--primary-border-color);
 }
 
 /* -----------------------------------
