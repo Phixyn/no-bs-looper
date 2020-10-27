@@ -19,7 +19,6 @@ var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
 var shareLinkInput;
-var copyLinkButton;
 
 // Websocket client
 
@@ -107,7 +106,7 @@ websocket.onclose = (event) => {
 /**
  * TODO
  */
-$("input").on("focus", function() {
+$("input").on("focus", function () {
   if ($(this).data("autoselect")) {
     console.debug("Has autoselect and is true.");
     $(this).select();
@@ -115,13 +114,32 @@ $("input").on("focus", function() {
     console.debug("Has autoselect false or undefined.");
     console.debug($(this).data("autoselect"));
   }
+
+  if ($(this).data("autocopy")) {
+    console.debug("Has autocopy and is true.");
+    // Attempt to copy input value to clipboard
+    // TODO: Requires HTTPS on mobile browsers
+    navigator.clipboard.writeText($(this).val()).then(
+      () => {
+        // TODO: Toggle a tooltip or sumthing for 5 secs
+        console.debug("Text copied!");
+      },
+      () => {
+        // TODO: Tooltip with error? Or not, idk
+        console.debug("Copy failed e_e");
+      }
+    );
+  } else {
+    console.debug("Has autocopy false or undefined.");
+    console.debug($(this).data("autocopy"));
+  }
 });
 
 /**
  * Event handler for jQuery's ready event. Everything that we want to execute
  * only after the DOM is ready should go here.
  */
-$(function() {
+$(function () {
   console.log("[INFO] Document ready.");
 
   videoForm = $("#video-form");
@@ -134,7 +152,6 @@ $(function() {
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
   shareLinkInput = $("#share-link");
-  copyLinkButton = $("#copy-btn");
 
   // Load the Iframe Player API code asynchronously
   console.debug(
@@ -415,57 +432,6 @@ function updatePlayer() {
 function togglePlayer() {
   console.debug("[DEBUG] Toggling player visibility.");
   $("#player").fadeToggle();
-}
-
-/**
- * TODO
- */
-function selectAllText() {
-  shareLinkInput.select();
-  // shareLinkInput.setSelectionRange(0, shareLinkInput.val().length);
-}
-
-const data = {
-  url: shareLinkInput.val(),
-  title: "Share",
-  text: "Share this loop with your buddies.",
-};
-
-/**
- * TODO
- */
-function copyShareLink() {
-  // TODO remove this
-  console.debug("[DEBUG] Copying share link.");
-
-  // Native mobile share dialog (requires HTTPS).
-  // if (navigator.share) {
-  //   navigator
-  //     .share({
-  //       title: "Share",
-  //       text: "Share this loop with your buddies.",
-  //       url: shareLinkInput.val(),
-  //     })
-  //     .then(() => {
-  //       console.log("Successful share");
-  //       return;
-  //     })
-  //     .catch((error) => console.log("Error sharing", error));
-  // }
-
-  // TODO Requires HTTPS on mobile browsers
-  navigator.clipboard.writeText(shareLinkInput.val()).then(
-    () => {
-      copyLinkButton.val("Copied!");
-      setTimeout(() => {
-        copyLinkButton.val("Copy");
-      }, 5000);
-    },
-    () => {
-      console.error("[ERROR] Copying to clipboard failed.");
-      copyLinkButton.val("Failed :( Try CTRL+C");
-    }
-  );
 }
 
 /**
