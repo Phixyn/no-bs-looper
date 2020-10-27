@@ -118,11 +118,28 @@
           <!-- Control buttons -->
           <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
           <!-- TODO not yet implemented -->
-          <!--<input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights">
-          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop">-->
+          <!--<input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights">-->
+          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop" data-open="share-modal">
         </div> <!-- .cell -->
       </form> <!-- .grid-x -->
     </div> <!-- .grid-container -->
+
+    <div id="share-modal" class="reveal" aria-labelledby="share-modal-header" data-reveal data-animation-in="fade-in fast" data-animation-out="fade-out fast">
+      <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
+      <form>
+          <div class="input-group">
+            <input type="text" id="share-link" class="input-group-field" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" readonly>
+            <!-- <input type="text" id="share-link" class="input-group-field" name="share-link" placeholder="Share link" onclick="selectAllText()" aria-describedby="share-link-hint" readonly> -->
+            <div class="input-group-button">
+              <input type="button" id="copy-btn" class="button primary" name="copy-btn" value="Copy" onclick="copyShareLink()">
+            </div>
+          </div> <!-- .input-group -->
+        <p class="help-text" id="share-link-hint">Save or share this link with your buddies. Note: Copy button may not work on mobile. Select text in box and long-tap it to copy.</p>
+      </form>
+      <button class="close-button" data-close aria-label="Close share modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
     <!-- FOOTER -->
     <div class="grid-y grid-margin-y" id="footer">
