@@ -18,6 +18,8 @@ var sliderDiv;
 var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
+var shareLinkInput;
+var copyLinkButton;
 
 // Websocket client
 
@@ -118,6 +120,8 @@ $(() => {
   loopPortionSlider = new Foundation.Slider(sliderDiv);
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
+  shareLinkInput = $("#share-link");
+  copyLinkButton = $("#copy-btn");
 
   // Load the Iframe Player API code asynchronously
   console.debug(
@@ -401,6 +405,57 @@ function togglePlayer() {
 }
 
 /**
+ * TODO
+ */
+function selectAllText() {
+  shareLinkInput.select();
+  // shareLinkInput.setSelectionRange(0, shareLinkInput.val().length);
+}
+
+const data = {
+  url: shareLinkInput.val(),
+  title: "Share",
+  text: "Share this loop with your buddies.",
+};
+
+/**
+ * TODO
+ */
+function copyShareLink() {
+  // TODO remove this
+  console.debug("[DEBUG] Copying share link.");
+
+  // Native mobile share dialog (requires HTTPS).
+  // if (navigator.share) {
+  //   navigator
+  //     .share({
+  //       title: "Share",
+  //       text: "Share this loop with your buddies.",
+  //       url: shareLinkInput.val(),
+  //     })
+  //     .then(() => {
+  //       console.log("Successful share");
+  //       return;
+  //     })
+  //     .catch((error) => console.log("Error sharing", error));
+  // }
+
+  // TODO Requires HTTPS on mobile browsers
+  navigator.clipboard.writeText(shareLinkInput.val()).then(
+    () => {
+      copyLinkButton.val("Copied!");
+      setTimeout(() => {
+        copyLinkButton.val("Copy");
+      }, 5000);
+    },
+    () => {
+      console.error("[ERROR] Copying to clipboard failed.");
+      copyLinkButton.val("Failed :( Try CTRL+C");
+    }
+  );
+}
+
+/**
  * Updates the start and end times for the video's loop portion based on the
  * values in the HTML input elements (i.e. set by the user!).
  *
@@ -442,6 +497,8 @@ function updateHistoryState() {
    * API for info on replaceState().
    */
   history.replaceState(state, "", "?" + $.param(state));
+
+  shareLinkInput.val(location.href);
   console.debug("[DEBUG] New history.state:");
   console.debug(history.state);
 }
