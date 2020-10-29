@@ -121,12 +121,28 @@ $("input").on("focus", function () {
     // TODO: Requires HTTPS on mobile browsers
     navigator.clipboard.writeText($(this).val()).then(
       () => {
-        // TODO: Toggle a tooltip or sumthing for 5 secs
         console.debug("Text copied!");
+
+        // TODO: Toggle a tooltip instead (make our own) of this hack.
+        if ($(this).attr("aria-describedby")) {
+          /* If this input element has another element with text to describe
+           * it (commonly used for accessibility purposes), hijack that element
+           * and temporarily change its text. This is used to tell users that
+           * the input text was copied to their clipboard.
+           * Sometimes my genius is... It's almost frightening. */
+          let elem = $(
+            document.getElementById($(this).attr("aria-describedby"))
+          );
+          let originalText = elem.text();
+          elem.text("Link copied!");
+          setTimeout(() => {
+            elem.text(originalText);
+          }, 2500);
+        }
       },
-      () => {
-        // TODO: Tooltip with error? Or not, idk
-        console.debug("Copy failed e_e");
+      (err) => {
+        console.error("Copying share link to clipboard failed.");
+        console.error(err);
       }
     );
   } else {
