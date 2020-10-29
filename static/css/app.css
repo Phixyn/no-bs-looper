@@ -368,6 +368,10 @@ input:disabled, textarea:disabled {
   border: 1px solid var(--primary-border-color);
 }
 
+[data-whatinput="touch"] .reveal {
+  outline: 0;
+}
+
 /* -----------------------------------
     FOOTER
 ----------------------------------- */
