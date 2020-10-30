@@ -67,7 +67,7 @@
         <div class="cell small-12 medium-8 large-8 medium-offset-2 large-offset-2">
           <label>Video link or ID
             <div class="input-group">
-              <input type="text" id="video-id" class="input-group-field" name="video-id" placeholder="Video link or ID" value="KcUnXunuDTs" aria-describedby="video-id-hint" aria-errormessage="video-id-error" required>
+              <input type="text" id="video-id" class="input-group-field" name="video-id" placeholder="Video link or ID" value="KcUnXunuDTs" aria-describedby="video-id-hint" aria-errormessage="video-id-error" data-autoselect="true" required>
               <div class="input-group-button">
                 <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
               </div>
@@ -117,12 +117,27 @@
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
           <!-- Control buttons -->
           <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-          <!-- TODO not yet implemented -->
-          <!--<input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights">
-          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop">-->
+          <!-- TODO #10: Not yet implemented -->
+          <!--<input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights">-->
+          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop" data-open="share-modal">
         </div> <!-- .cell -->
       </form> <!-- .grid-x -->
     </div> <!-- .grid-container -->
+
+    <div id="share-modal" class="reveal" aria-labelledby="share-modal-header" data-reveal data-animation-out="fade-out fast">
+      <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
+      <form>
+        <label for="share-link" class="show-for-sr">Share link</label>
+        <div class="phix-tooltip phix-tooltip--bottom">
+          <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autocopy="true" data-autoselect="true" readonly>
+          <span class="phix-tooltip-text" id="share-link-tooltip">Link copied!</span>
+        </div>
+        <p class="help-text" id="share-link-hint">Copy this link to share your loop with others. You can also bookmark this page to save your loop.</p>
+      </form>
+      <button class="close-button" data-close aria-label="Close share modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
     <!-- FOOTER -->
     <div class="grid-y grid-margin-y" id="footer">

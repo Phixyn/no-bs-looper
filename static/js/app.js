@@ -7,6 +7,7 @@ const TYPE_PROP = "type";
 const TYPE_SERVER_ERROR_MESSAGE = "error";
 const TYPE_VIDEO_INFO_MESSAGE = "video_info";
 const VIDEO_ID_LENGTH = 11;
+const TOOLTIP_TEXT_CLASS = ".phix-tooltip-text";
 
 var player;
 var state;
@@ -18,6 +19,7 @@ var sliderDiv;
 var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
+var shareLinkInput;
 
 // Websocket client
 
@@ -103,10 +105,46 @@ websocket.onclose = (event) => {
 };
 
 /**
+ * Event handler for input focus events.
+ *
+ * This handler looks for the custom data attributes 'data-autoselect' and
+ * 'data-autocopy' in form input elements. If these are found and set to true,
+ * the handler will execute the appropriate action, such as selecting the
+ * input's text or copying it to the user's clipboard.
+ */
+$("input").on("focus", function () {
+  if ($(this).data("autoselect")) {
+    $(this).select();
+  }
+
+  if ($(this).data("autocopy")) {
+    // Attempt to write the input's value to the user's clipboard
+    navigator.clipboard.writeText($(this).val()).then(
+      () => {
+        console.log("[INFO] Share link copied.");
+
+        // If the input element has a tooltip as a sibling, toggle it. This can
+        // be used to show a message when the text is automatically copied.
+        if ($(this).siblings(TOOLTIP_TEXT_CLASS).length > 0) {
+          $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeIn(300);
+          setTimeout(() => {
+            $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeOut(400);
+          }, 3000);
+        }
+      },
+      (err) => {
+        console.error("[ERROR] Copying share link to clipboard failed.");
+        console.error(err);
+      }
+    );
+  }
+});
+
+/**
  * Event handler for jQuery's ready event. Everything that we want to execute
  * only after the DOM is ready should go here.
  */
-$(() => {
+$(function () {
   console.log("[INFO] Document ready.");
 
   videoForm = $("#video-form");
@@ -118,6 +156,7 @@ $(() => {
   loopPortionSlider = new Foundation.Slider(sliderDiv);
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
+  shareLinkInput = $("#share-link");
 
   // Load the Iframe Player API code asynchronously
   console.debug(
@@ -442,6 +481,8 @@ function updateHistoryState() {
    * API for info on replaceState().
    */
   history.replaceState(state, "", "?" + $.param(state));
+
+  shareLinkInput.val(location.href);
   console.debug("[DEBUG] New history.state:");
   console.debug(history.state);
 }

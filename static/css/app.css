@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.4.2 (no bs edition)
+Version: 0.5.0 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -296,6 +296,15 @@ li.is-submenu-item > a:hover {
   color: var(--primary-text-color);
 }
 
+input[readonly], textarea[readonly] {
+  background-color: var(--accent-container-color);
+  cursor: auto;
+}
+
+input:disabled, textarea:disabled {
+  background-color: var(--accent-container-color);
+}
+
 /* 'placeholder=' HTML attribute */
 ::placeholder {
   color: var(--primary-menu-link-color);
@@ -339,6 +348,69 @@ li.is-submenu-item > a:hover {
 .slider-handle:active,
 .slider-handle:focus {
   background-color: var(--handle-hover-color);
+}
+
+/* -----------------------------------
+    CLOSE BUTTON
+----------------------------------- */
+
+.close-button:focus, .close-button:hover {
+  color: var(--primary-text-color);
+}
+
+/* -----------------------------------
+    REVEAL
+----------------------------------- */
+
+.reveal {
+  background-color: var(--primary-background-color);
+  border: 1px solid var(--primary-border-color);
+}
+
+[data-whatinput="touch"] .reveal {
+  outline: 0;
+}
+
+/* -----------------------------------
+    CUSTOM COMPONENTS
+----------------------------------- */
+
+/* -----------------------------------
+    TOOLTIP
+----------------------------------- */
+
+.phix-tooltip {
+  display: inline;
+  position: relative;
+}
+
+.phix-tooltip .phix-tooltip-text {
+  display: none;
+  position: absolute;
+  bottom: -1.69rem;
+  transform: translateX(150%);
+  min-width: 8.75rem;
+  max-width: 16rem;
+  padding: 0.3125rem;
+  z-index: 2000;
+  background-color: var(--accent-container-color);
+  border-radius: 0.375rem;
+  border-width: 0.125rem;
+  border-style: solid;
+  border-color: var(--secondary-border-color);
+  color: var(--primary-text-color);
+  text-align: center;
+}
+
+.phix-tooltip--bottom .phix-tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: -0.78rem;
+  left: 50%;
+  margin-left: -0.3125rem;
+  border-width: 0.3125rem;
+  border-style: solid;
+  border-color: transparent transparent var(--accent-container-color) transparent;
 }
 
 /* -----------------------------------
