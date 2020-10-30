@@ -22,12 +22,16 @@ Devlog template: 1.1.0
     - [Actual BS Loopers](#actual-bs-loopers)
     - [Docker](#docker)
     - [Foundation](#foundation)
+        - [Foundation Motion UI Docs](#foundation-motion-ui-docs)
     - [Design and UX](#design-and-ux)
     - [JavaScript](#javascript)
     - [jQuery](#jquery)
     - [CORS](#cors)
     - [Browser History API](#browser-history-api)
     - [URL API](#url-api)
+    - [Clipboard API](#clipboard-api)
+    - [Native Mobile Share API](#native-mobile-share-api)
+    - [HTML Global Data Attributes](#html-global-data-attributes)
     - [Similar Projects](#similar-projects)
     - [Websockets](#websockets)
     - [Libraries/modules](#librariesmodules)
@@ -41,11 +45,13 @@ Devlog template: 1.1.0
 - [Notepad](#notepad)
     - [Test links](#test-links)
 - [Scrap Paper](#scrap-paper)
-    - [Build the Nginx Container](#build-the-nginx-container)
-    - [Parsing YouTube Video URLs To Get ID](#parsing-youtube-video-urls-to-get-id)
+    - [Build the Nginx container](#build-the-nginx-container)
+    - [Parsing YouTube video URLs to get ID](#parsing-youtube-video-urls-to-get-id)
     - [Simple websocket onerror handler](#simple-websocket-onerror-handler)
     - [querystring bla](#querystring-bla)
     - [Foundation Abide plugin API](#foundation-abide-plugin-api)
+    - [Mobile Share API](#mobile-share-api)
+    - [jQuery find element siblings with given class name](#jquery-find-element-siblings-with-given-class-name)
 
 - - -
 
@@ -103,6 +109,13 @@ Devlog template: 1.1.0
 * [Slider | Foundation for Sites 6 Docs](https://get.foundation/sites/docs/slider.html)
 * [foundation-sites/foundation.slider.js at develop · foundation/foundation-sites · GitHub](https://github.com/foundation/foundation-sites/blob/develop/js/foundation.slider.js#L259) - Foundation Slider plugin source code
 * [Range slider-fill doesn't update correctly for sliders with two handles. · GitHub](https://github.com/foundation/foundation-sites/issues/10768)
+* [Reveal | Foundation for Sites 6 Docs](https://get.foundation/sites/docs/reveal.html)
+
+#### Foundation Motion UI Docs
+
+* [motion-ui/docs · GitHub](https://github.com/foundation/motion-ui/tree/master/docs)
+* [Animations](https://github.com/foundation/motion-ui/blob/master/docs/animations.md)
+* [Transitions](https://github.com/foundation/motion-ui/blob/master/docs/transitions.md)
 
 ### Design and UX
 
@@ -127,6 +140,8 @@ Devlog template: 1.1.0
 * [jQuery: When to use `$(document).ready()` and when `$(window).load()` (Example)](https://coderwall.com/p/_jothq/jquery-when-to-use-document-ready-and-when-window-load)
 * [DOMContentLoaded vs jQuery.ready vs onload, How To Decide When Your Code Should Run - Eager Blog](https://eager.io/blog/how-to-decide-when-your-code-should-run/)
 * [jQuery 3 - window load inside ready state will not be triggered · GitHub](https://github.com/jquery/jquery/issues/3194)
+* [html - Retrieve boolean data from data attribute in jquery - Stack Overflow](https://stackoverflow.com/questions/9921076/retrieve-boolean-data-from-data-attribute-in-jquery)
+* [jQuery: Using selectionStart, selectionEnd, setSelectionRange](https://browse-tutorials.com/snippet/jquery-using-selectionstart-selectionend-setselectionrange)
 
 ### CORS
 
@@ -140,9 +155,33 @@ Devlog template: 1.1.0
 
 ### URL API
 
-* https://developer.mozilla.org/en-US/docs/Web/API/URL/URL
-* https://developer.mozilla.org/en-US/docs/Web/API/URL
-* https://url.spec.whatwg.org/#dom-url-href
+* [`URL()` - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL)
+* [URL - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/URL)
+* [URL Standard](https://url.spec.whatwg.org/#dom-url-href)
+
+### Clipboard API
+
+* [Clipboard API - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API)
+* [Clipboard.writeText() - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/writeText)
+* [Interact with the clipboard - Mozilla | MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Interact_with_the_clipboard)
+* [Unblocking clipboard access](https://web.dev/async-clipboard/) - Async Clipboard stuff, not currently using it but could be handy to use async/await in the future
+* [Also related: Permissions API](https://developers.google.com/web/updates/2015/04/permissions-api-for-the-web)
+
+A 3rd party clipboard library: https://clipboardjs.com
+
+### Native Mobile Share API
+
+> Used to display those native share modals on Android, iOS... requires HTTPS
+
+* [Navigator.share() - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share)
+* [Integrate with the OS sharing UI with the Web Share API](https://web.dev/web-share/)
+
+### HTML Global Data Attributes
+
+> data-* attributes
+
+* [HTML Global data-* Attributes](https://www.w3schools.com/tags/att_global_data.asp)
+* [html - Retrieve boolean data from data attribute in jquery - Stack Overflow](https://stackoverflow.com/questions/9921076/retrieve-boolean-data-from-data-attribute-in-jquery)
 
 ### Similar Projects
 
@@ -223,7 +262,7 @@ Devlog template: 1.1.0
 
 > 📝 For code snippets, experimental code, things that need to be moved to a gist, or just temporary code.
 
-### Build the Nginx Container
+### Build the Nginx container
 
 ```text
 docker image build -t phixyn/no-bs-looper .
@@ -241,7 +280,7 @@ docker container run -d -p 14666:80 phixyn/no-bs-looper
 docker container run --name no-bs-looper -d -p 14666:80 -v E:\Phixyn\Projects\no-bs-looper\static:/usr/share/nginx/html phixyn/no-bs-looper
 ```
 
-### Parsing YouTube Video URLs To Get ID
+### Parsing YouTube video URLs to get ID
 
 ```javascript
 var getYoutubeIdByUrl = function( url ){
@@ -288,4 +327,32 @@ $("#form-id").foundation("addErrorClasses", $("#input-field-id"), ["required"]);
 
 /// Remove all error classes from input field
 $("#form-id").foundation("removeErrorClasses", $("#input-field-id"));
+```
+
+### Mobile Share API
+
+```javascript
+// Native mobile share dialog (requires HTTPS).
+if (navigator.share) {
+  navigator
+    .share({
+      title: "Share",
+      text: "Share this loop with your buddies.",
+      url: shareLinkInput.val(),
+    })
+    .then(() => {
+      console.log("Successful share");
+      return;
+    })
+    .catch((error) => console.log("Error sharing", error));
+}
+```
+
+### jQuery find element siblings with given class name
+
+```javascript
+$(element).siblings(".class-name")
+
+// Check if it has at least one sibling with the class:
+$(element).siblings(".class-name").length > 0
 ```
