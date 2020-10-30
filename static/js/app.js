@@ -1,12 +1,24 @@
 // Initialize all Foundation plugins
 $(document).foundation();
 
+// Websocket
 // Add your websocket server IP address here
 const websocket = new WebSocket("ws://<server IP address here>:14670");
 const TYPE_PROP = "type";
 const TYPE_SERVER_ERROR_MESSAGE = "error";
 const TYPE_VIDEO_INFO_MESSAGE = "video_info";
+// Video
 const VIDEO_ID_LENGTH = 11;
+// Animations
+const ANIMATION_DURATION_DEFAULT = 400;
+const ANIMATION_DURATION_SLOW = 1000;
+const ANIMATION_DURATION_FAST = 300;
+// Timeouts
+const TIMEOUT_SLIDER_REFLOW = 1000;
+const TIMEOUT_TOOLTIP = 3000;
+// Intervals
+const INTERVAL_CHECK_CURRENT_TIME = 1000;
+// CSS
 const TOOLTIP_TEXT_CLASS = ".phix-tooltip-text";
 
 var player;
@@ -64,7 +76,7 @@ websocket.onmessage = (event) => {
       // TODO #52: Workaround for slider fill bug
       setTimeout(() => {
         loopPortionSlider._reflow();
-      }, 1000);
+      }, TIMEOUT_SLIDER_REFLOW);
       break;
     case TYPE_SERVER_ERROR_MESSAGE:
       // TODO #75: Show error toast to the user
@@ -126,10 +138,16 @@ $("input").on("focus", function () {
         // If the input element has a tooltip as a sibling, toggle it. This can
         // be used to show a message when the text is automatically copied.
         if ($(this).siblings(TOOLTIP_TEXT_CLASS).length > 0) {
-          $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeIn(300);
+          $(this)
+            .siblings(TOOLTIP_TEXT_CLASS)
+            .first()
+            .fadeIn(ANIMATION_DURATION_FAST);
           setTimeout(() => {
-            $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeOut(400);
-          }, 3000);
+            $(this)
+              .siblings(TOOLTIP_TEXT_CLASS)
+              .first()
+              .fadeOut(ANIMATION_DURATION_DEFAULT);
+          }, TIMEOUT_TOOLTIP);
         }
       },
       (err) => {
@@ -304,7 +322,7 @@ function onPlayerReady(event) {
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
     loopPortionSlider._reflow();
-  }, 1000);
+  }, TIMEOUT_SLIDER_REFLOW);
 }
 
 var timer = null;
@@ -327,7 +345,7 @@ function onPlayerStateChange(event) {
       ) {
         player.seekTo(state.start, true);
       }
-    }, 1000);
+    }, INTERVAL_CHECK_CURRENT_TIME);
   }
   // TODO #45: This also affects things like PlayerState === buffering, so
   // maybe do 'if (event.data === YT.PlayerState.PAUSED)' ?
