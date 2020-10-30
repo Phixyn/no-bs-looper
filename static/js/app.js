@@ -7,6 +7,7 @@ const TYPE_PROP = "type";
 const TYPE_SERVER_ERROR_MESSAGE = "error";
 const TYPE_VIDEO_INFO_MESSAGE = "video_info";
 const VIDEO_ID_LENGTH = 11;
+const TOOLTIP_TEXT_CLASS = ".phix-tooltip-text";
 
 var player;
 var state;
@@ -104,50 +105,38 @@ websocket.onclose = (event) => {
 };
 
 /**
- * TODO
+ * Event handler for input focus events.
+ *
+ * This handler looks for the custom data attributes 'data-autoselect' and
+ * 'data-autocopy' in form input elements. If these are found and set to true,
+ * the handler will execute the appropriate action, such as selecting the
+ * input's text or copying it to the user's clipboard.
  */
 $("input").on("focus", function () {
   if ($(this).data("autoselect")) {
-    console.debug("Has autoselect and is true.");
     $(this).select();
-  } else {
-    console.debug("Has autoselect false or undefined.");
-    console.debug($(this).data("autoselect"));
   }
 
   if ($(this).data("autocopy")) {
-    console.debug("Has autocopy and is true.");
-    // Attempt to copy input value to clipboard
-    // TODO: Requires HTTPS on mobile browsers
+    // Attempt to write the input's value to the user's clipboard
     navigator.clipboard.writeText($(this).val()).then(
       () => {
-        console.debug("Text copied!");
+        console.log("[INFO] Share link copied.");
 
-        // TODO: Toggle a tooltip instead (make our own) of this hack.
-        if ($(this).attr("aria-describedby")) {
-          /* If this input element has another element with text to describe
-           * it (commonly used for accessibility purposes), hijack that element
-           * and temporarily change its text. This is used to tell users that
-           * the input text was copied to their clipboard.
-           * Sometimes my genius is... It's almost frightening. */
-          let elem = $(
-            document.getElementById($(this).attr("aria-describedby"))
-          );
-          let originalText = elem.text();
-          elem.text("Link copied!");
+        // If the input element has a tooltip as a sibling, toggle it. This can
+        // be used to show a message when the text is automatically copied.
+        if ($(this).siblings(TOOLTIP_TEXT_CLASS).length > 0) {
+          $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeIn(300);
           setTimeout(() => {
-            elem.text(originalText);
-          }, 2500);
+            $(this).siblings(TOOLTIP_TEXT_CLASS).first().fadeOut(400);
+          }, 3000);
         }
       },
       (err) => {
-        console.error("Copying share link to clipboard failed.");
+        console.error("[ERROR] Copying share link to clipboard failed.");
         console.error(err);
       }
     );
-  } else {
-    console.debug("Has autocopy false or undefined.");
-    console.debug($(this).data("autocopy"));
   }
 });
 
