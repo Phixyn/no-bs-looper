@@ -128,8 +128,11 @@
       <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
       <form>
         <label for="share-link" class="show-for-sr">Share link</label>
-        <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autocopy="true" data-autoselect="true" readonly>
-        <p class="help-text" id="share-link-hint">Save or share this link with your buddies. Select text in box and long-tap it to copy.</p>
+        <div class="phix-tooltip phix-tooltip--bottom">
+          <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autocopy="true" data-autoselect="true" readonly>
+          <span class="phix-tooltip-text" id="share-link-tooltip">Link copied!</span>
+        </div>
+        <p class="help-text" id="share-link-hint">Copy this link to share your loop with others. You can also bookmark this page to save your loop.</p>
       </form>
       <button class="close-button" data-close aria-label="Close share modal" type="button">
         <span aria-hidden="true">&times;</span>
