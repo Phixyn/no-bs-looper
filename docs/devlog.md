@@ -53,6 +53,7 @@ Devlog template: 1.1.0
     - [Mobile Share API](#mobile-share-api)
     - [jQuery find element siblings with given class name](#jquery-find-element-siblings-with-given-class-name)
     - [jQuery parse boolean data from custom HTML data attributes](#jquery-parse-boolean-data-from-custom-html-data-attributes)
+    - [CSS for video filters/dimming feature](#css-for-video-filtersdimming-feature)
 
 - - -
 
@@ -366,4 +367,34 @@ $(element).siblings(".class-name").length > 0
 $(element).data("attr");
 // Get raw value. Needs full attribute name:
 $(element).attr("data-attr");
+```
+
+### CSS for video filters/dimming feature
+
+In case we lose the GitHub issue ([#87](https://github.com/Phixyn/no-bs-looper/issues/87)) for some reason... here's the snippet:
+
+```css
+div.player-overlay {
+  position: relative;
+}
+
+div.player-overlay iframe {
+  display: block;
+  /* position: relative;
+  z-index: 1; */
+}
+
+div.player-overlay::after {
+  /* Set this to a flux-like color */
+  background-color: rgba(180, 109, 50, 0.5);
+  content: "";
+  position: absolute;
+  /* z-index: 2; */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* Need to make sure this works everywhere */
+  pointer-events: none;
+}
 ```
