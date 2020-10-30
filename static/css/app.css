@@ -297,8 +297,7 @@ li.is-submenu-item > a:hover {
 }
 
 input[readonly], textarea[readonly] {
-  background-color: var(--secondary-container-color);
-  /* background-color: var(--accent-container-color); */
+  background-color: var(--accent-container-color);
   cursor: auto;
 }
 
