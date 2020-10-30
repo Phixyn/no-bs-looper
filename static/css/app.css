@@ -108,6 +108,12 @@ label {
   font-size: 1.0em;
 }
 
+.player-container {
+  box-shadow: 0px 0px 20px 5px var(--accent-background-color-transparent);
+  /* Arghhhh can't decide, I'm no designer :( */
+  /* box-shadow: 0px 0px 20px 2px var(--accent-background-color-transparent); */
+}
+
 /* -----------------------------------
     TOP BAR
 ----------------------------------- */
@@ -289,8 +295,8 @@ li.is-submenu-item > a:hover {
   /* border-color: var(--accent-border-color); */
   /* Trying out using theme accent as :focus border,
    * not sure if I like it yet. */
-   border-width: 2px;
-   border-color: var(--primary-accent-color);
+  border-width: 2px;
+  border-color: var(--primary-accent-color);
   -webkit-box-shadow: none;
   box-shadow: none;
   color: var(--primary-text-color);
