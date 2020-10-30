@@ -52,6 +52,7 @@ Devlog template: 1.1.0
     - [Foundation Abide plugin API](#foundation-abide-plugin-api)
     - [Mobile Share API](#mobile-share-api)
     - [jQuery find element siblings with given class name](#jquery-find-element-siblings-with-given-class-name)
+    - [jQuery parse boolean data from custom HTML data attributes](#jquery-parse-boolean-data-from-custom-html-data-attributes)
 
 - - -
 
@@ -140,7 +141,6 @@ Devlog template: 1.1.0
 * [jQuery: When to use `$(document).ready()` and when `$(window).load()` (Example)](https://coderwall.com/p/_jothq/jquery-when-to-use-document-ready-and-when-window-load)
 * [DOMContentLoaded vs jQuery.ready vs onload, How To Decide When Your Code Should Run - Eager Blog](https://eager.io/blog/how-to-decide-when-your-code-should-run/)
 * [jQuery 3 - window load inside ready state will not be triggered · GitHub](https://github.com/jquery/jquery/issues/3194)
-* [html - Retrieve boolean data from data attribute in jquery - Stack Overflow](https://stackoverflow.com/questions/9921076/retrieve-boolean-data-from-data-attribute-in-jquery)
 * [jQuery: Using selectionStart, selectionEnd, setSelectionRange](https://browse-tutorials.com/snippet/jquery-using-selectionstart-selectionend-setselectionrange)
 
 ### CORS
@@ -181,7 +181,6 @@ A 3rd party clipboard library: https://clipboardjs.com
 > data-* attributes
 
 * [HTML Global data-* Attributes](https://www.w3schools.com/tags/att_global_data.asp)
-* [html - Retrieve boolean data from data attribute in jquery - Stack Overflow](https://stackoverflow.com/questions/9921076/retrieve-boolean-data-from-data-attribute-in-jquery)
 
 ### Similar Projects
 
@@ -355,4 +354,16 @@ $(element).siblings(".class-name")
 
 // Check if it has at least one sibling with the class:
 $(element).siblings(".class-name").length > 0
+```
+
+### jQuery parse boolean data from custom HTML data attributes
+
+> Parse boolean data from custom HTML data-* attributes
+
+```javascript
+// Parse/convert boolean and numeric values
+// Only needs attr name after 'data-'
+$(element).data("attr");
+// Get raw value. Needs full attribute name:
+$(element).attr("data-attr");
 ```
