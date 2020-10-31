@@ -53,12 +53,12 @@ Author:  Phixyn
 
 ::-moz-selection {
   background: var(--primary-link-color);
-  color:#fff;
+  color:rgb(255, 255, 255);
 }
 
 ::selection {
   background: var(--primary-link-color);
-  color:#fff;
+  color:rgb(255, 255, 255);
 }
 
 /* -----------------------------------
@@ -333,7 +333,7 @@ input.has-tip {
 }
 
 button.has-tip,
-  [type="button"].has-tip {
+[type="button"].has-tip {
   cursor: pointer;
 }
 
