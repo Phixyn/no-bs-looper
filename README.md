@@ -50,6 +50,7 @@ I made this out of frustration with the current YouTube loopers out there. Most 
 - Play videos while your phone is **locked**
 - **Save and share** your loops
 - Sleek **dark theme** with no ads, no banners and no distractions
+- Focus on the video with **"Turn Off the Lights"** mode, inspired by this [Firefox extension](https://addons.mozilla.org/en-GB/firefox/addon/turn-off-the-lights/)
 
 ## Getting Started
 
@@ -106,19 +107,21 @@ Obviously replace the path to the static folder with your own path. Note that it
 
 Depending on your HTTP server's setup, this may vary. If you followed all the steps in the [Installation](#installation) section, you'll be able to access the website using your **local IP address**, or localhost. If you can't get it set up, use one of the [public instances](#public-instances) listed below.
 
-Once you're in the website, paste a **video ID** onto the video ID text field and click **"Update".** Move the slider handles to loop a specific portion of the video, or leave them at the start and end to loop the full video.
+Once you're in the website, paste a **YouTube video link** or ID onto the video link text field and click **"Update".** Move the slider handles to loop a specific portion of the video, or leave them at the start and end to loop the full video.
 
 You can **save and share** your loop by copying the URL in your address bar. The URL changes everytime you customize the loop or load a new video.
 
+To reduce distractions and focus on the video, you can dim every element on the page by clicking **"Turn off the lights"**. Click or tap anywhere on the page (outside of the video player) to disable this effect.
+
 ### How to find the video ID?
+
+**Since v1.1.0 you can copy full YouTube links instead of a video ID.** However, if you still want to use video IDs instead, here's how to find them:
 
 It's usually after the `v=` portion of a YouTube link. For example:
 
 ![https://www.youtube.com/watch?v=dQw4w9WgXcQ](docs/screenshots/video_id_example.png?raw=true)
 
 For the above video, the video ID is `dQw4w9WgXcQ`.
-
-Don't worry, you'll be able to use full video URLs [soon](https://github.com/Phixyn/no-bs-looper/issues/24).
 
 ## Public Instances
 
@@ -154,7 +157,7 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 This software uses the following open source ❤︎ projects:
 
-- [GitHub - foundation/foundation-sites: The most advanced responsive front-end framework in the world](https://github.com/foundation/foundation-sites)
-- [GitHub - jquery/jquery: jQuery JavaScript Library](https://github.com/jquery/jquery/)
-- [GitHub - ljharb/qs: A querystring parser with nesting support](https://github.com/ljharb/qs/)
+- [jQuery](https://github.com/jquery/jquery/)
+- [Zurb Foundation for Sites](https://github.com/foundation/foundation-sites)
+- [Qs: A querystring parser with nesting support](https://github.com/ljharb/qs/)
 - [GitHub - aaugustin/websockets: Library for building WebSocket servers and clients in Python](https://github.com/aaugustin/websockets)
