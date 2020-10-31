@@ -53,12 +53,12 @@ Author:  Phixyn
 
 ::-moz-selection {
   background: var(--primary-link-color);
-  color:rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
 }
 
 ::selection {
   background: var(--primary-link-color);
-  color:rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
 }
 
 /* -----------------------------------
@@ -66,7 +66,7 @@ Author:  Phixyn
 ----------------------------------- */
 
 body {
-  background: var(--primary-background-color) url('../images/zwartevilt.png');
+  background: var(--primary-background-color) url("../images/zwartevilt.png");
   color: var(--primary-text-color);
 }
 
@@ -105,7 +105,7 @@ pre {
 label {
   color: var(--primary-text-color);
   font-weight: bold;
-  font-size: 1.0em;
+  font-size: 1em;
 }
 
 /* -----------------------------------
@@ -268,23 +268,41 @@ li.is-submenu-item > a:hover {
     FORMS
 ----------------------------------- */
 
-[type="color"], [type="date"], [type="datetime-local"],
-[type="datetime"], [type="email"], [type="month"],
-[type="number"], [type="password"], [type="search"],
-[type="tel"], [type="text"], [type="time"],
-[type="url"], [type="week"], textarea {
+[type="color"],
+[type="date"],
+[type="datetime-local"],
+[type="datetime"],
+[type="email"],
+[type="month"],
+[type="number"],
+[type="password"],
+[type="search"],
+[type="tel"],
+[type="text"],
+[type="time"],
+[type="url"],
+[type="week"],
+textarea {
   background-color: var(--secondary-container-color);
   color: var(--primary-text-color);
   border: 1px solid var(--secondary-border-color);
 }
 
-[type="color"]:focus, [type="date"]:focus,
-[type="datetime-local"]:focus, [type="datetime"]:focus,
-[type="email"]:focus, [type="month"]:focus,
-[type="number"]:focus, [type="password"]:focus,
-[type="search"]:focus, [type="tel"]:focus,
-[type="text"]:focus, [type="time"]:focus,
-[type="url"]:focus, [type="week"]:focus, textarea:focus {
+[type="color"]:focus,
+[type="date"]:focus,
+[type="datetime-local"]:focus,
+[type="datetime"]:focus,
+[type="email"]:focus,
+[type="month"]:focus,
+[type="number"]:focus,
+[type="password"]:focus,
+[type="search"]:focus,
+[type="tel"]:focus,
+[type="text"]:focus,
+[type="time"]:focus,
+[type="url"]:focus,
+[type="week"]:focus,
+textarea:focus {
   background-color: var(--accent-container-color);
   /* border-color: var(--accent-border-color); */
   /* Trying out using theme accent as :focus border,
@@ -296,12 +314,14 @@ li.is-submenu-item > a:hover {
   color: var(--primary-text-color);
 }
 
-input[readonly], textarea[readonly] {
+input[readonly],
+textarea[readonly] {
   background-color: var(--accent-container-color);
   cursor: auto;
 }
 
-input:disabled, textarea:disabled {
+input:disabled,
+textarea:disabled {
   background-color: var(--accent-container-color);
 }
 
@@ -345,7 +365,8 @@ button.has-tip,
 }
 
 .tooltip.bottom::before {
-  border-color: transparent transparent var(--accent-background-color-transparent);
+  border-color: transparent transparent
+    var(--accent-background-color-transparent);
 }
 
 /* -----------------------------------
@@ -378,7 +399,8 @@ button.has-tip,
     CLOSE BUTTON
 ----------------------------------- */
 
-.close-button:focus, .close-button:hover {
+.close-button:focus,
+.close-button:hover {
   color: var(--primary-text-color);
 }
 
@@ -433,7 +455,8 @@ button.has-tip,
   margin-left: -0.3125rem;
   border-width: 0.3125rem;
   border-style: solid;
-  border-color: transparent transparent var(--accent-container-color) transparent;
+  border-color: transparent transparent var(--accent-container-color)
+    transparent;
 }
 
 /* -----------------------------------
@@ -463,7 +486,7 @@ button.has-tip,
   left: 0;
   z-index: 200;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.80);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 /* -----------------------------------
