@@ -32,7 +32,7 @@ Adds some much needed essential features and improvements.
 ### Changed
 
 - Clicking/tapping the "Video link or ID" input field now auto-selects its contents
-- Background and text color of selected text has been changed to accent color - [#72](https://github.com/Phixyn/no-bs-looper/issues/72) (thanks @tomwalsh-home)
+- Background and text color of selected text has been changed to accent color - [#72](https://github.com/Phixyn/no-bs-looper/issues/72) (thanks [@tomwalsh-home](https://github.com/tomwalsh-home))
 - Server messages now include a `type` property
 - Server now sends more detailed error messages to clients
 - Client's `onmessage` handler now checks server message contents
