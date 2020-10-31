@@ -7,23 +7,41 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Primary Meta Tags -->
     <meta name="title" content="No BS YouTube Looper" />
-    <meta name="description" content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it." />
+    <meta
+      name="description"
+      content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it."
+    />
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://ytlooper.phixyn.com/" />
     <meta property="og:title" content="No BS YouTube Looper" />
-    <meta property="og:description" content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it." />
-    <meta property="og:image" content="http://cdn.phixyn.com/ytlooper/screenshots/desktop_demo_yt_controls.png" />
+    <meta
+      property="og:description"
+      content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it."
+    />
+    <meta
+      property="og:image"
+      content="http://cdn.phixyn.com/ytlooper/screenshots/desktop_demo_yt_controls.png"
+    />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="http://ytlooper.phixyn.com/" />
     <meta name="twitter:title" content="No BS YouTube Looper" />
-    <meta name="twitter:description" content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it." />
+    <meta
+      name="twitter:description"
+      content="A mobile-friendly website that loops YouTube videos. Easy to use and no distractions or ad banners. Loop an entire YouTube video or a portion of it."
+    />
     <meta name="twitter:site" content="@phixyn" />
     <meta name="twitter:creator" content="@phixyn" />
-    <meta name="twitter:image" content="http://cdn.phixyn.com/ytlooper/screenshots/desktop_demo_yt_controls.png" />
-    <meta name="twitter:image:alt" content="No BS YouTube looper preview image (desktop)." />
+    <meta
+      name="twitter:image"
+      content="http://cdn.phixyn.com/ytlooper/screenshots/desktop_demo_yt_controls.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="No BS YouTube looper preview image (desktop)."
+    />
     <title>No BS YouTube Looper</title>
 
     <link rel="stylesheet" href="css/foundation.min.css" />
@@ -53,90 +71,259 @@
           <div class="player-container responsive-embed widescreen">
             <!-- The <iframe> (and video player) will replace this <div> tag -->
             <div id="player"></div>
-          </div> <!-- .responsive-embed .widescreen -->
+          </div> <!-- .player-container .responsive-embed .widescreen -->
 
-          <div id="loop-portion-slider" class="slider" data-slider data-start="0" data-end="100" data-initial-start="0" data-initial-end="100" data-double-sided="true" data-changed-delay="500">
-            <span id="start-time-handle" class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="start-time"></span>
+          <div
+            id="loop-portion-slider"
+            class="slider"
+            data-slider
+            data-start="0"
+            data-end="100"
+            data-initial-start="0"
+            data-initial-end="100"
+            data-double-sided="true"
+            data-changed-delay="500"
+          >
+            <span
+              id="start-time-handle"
+              class="slider-handle"
+              data-slider-handle
+              role="slider"
+              tabindex="1"
+              aria-controls="start-time"
+            ></span>
             <span class="slider-fill" data-slider-fill></span>
-            <span id="end-time-handle" class="slider-handle" data-slider-handle role="slider" tabindex="1" aria-controls="end-time"></span>
+            <span
+              id="end-time-handle"
+              class="slider-handle"
+              data-slider-handle
+              role="slider"
+              tabindex="1"
+              aria-controls="end-time"
+            ></span>
             <!-- <input type="hidden" id="slider-start">
             <input type="hidden" id="slider-end"> -->
           </div> <!-- .slider -->
         </div> <!-- .cell -->
       </div> <!-- .grid-x -->
 
-      <form id="video-form" class="grid-x grid-padding-x grid-padding-y" data-abide novalidate>
+      <form
+        id="video-form"
+        class="grid-x grid-padding-x grid-padding-y"
+        data-abide
+        novalidate
+      >
         <!-- Video ID -->
-        <div class="cell small-12 medium-8 large-8 medium-offset-2 large-offset-2">
+        <div
+          class="cell small-12 medium-8 large-8 medium-offset-2 large-offset-2"
+        >
           <label>Video link or ID
             <div class="input-group">
-              <input type="text" id="video-id" class="input-group-field" name="video-id" placeholder="Video link or ID" value="KcUnXunuDTs" aria-describedby="video-id-hint" aria-errormessage="video-id-error" data-autoselect="true" required>
+              <input
+                type="text"
+                id="video-id"
+                class="input-group-field"
+                name="video-id"
+                placeholder="Video link or ID"
+                value="KcUnXunuDTs"
+                aria-describedby="video-id-hint"
+                aria-errormessage="video-id-error"
+                data-autoselect="true"
+                required
+              />
               <div class="input-group-button">
-                <input type="button" id="update-btn" class="button primary" name="update-btn" value="Update" onclick="updatePlayer()">
+                <input
+                  type="button"
+                  id="update-btn"
+                  class="button primary"
+                  name="update-btn"
+                  value="Update"
+                  onclick="updatePlayer()"
+                />
               </div>
             </div> <!-- .input-group -->
-            <span id="video-id-error" class="form-error" data-form-error-for="video-id" data-form-error-on="required">
-              This can't be empty. Type or paste in a valid YouTube link or video ID.
+            <span
+              id="video-id-error"
+              class="form-error"
+              data-form-error-for="video-id"
+              data-form-error-on="required"
+            >
+              This can't be empty. Type or paste in a valid YouTube link or
+              video ID.
             </span>
-            <span class="form-error" data-form-error-for="video-id" data-form-error-on="pattern">
-              This link/ID didn't work :( Make sure it's a link to a video that starts with 'http://' or 'https://', or an 11-character video ID.
+            <span
+              class="form-error"
+              data-form-error-for="video-id"
+              data-form-error-on="pattern"
+            >
+              This link/ID didn't work :( Make sure it's a link to a video that
+              starts with 'http://' or 'https://', or an 11-character video ID.
             </span>
           </label>
-          <p class="help-text" id="video-id-hint">Paste a YouTube link or video ID here (e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ).</p>
-        </div> <!-- .cell -->
+          <p class="help-text" id="video-id-hint">
+            Paste a YouTube link or video ID here (e.g.
+            https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+          </p>
+        </div>
+        <!-- .cell -->
 
         <!-- Start time -->
-        <div class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2">
+        <div
+          class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2"
+        >
           <label>Start time (seconds)
             <div class="input-group">
-              <input type="number" id="start-time" class="input-group-field" name="start-time" placeholder="Start time (seconds)" value="0" aria-describedby="start-time-hint" aria-errormessage="start-time-error" required pattern="number">
+              <input
+                type="number"
+                id="start-time"
+                class="input-group-field"
+                name="start-time"
+                placeholder="Start time (seconds)"
+                value="0"
+                aria-describedby="start-time-hint"
+                aria-errormessage="start-time-error"
+                required
+                pattern="number"
+              />
               <div class="input-group-button">
-                <input type="button" id="start-to-current-btn" class="button primary" name="start-to-current-btn" value="Current" onclick="setStartTimeToCurrent()">
+                <input
+                  type="button"
+                  id="start-to-current-btn"
+                  class="button primary"
+                  name="start-to-current-btn"
+                  value="Current"
+                  onclick="setStartTimeToCurrent()"
+                />
               </div>
             </div> <!-- .input-group -->
-            <span id="start-time-error" class="form-error" data-form-error-for="start-time">
+            <span
+              id="start-time-error"
+              class="form-error"
+              data-form-error-for="start-time"
+            >
               Invalid start time. Numbers only and can't be empty.
             </span>
           </label>
-          <p class="help-text" id="start-time-hint">Loop starts at this time.</p>
+          <p class="help-text" id="start-time-hint">
+            Loop starts at this time.
+          </p>
         </div> <!-- .cell -->
 
         <!-- End time -->
         <div class="cell small-6 medium-4 large-4">
           <label>End time (seconds)
             <div class="input-group">
-              <input type="number" id="end-time" class="input-group-field" name="end-time" placeholder="End time (seconds)" value="100" min="1" aria-describedby="end-time-hint" aria-errormessage="end-time-error" required pattern="number">
+              <input
+                type="number"
+                id="end-time"
+                class="input-group-field"
+                name="end-time"
+                placeholder="End time (seconds)"
+                value="100"
+                min="1"
+                aria-describedby="end-time-hint"
+                aria-errormessage="end-time-error"
+                required
+                pattern="number"
+              />
               <div class="input-group-button">
-                <input type="button" id="end-to-current-btn" class="button primary" name="end-to-current-btn" value="Current" onclick="setEndTimeToCurrent()">
+                <input
+                  type="button"
+                  id="end-to-current-btn"
+                  class="button primary"
+                  name="end-to-current-btn"
+                  value="Current"
+                  onclick="setEndTimeToCurrent()"
+                />
               </div>
             </div> <!-- .input-group -->
-            <span id="end-time-error" class="form-error" data-form-error-for="end-time">
+            <span
+              id="end-time-error"
+              class="form-error"
+              data-form-error-for="end-time"
+            >
               Invalid end time. Numbers only and can't be empty.
             </span>
           </label>
-          <p class="help-text" id="end-time-hint">Loop ends (restarts) at this time.</p>
+          <p class="help-text" id="end-time-hint">
+            Loop ends (restarts) at this time.
+          </p>
         </div> <!-- .cell -->
 
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
           <!-- Control buttons -->
-          <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-          <input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights" data-tooltip tabindex="1" title="Dim everything except the player" data-hover-delay="350" data-click-open="false" data-disable-for-touch="true" data-position="bottom" data-alignment="center" onclick="enableTotl()">
-          <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop" data-open="share-modal">
+          <input
+            type="button"
+            id="toggle-vid-btn"
+            class="button primary"
+            name="toggle-vid-btn"
+            value="Show/hide video"
+            onclick="togglePlayer()"
+          />
+          <input
+            type="button"
+            id="lights-off-btn"
+            class="button primary"
+            name="lights-off-btn"
+            value="Turn off the lights"
+            data-tooltip
+            tabindex="1"
+            title="Dim everything except the player"
+            data-hover-delay="350"
+            data-click-open="false"
+            data-disable-for-touch="true"
+            data-position="bottom"
+            data-alignment="center"
+            onclick="enableTotl()"
+          />
+          <input
+            type="button"
+            id="share-btn"
+            class="button primary"
+            name="share-btn"
+            value="Share/save loop"
+            data-open="share-modal"
+          />
         </div> <!-- .cell -->
       </form> <!-- .grid-x -->
     </div> <!-- .grid-container -->
 
-    <div id="share-modal" class="reveal" aria-labelledby="share-modal-header" data-reveal data-animation-out="fade-out fast">
+    <div
+      id="share-modal"
+      class="reveal"
+      aria-labelledby="share-modal-header"
+      data-reveal
+      data-animation-out="fade-out fast"
+    >
       <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
       <form>
         <label for="share-link" class="show-for-sr">Share link</label>
         <div class="phix-tooltip phix-tooltip--bottom">
-          <input type="text" id="share-link" name="share-link" placeholder="Share link" aria-describedby="share-link-hint" data-autocopy="true" data-autoselect="true" readonly>
-          <span class="phix-tooltip-text" id="share-link-tooltip">Link copied!</span>
+          <input
+            type="text"
+            id="share-link"
+            name="share-link"
+            placeholder="Share link"
+            aria-describedby="share-link-hint"
+            data-autocopy="true"
+            data-autoselect="true"
+            readonly
+          />
+          <span class="phix-tooltip-text" id="share-link-tooltip">
+            Link copied!
+          </span>
         </div>
-        <p class="help-text" id="share-link-hint">Copy this link to share your loop with others. You can also bookmark this page to save your loop.</p>
+        <p class="help-text" id="share-link-hint">
+          Copy this link to share your loop with others. You can also bookmark
+          this page to save your loop.
+        </p>
       </form>
-      <button class="close-button" data-close aria-label="Close share modal" type="button">
+      <button
+        class="close-button"
+        data-close
+        aria-label="Close share modal"
+        type="button"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -145,8 +332,15 @@
     <div class="grid-y grid-margin-y" id="footer">
       <div class="cell">
         <p class="copyright-msg">
-          No Bullshit Software by <a href="https://twitter.com/Phixyn" title="Phixyn on Twitter">Phixyn</a>. No bullshit, no rights reserved. Also, no warranty.<br />
-          v1.0.0 (8d9ad71) &nbsp; | &nbsp; <a href="https://github.com/Phixyn/no-bs-looper" title="GitHub repository">GitHub</a>
+          No BS Software by
+          <a href="https://twitter.com/Phixyn" title="Phixyn on Twitter">
+          Phixyn</a>. No BS, no rights reserved. Also, no warranty.
+          <br />
+          v1.0.0 (8d9ad71) &nbsp; | &nbsp;
+          <a
+            href="https://github.com/Phixyn/no-bs-looper"
+            title="GitHub repository"
+          >GitHub</a>
         </p>
       </div> <!-- .cell -->
     </div> <!-- .grid-y -->
