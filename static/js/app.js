@@ -185,6 +185,16 @@ $(function () {
   let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  /*
+   * Add event handler for "Turn off the lights" overlay. This handler disables
+   * the overlay by setting the div element's 'display' property to 'none',
+   * with a fancy fade animation. Since the div covers the whole page, this
+   * gets fired when users click or tap anywhere on the page.
+   */
+  $("#totl-overlay").on("click tap", function () {
+    $(this).fadeOut(ANIMATION_DURATION_DEFAULT);
+  });
+
   // State setting and updating
   console.debug("[DEBUG] Current history.state object is:");
   console.debug(history.state);
