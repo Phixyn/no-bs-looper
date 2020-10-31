@@ -418,10 +418,13 @@ input:disabled, textarea:disabled {
 ----------------------------------- */
 
 .player-container {
+  opacity: 1;
   z-index: 300;
   box-shadow: 0px 0px 20px 5px var(--accent-background-color-transparent);
   /* Arghhhh can't decide, I'm no designer :( */
   /* box-shadow: 0px 0px 20px 2px var(--accent-background-color-transparent); */
+  /* Player toggle transition */
+  transition: opacity 0.3s linear;
 }
 
 /* -----------------------------------

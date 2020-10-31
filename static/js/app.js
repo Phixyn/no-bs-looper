@@ -450,11 +450,16 @@ function updatePlayer() {
 }
 
 /**
- * Toggles the player Iframe visibility with a fancy fade animation.
+ * Toggles the opacity of the player's parent element, making the player
+ * visible or invisible. Note that unlike jQuery's toggle(), this preserves
+ * the space taken by the element, as it doesn't modify the 'display' property.
  */
 function togglePlayer() {
-  console.debug("[DEBUG] Toggling player visibility.");
-  $("#player").fadeToggle();
+  if ($("#player").parent().css("opacity") === "1") {
+    $("#player").parent().css("opacity", "0");
+  } else {
+    $("#player").parent().css("opacity", "1");
+  }
 }
 
 /**
