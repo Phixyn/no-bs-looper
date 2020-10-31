@@ -463,6 +463,15 @@ function togglePlayer() {
 }
 
 /**
+ * Toggles the "Turn off the lights" (TOTL) feature on by displaying the TOTL
+ * overlay. This overlay is a div with a dark background that covers every
+ * element except the player.
+ */
+function enableTotl() {
+  $("#totl-overlay").fadeIn(ANIMATION_DURATION_SLOW);
+}
+
+/**
  * Updates the start and end times for the video's loop portion based on the
  * values in the HTML input elements (i.e. set by the user!).
  *
