@@ -31,6 +31,9 @@
   </head>
 
   <body>
+    <!-- TURN OFF THE LIGHTS OVERLAY -->
+    <div id="totl-overlay"></div>
+
     <!-- TOP BAR -->
     <div class="top-bar" id="top-navbar">
       <div class="top-bar-left">
@@ -76,7 +79,7 @@
               This can't be empty. Type or paste in a valid YouTube link or video ID.
             </span>
             <span class="form-error" data-form-error-for="video-id" data-form-error-on="pattern">
-              This link didn't work :( Make sure it's a link to a video that starts with 'http://' or 'https://'
+              This link/ID didn't work :( Make sure it's a link to a video that starts with 'http://' or 'https://', or an 11-character video ID.
             </span>
           </label>
           <p class="help-text" id="video-id-hint">Paste a YouTube link or video ID here (e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ).</p>
@@ -117,8 +120,7 @@
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
           <!-- Control buttons -->
           <input type="button" id="toggle-vid-btn" class="button primary" name="toggle-vid-btn" value="Show/hide video" onclick="togglePlayer()">
-          <!-- TODO #10: Not yet implemented -->
-          <!--<input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights">-->
+          <input type="button" id="lights-off-btn" class="button primary" name="lights-off-btn" value="Turn off the lights" data-tooltip tabindex="1" title="Dim everything except the player" data-hover-delay="350" data-click-open="false" data-disable-for-touch="true" data-position="bottom" data-alignment="center" onclick="enableTotl()">
           <input type="button" id="share-btn" class="button primary" name="share-btn" value="Share/save loop" data-open="share-modal">
         </div> <!-- .cell -->
       </form> <!-- .grid-x -->
