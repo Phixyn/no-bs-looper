@@ -411,8 +411,7 @@ button.has-tip,
 .phix-tooltip .phix-tooltip-text {
   display: none;
   position: absolute;
-  bottom: -1.69rem;
-  transform: translateX(150%);
+  transform: translateX(150%) translateY(-20%);
   min-width: 8.75rem;
   max-width: 16rem;
   padding: 0.3125rem;
