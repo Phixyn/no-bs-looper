@@ -325,6 +325,30 @@ input:disabled, textarea:disabled {
 }
 
 /* -----------------------------------
+    FOUNDATION TOOLTIP
+----------------------------------- */
+
+input.has-tip {
+  font-weight: 400;
+}
+
+button.has-tip,
+  [type="button"].has-tip {
+  cursor: pointer;
+}
+
+.tooltip {
+  z-index: 2;
+  border: 2px solid var(--primary-border-color);
+  background-color: var(--accent-background-color-transparent);
+  color: var(--primary-text-color);
+}
+
+.tooltip.bottom::before {
+  border-color: transparent transparent var(--accent-background-color-transparent);
+}
+
+/* -----------------------------------
     SLIDER
 ----------------------------------- */
 
