@@ -7,7 +7,9 @@
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
+  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.0">
+    <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
+  </a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
   </a>
