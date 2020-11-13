@@ -153,7 +153,7 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 ## Contact
 
-> Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](http://phixyn.com)
+> Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](https://phixyn.com)
 
 ## Acknowledgements
 
