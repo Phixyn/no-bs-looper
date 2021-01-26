@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.5.1 (no bs edition)
+Version: 0.5.2 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -79,12 +79,18 @@ h4,
 
 a {
   color: var(--primary-link-color);
+  transition: color 0.2s ease-out;
 }
 
 a:focus,
 a:hover {
   color: var(--secondary-link-color);
   text-decoration: none;
+}
+
+a:active,
+a:focus {
+  outline: none;
 }
 
 hr {
