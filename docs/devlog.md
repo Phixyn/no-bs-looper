@@ -195,6 +195,10 @@ A 3rd party clipboard library: https://clipboardjs.com
 * [GitHub - aaugustin/websockets: Library for building WebSocket servers and clients in Python](https://github.com/aaugustin/websockets) - Python library we're using
     * [Getting started — websockets 8.1 documentation](https://websockets.readthedocs.io/en/stable/intro.html)
     * [Deployment — websockets 8.1 documentation](https://websockets.readthedocs.io/en/stable/deployment.html)
+    * [Secure Example — websockets 8.1 documentation](https://websockets.readthedocs.io/en/stable/intro.html#secure-example) - SSL example, also see links below
+* [ssl — TLS/SSL wrapper for socket objects — Python 3.9.1 documentation](https://docs.python.org/3/library/ssl.html)
+    * [ssl security — TLS/SSL wrapper for socket objects — Python 3.9.1 documentation](https://docs.python.org/3/library/ssl.html#ssl-security)
+    * [`PROTOCOL_TLS_SERVER` — TLS/SSL wrapper for socket objects — Python 3.9.1 documentation](https://docs.python.org/3/library/ssl.html#ssl.PROTOCOL_TLS_SERVER)
 
 ### Libraries/modules
 
