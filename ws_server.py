@@ -9,12 +9,13 @@ server to.
 
 
 __author__ = "Phixyn"
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 
 import asyncio
 import json
 import logging
+import ssl
 import sys
 import urllib.parse
 import urllib.request
@@ -160,7 +161,42 @@ if __name__ == "__main__":
     # Add your local IP address here
     HOST = ""
     PORT = 14670
+    USE_SSL = False
+    # /path/to/certchain.pem
+    CERTCHAIN_PATH = None
+    # If your private key is not in the certificate chain container, you may
+    # specify the path to the private key file here. Otherwise the private key
+    # will be taken from the certificate chain file.
+    KEYFILE_PATH = None
 
-    start_server = websockets.serve(server_handler, HOST, PORT)
+    if USE_SSL:
+        logger.debug("Using SSL: %s", USE_SSL)
+        logger.debug("Certchain path: %s", CERTCHAIN_PATH)
+        logger.debug("Keyfile path: %s", KEYFILE_PATH)
+
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        try:
+            ssl_context.load_cert_chain(CERTCHAIN_PATH, KEYFILE_PATH)
+        except TypeError as ex:
+            logger.exception(ex)
+            sys.exit(1)
+        except FileNotFoundError as ex:
+            logger.exception(ex.strerror)
+            sys.exit(1)
+        except ssl.SSLError as ex:
+            logger.exception(ex)
+            sys.exit(1)
+        except ssl.SSLCertVerificationError as ex:
+            logger.exception(ex.verify_message)
+            logger.debug(ex.verify_code)
+            sys.exit(1)
+
+        start_server = websockets.serve(
+            server_handler, HOST, PORT, ssl=ssl_context
+        )
+    else:
+        logger.debug("Using SSL: %s", USE_SSL)
+        start_server = websockets.serve(server_handler, HOST, PORT)
+
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
