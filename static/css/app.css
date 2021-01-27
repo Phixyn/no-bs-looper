@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.5.2 (no bs edition)
+Version: 0.5.3 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -13,8 +13,8 @@ Author:  Phixyn
 :root {
   --primary-background-color: rgb(18, 18, 18);
   --secondary-background-color: rgb(32, 32, 32);
-  --accent-background-color: rgb(0, 0, 0);
-  --accent-background-color-transparent: rgba(0, 0, 0, 0.5);
+  --accent-background-color: rgb(10, 10, 10);
+  --accent-background-color-transparent: rgba(10, 10, 10, 0.5);
 
   /* TODO: Improve this color. Maybe darker or more transparent? */
   --primary-container-color: rgba(25, 25, 25, 0.8);
@@ -31,6 +31,8 @@ Author:  Phixyn
   /* --accent-border-color: rgb(79, 79, 79); */
   --primary-separator-color: rgb(66, 66, 66);
   --secondary-separator-color: rgb(37, 37, 37);
+
+  --container-shadow-color: rgba(0, 0, 0, 0.5);
 
   /* Accent colors that make the theme "pop" */
   --primary-accent-color: rgb(166, 33, 57);
@@ -66,7 +68,7 @@ Author:  Phixyn
 ----------------------------------- */
 
 body {
-  background: var(--primary-background-color) url("../images/zwartevilt.png");
+  background-color: var(--primary-background-color);
   color: var(--primary-text-color);
 }
 
@@ -186,13 +188,13 @@ label {
 
 .is-dropdown-submenu.js-dropdown-active {
   border: 1px solid var(--primary-border-color);
-  background: var(--accent-background-color-transparent);
+  background-color: var(--accent-background-color-transparent);
   margin-top: 0.3rem;
 }
 
 li.is-submenu-item > a:focus,
 li.is-submenu-item > a:hover {
-  background: var(--accent-background-color);
+  background-color: var(--accent-background-color);
 }
 
 /* -----------------------------------
@@ -472,9 +474,9 @@ button.has-tip,
 .player-container {
   opacity: 1;
   z-index: 300;
-  box-shadow: 0px 0px 20px 5px var(--accent-background-color-transparent);
+  box-shadow: 0px 0px 20px 5px var(--container-shadow-color);
   /* Arghhhh can't decide, I'm no designer :( */
-  /* box-shadow: 0px 0px 20px 2px var(--accent-background-color-transparent); */
+  /* box-shadow: 0px 0px 20px 2px var(--container-shadow-color); */
   /* Player toggle transition */
   transition: opacity 0.3s linear;
 }
