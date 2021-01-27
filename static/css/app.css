@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.5.3 (no bs edition)
+Version: 0.5.4 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -142,8 +142,8 @@ label {
 ----------------------------------- */
 
 .menu .menu-text {
-  padding: 0 2.5rem;
-  font-size: 2vw;
+  padding: 0.5rem 2.5rem;
+  font-size: 1.25rem;
   font-weight: normal;
   letter-spacing: 0.15em;
 }
