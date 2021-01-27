@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.5.2 (no bs edition)
+Version: 0.5.3 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -31,6 +31,8 @@ Author:  Phixyn
   /* --accent-border-color: rgb(79, 79, 79); */
   --primary-separator-color: rgb(66, 66, 66);
   --secondary-separator-color: rgb(37, 37, 37);
+
+  --container-shadow-color: rgba(0, 0, 0, 0.5);
 
   /* Accent colors that make the theme "pop" */
   --primary-accent-color: rgb(166, 33, 57);
@@ -472,9 +474,9 @@ button.has-tip,
 .player-container {
   opacity: 1;
   z-index: 300;
-  box-shadow: 0px 0px 20px 5px var(--accent-background-color-transparent);
+  box-shadow: 0px 0px 20px 5px var(--container-shadow-color);
   /* Arghhhh can't decide, I'm no designer :( */
-  /* box-shadow: 0px 0px 20px 2px var(--accent-background-color-transparent); */
+  /* box-shadow: 0px 0px 20px 2px var(--container-shadow-color); */
   /* Player toggle transition */
   transition: opacity 0.3s linear;
 }
