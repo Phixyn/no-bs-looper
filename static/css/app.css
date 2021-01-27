@@ -13,8 +13,8 @@ Author:  Phixyn
 :root {
   --primary-background-color: rgb(18, 18, 18);
   --secondary-background-color: rgb(32, 32, 32);
-  --accent-background-color: rgb(0, 0, 0);
-  --accent-background-color-transparent: rgba(0, 0, 0, 0.5);
+  --accent-background-color: rgb(10, 10, 10);
+  --accent-background-color-transparent: rgba(10, 10, 10, 0.5);
 
   /* TODO: Improve this color. Maybe darker or more transparent? */
   --primary-container-color: rgba(25, 25, 25, 0.8);
@@ -66,7 +66,7 @@ Author:  Phixyn
 ----------------------------------- */
 
 body {
-  background: var(--primary-background-color) url("../images/zwartevilt.png");
+  background-color: var(--primary-background-color);
   color: var(--primary-text-color);
 }
 
@@ -186,13 +186,13 @@ label {
 
 .is-dropdown-submenu.js-dropdown-active {
   border: 1px solid var(--primary-border-color);
-  background: var(--accent-background-color-transparent);
+  background-color: var(--accent-background-color-transparent);
   margin-top: 0.3rem;
 }
 
 li.is-submenu-item > a:focus,
 li.is-submenu-item > a:hover {
-  background: var(--accent-background-color);
+  background-color: var(--accent-background-color);
 }
 
 /* -----------------------------------
