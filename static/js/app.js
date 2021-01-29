@@ -32,6 +32,7 @@ var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
 var shareLinkInput;
+var isInitialVideo = true;
 
 // Websocket client
 
@@ -70,8 +71,21 @@ websocket.onmessage = (event) => {
       break;
     case TYPE_VIDEO_INFO_MESSAGE:
       // We got a new video duration, so update the slider and input elements
-      state.end = parseInt(msg.content.length_seconds, 10);
-      updateSliderAndInputAttributes(state.start, state.end);
+      let videoDuration = parseInt(msg.content.length_seconds, 10);
+      // Preserve state.end value if this is the initial video's duration
+      if (!isInitialVideo) {
+        state.end = videoDuration;
+      }
+
+      updateSliderAndInputAttributes(state.start, videoDuration);
+
+      // TODO #54: This shouldn't be needed because it's already set in
+      //    updateSliderAndInputAttributes(). But startTime value is wrong on
+      //    initial video without it...
+      console.debug(
+        "[DEBUG] Setting numeric input fields from websocket onmessage."
+      );
+      startTimeInput.val(state.start.toString()).change();
 
       // TODO #52: Workaround for slider fill bug
       setTimeout(() => {
@@ -217,9 +231,6 @@ $(function () {
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
-    // Do this just in case history.state doesn't get automatically set
-    // from the URL's querystring. Same applies to the call below.
-    updateHistoryState();
 
     /* Update text input for video ID (remember we can't update numeric inputs
      * here yet, because we need to set the "max" attributes. We can only set
@@ -237,8 +248,11 @@ $(function () {
       start: parseInt(startTimeInput.val(), 10),
       end: parseInt(endTimeInput.val(), 10),
     };
-    updateHistoryState();
   }
+
+  // Do this just in case history.state doesn't get automatically set
+  // from the URL's querystring.
+  updateHistoryState();
 });
 
 // YouTube Player event handlers
@@ -307,32 +321,19 @@ function onPlayerReady(event) {
    */
   $(sliderDiv).on("changed.zf.slider", () => {
     /* Only update state (used to set the querystring portion of the URL) after
-     * the start/end times haven't been updated for 2000ms. The idea is to
+     * the start/end times haven't been updated for 500ms. The idea is to
      * reduce lag and overhead when updating the state. Updating the state
-     * everytime the slider is moved causes massive lag. Updating it every
-     * 500ms is slightly better, but can be laggy if a browser is already under
-     * heavy load (e.g. many tabs loaded). 2000 to 5000ms seems like a good
-     * value, but larger values could leave users confused as to why the
-     * sharable URL they copied (which is set based on state) is wrong if they
-     * copy it too fast after moving the slider.
+     * everytime the slider is moved causes massive lag. Updating it 500ms
+     * after the user finished moving the slider is better. Values between
+     * 500-2000ms seem good - larger values could leave users confused as to
+     * why the sharable URL they copied (which is set based on state) is wrong
+     * if they copy it too fast after moving the slider.
      */
     updateHistoryState();
   });
 
-  updateSliderAndInputAttributes(
-    state.start,
-    parseInt(event.target.getDuration(), 10)
-  );
-
-  // TODO #54: This shouldn't be needed because it's already set in
-  //    updateSliderAndInputAttributes(). But the app breaks without it.
-  console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
-  startTimeInput.val(state.start.toString()).change();
-
-  // TODO #52: Workaround for slider fill bug
-  setTimeout(() => {
-    loopPortionSlider._reflow();
-  }, TIMEOUT_SLIDER_REFLOW);
+  // Request video duration and other info from backend server
+  websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
 
 var timer = null;
@@ -395,6 +396,13 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
+
+  // Initial video is the one that shows when page first loads, thus this
+  // should be set to false the first time a new video is loaded.
+  if (isInitialVideo) {
+    isInitialVideo = false;
+  }
+
   let videoIdInputVal = videoIdInput.val();
 
   if (isValidHttpUrl(videoIdInputVal)) {
