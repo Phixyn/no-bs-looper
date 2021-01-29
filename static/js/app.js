@@ -32,6 +32,7 @@ var loopPortionSlider;
 var startTimeSliderHandle;
 var endTimeSliderHandle;
 var shareLinkInput;
+var isInitialVideo = true;
 
 // Websocket client
 
@@ -70,8 +71,23 @@ websocket.onmessage = (event) => {
       break;
     case TYPE_VIDEO_INFO_MESSAGE:
       // We got a new video duration, so update the slider and input elements
-      state.end = parseInt(msg.content.length_seconds, 10);
-      updateSliderAndInputAttributes(state.start, state.end);
+      state.videoDuration = parseInt(msg.content.length_seconds, 10);
+      // state.end = state.videoDuration;
+      // Clamp state.end to videoDuration
+      if (!isInitialVideo || state.end > state.videoDuration) {
+        state.end = state.videoDuration;
+      }
+
+      console.debug("STATE FROM ONMESSAGE IS");
+      console.debug(state);
+      // TODO try state.end and remove videoDuration
+      updateSliderAndInputAttributes(state.start, state.videoDuration);
+
+      console.debug(
+        "[DEBUG] Setting numeric input fields from websocket onmessage."
+      );
+      startTimeInput.val(state.start.toString()).change();
+      endTimeInput.val(state.end.toString()).change();
 
       // TODO #52: Workaround for slider fill bug
       setTimeout(() => {
@@ -319,15 +335,13 @@ function onPlayerReady(event) {
     updateHistoryState();
   });
 
-  updateSliderAndInputAttributes(
-    state.start,
-    parseInt(event.target.getDuration(), 10)
-  );
+  websocket.send(JSON.stringify({ get_video_info: state.v }));
 
   // TODO #54: This shouldn't be needed because it's already set in
-  //    updateSliderAndInputAttributes(). But the app breaks without it.
-  console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
-  startTimeInput.val(state.start.toString()).change();
+  //    updateSliderAndInputAttributes(). But the slider breaks without it.
+  // console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
+  // startTimeInput.val(state.start.toString()).change();
+  // endTimeInput.val(state.end.toString()).change();
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
@@ -395,6 +409,13 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
+
+  // Initial video is the one that shows when page first loads, thus this
+  // should be set to false the first time a new video is loaded.
+  if (isInitialVideo) {
+    isInitialVideo = false;
+  }
+
   let videoIdInputVal = videoIdInput.val();
 
   if (isValidHttpUrl(videoIdInputVal)) {
