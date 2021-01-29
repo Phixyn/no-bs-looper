@@ -80,7 +80,8 @@ websocket.onmessage = (event) => {
       updateSliderAndInputAttributes(state.start, videoDuration);
 
       // TODO #54: This shouldn't be needed because it's already set in
-      //    updateSliderAndInputAttributes(). But the slider breaks without it.
+      //    updateSliderAndInputAttributes(). But startTime value is wrong on
+      //    initial video without it...
       console.debug(
         "[DEBUG] Setting numeric input fields from websocket onmessage."
       );
@@ -321,18 +322,18 @@ function onPlayerReady(event) {
    */
   $(sliderDiv).on("changed.zf.slider", () => {
     /* Only update state (used to set the querystring portion of the URL) after
-     * the start/end times haven't been updated for 2000ms. The idea is to
+     * the start/end times haven't been updated for 500ms. The idea is to
      * reduce lag and overhead when updating the state. Updating the state
-     * everytime the slider is moved causes massive lag. Updating it every
-     * 500ms is slightly better, but can be laggy if a browser is already under
-     * heavy load (e.g. many tabs loaded). 2000 to 5000ms seems like a good
-     * value, but larger values could leave users confused as to why the
-     * sharable URL they copied (which is set based on state) is wrong if they
-     * copy it too fast after moving the slider.
+     * everytime the slider is moved causes massive lag. Updating it 500ms
+     * after the user finished moving the slider is better. Values between
+     * 500-2000ms seem good - larger values could leave users confused as to
+     * why the sharable URL they copied (which is set based on state) is wrong
+     * if they copy it too fast after moving the slider.
      */
     updateHistoryState();
   });
 
+  // Request video duration and other info from backend server
   websocket.send(JSON.stringify({ get_video_info: state.v }));
 
   // TODO #54: This shouldn't be needed because it's already set in
