@@ -231,9 +231,6 @@ $(function () {
     };
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
-    // Do this just in case history.state doesn't get automatically set
-    // from the URL's querystring. Same applies to the call below.
-    updateHistoryState();
 
     /* Update text input for video ID (remember we can't update numeric inputs
      * here yet, because we need to set the "max" attributes. We can only set
@@ -251,8 +248,11 @@ $(function () {
       start: parseInt(startTimeInput.val(), 10),
       end: parseInt(endTimeInput.val(), 10),
     };
-    updateHistoryState();
   }
+
+  // Do this just in case history.state doesn't get automatically set
+  // from the URL's querystring.
+  updateHistoryState();
 });
 
 // YouTube Player event handlers
