@@ -86,7 +86,6 @@ websocket.onmessage = (event) => {
         "[DEBUG] Setting numeric input fields from websocket onmessage."
       );
       startTimeInput.val(state.start.toString()).change();
-      endTimeInput.val(state.end.toString()).change();
 
       // TODO #52: Workaround for slider fill bug
       setTimeout(() => {
@@ -335,17 +334,6 @@ function onPlayerReady(event) {
 
   // Request video duration and other info from backend server
   websocket.send(JSON.stringify({ get_video_info: state.v }));
-
-  // TODO #54: This shouldn't be needed because it's already set in
-  //    updateSliderAndInputAttributes(). But the slider breaks without it.
-  // console.debug("[DEBUG] Setting numeric input fields from YT onPlayerReady.");
-  // startTimeInput.val(state.start.toString()).change();
-  // endTimeInput.val(state.end.toString()).change();
-
-  // TODO #52: Workaround for slider fill bug
-  setTimeout(() => {
-    loopPortionSlider._reflow();
-  }, TIMEOUT_SLIDER_REFLOW);
 }
 
 var timer = null;
