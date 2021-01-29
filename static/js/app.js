@@ -71,18 +71,16 @@ websocket.onmessage = (event) => {
       break;
     case TYPE_VIDEO_INFO_MESSAGE:
       // We got a new video duration, so update the slider and input elements
-      state.videoDuration = parseInt(msg.content.length_seconds, 10);
-      // state.end = state.videoDuration;
-      // Clamp state.end to videoDuration
-      if (!isInitialVideo || state.end > state.videoDuration) {
-        state.end = state.videoDuration;
+      let videoDuration = parseInt(msg.content.length_seconds, 10);
+      // Preserve state.end value if this is the initial video's duration
+      if (!isInitialVideo) {
+        state.end = videoDuration;
       }
 
-      console.debug("STATE FROM ONMESSAGE IS");
-      console.debug(state);
-      // TODO try state.end and remove videoDuration
-      updateSliderAndInputAttributes(state.start, state.videoDuration);
+      updateSliderAndInputAttributes(state.start, videoDuration);
 
+      // TODO #54: This shouldn't be needed because it's already set in
+      //    updateSliderAndInputAttributes(). But the slider breaks without it.
       console.debug(
         "[DEBUG] Setting numeric input fields from websocket onmessage."
       );
