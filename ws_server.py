@@ -9,7 +9,7 @@ server to.
 
 
 __author__ = "Phixyn"
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 
 
 import asyncio
