@@ -199,6 +199,12 @@ $(function () {
   let firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
+  // Register event handlers
+  $("#update-btn").on("click tap", updatePlayer);
+  $("#start-to-current-btn").on("click tap", setStartTimeToCurrent);
+  $("#end-to-current-btn").on("click tap", setEndTimeToCurrent);
+  $("#toggle-vid-btn").on("click tap", togglePlayer);
+  $("#lights-off-btn").on("click tap", enableTotl);
   /*
    * Add event handler for "Turn off the lights" overlay. This handler disables
    * the overlay by setting the div element's 'display' property to 'none',
@@ -210,6 +216,7 @@ $(function () {
   });
 
   // State setting and updating
+  // TODO #114: Move this to a separate function, setInitialState()
   console.debug("[DEBUG] Current history.state object is:");
   console.debug(history.state);
 
