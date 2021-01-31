@@ -280,7 +280,6 @@ function onYouTubeIframeAPIReady() {
       rel: 0,
       start: state.start,
       modestBranding: 1,
-      playlist: state.v,
       loop: 1,
     },
     events: {
@@ -341,6 +340,12 @@ function onPlayerReady(event) {
 
   // Request video duration and other info from backend server
   websocket.send(JSON.stringify({ get_video_info: state.v }));
+  /* Using a playlist is required to ensure that full videos loop without
+   * stopping. See comment above player.loadPlaylist() in updatePlayer()
+   * for more information.
+   */
+  player.cuePlaylist([state.v, state.v]);
+  player.setLoop(true);
 }
 
 var timer = null;
@@ -439,8 +444,8 @@ function updatePlayer() {
   console.log(`[INFO] Loading new video in player with ID '${state.v}'.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
-   * set 'playlist' and 'loop' in the 'playerVars' (see
-   * onYouTubeIframeAPIReady()).
+   * set 'loop: 1' in the 'playerVars' and call 'cuePlaylist()' (see
+   * onYouTubeIframeAPIReady() and onPlayerReady()) when setting up the player.
    *
    * Normally, we'd use player.loadVideoById(state.v), but then the video
    * wouldn't loop unless users explicitly set a loop portion using the slider.
