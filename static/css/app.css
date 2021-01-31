@@ -2,7 +2,7 @@
 ZURB Foundation Phixed Dark Theme
 No BS edition.
 
-Version: 0.5.4 (no bs edition)
+Version: 0.5.5 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -253,6 +253,7 @@ li.is-submenu-item > a:hover {
 .button {
   --button-main-color: rgb(25, 25, 25);
   --button-hover-color: var(--secondary-container-color);
+  --button-tap-highlight-color: rgba(36, 36, 36, 0);
   /* Could also add transparency to button on hover */
   /* --button-hover-color: rgba(36, 36, 36, 0.8); */
   --button-border-color: rgba(85, 85, 85, 0.25);
@@ -268,8 +269,11 @@ li.is-submenu-item > a:hover {
 .button.primary:hover,
 .button.primary:active,
 .button.primary:focus {
+  -webkit-tap-highlight-color: var(--button-tap-highlight-color);
+  -webkit-focus-ring-color: var(--secondary-border-color);
   background-color: var(--button-hover-color);
   color: var(--primary-text-color);
+  outline-color: var(--secondary-border-color);
 }
 
 /* -----------------------------------
