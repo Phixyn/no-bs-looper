@@ -33,7 +33,7 @@ Fixes a critical issue wherein the "Update" button would not work the first time
 
 ### Fixed
 
-- Fixed [#111](https://github.com/Phixyn/no-bs-looper/issues/111): Video player does not load a new video after clicking "Update" for the first time
+- Fixed [#111](https://github.com/Phixyn/no-bs-looper/issues/111): Videos will now successfully load after clicking "Update" for the first time
 
 ## [1.1.1](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.1) - 2021-01-29
 
