@@ -1,7 +1,7 @@
 # No BS Looper Development Log
 
 ```
-Version: 1.1.1
+Version: 1.1.2
 Description: A no BS YouTube looper.
 Project start: 2 June 2020
 GitHub: https://github.com/Phixyn/no-bs-looper

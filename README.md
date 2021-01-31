@@ -7,7 +7,7 @@
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.1">
+  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   </a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
@@ -131,7 +131,7 @@ If you can't host your own instance of the website, use any of the public instan
 
 | Owner  | Version                                                             | Link                                                       |
 | ------ | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Phixyn | [v1.1.1](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.1) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
+| Phixyn | [v1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
 
 If you decide to **host your own** public instance, feel free to update the README with a link to it and **make a PR.**
 
