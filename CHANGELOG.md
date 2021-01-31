@@ -8,17 +8,32 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Table of Contents
 
-- [1.1.1 - 2021-01-29](#111---2021-01-29)
+- [1.1.2 - 2021-01-31](#112---2021-01-31)
     - [Changed](#changed)
-    - [Removed](#removed)
     - [Fixed](#fixed)
+- [1.1.1 - 2021-01-29](#111---2021-01-29)
+    - [Changed](#changed-1)
+    - [Removed](#removed)
+    - [Fixed](#fixed-1)
     - [Security](#security)
 - [1.1.0 - 2020-10-31](#110---2020-10-31)
     - [Added](#added)
-    - [Changed](#changed-1)
-    - [Fixed](#fixed-1)
+    - [Changed](#changed-2)
+    - [Fixed](#fixed-2)
 - [1.0.0 - 2020-09-30](#100---2020-09-30)
     - [Added](#added-1)
+
+## [1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) - 2021-01-31
+
+Fixes a critical issue wherein the "Update" button would not work the first time it was clicked or tapped.
+
+### Changed
+
+- Changed outline and background colors of active/focused buttons on mobile to fit dark theme
+
+### Fixed
+
+- Fixed [#111](https://github.com/Phixyn/no-bs-looper/issues/111): Video player does not load a new video after clicking "Update" for the first time
 
 ## [1.1.1](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.1) - 2021-01-29
 
