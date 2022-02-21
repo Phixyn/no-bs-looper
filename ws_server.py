@@ -121,7 +121,7 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
     else:
         # TODO add more logging and could probably go to a separate function
         video_id = parsed_message["get_video_info"]
-        url = f"https://www.youtube.com/get_video_info?html5=1&video_id={video_id}"
+        url = f"https://www.youtube.com/get_video_info?html5=1&c=TVHTML5&cver=6.20180913&video_id={video_id}"
         # Perform request to YouTube server. It replies with a formencoded string,
         # which can be parsed with parse_qs.
         parsed_qs = urllib.parse.parse_qs(get_raw_html(url))
