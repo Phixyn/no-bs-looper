@@ -9,7 +9,7 @@ server to.
 
 
 __author__ = "Phixyn"
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 
 
 import asyncio
@@ -45,7 +45,7 @@ def get_raw_html(url: str) -> str:
     """Makes a simple HTTP GET request to the specified URL and returns the
     raw HTML response, if successful. Used to make the video info API
     request to YouTube.
-    
+
     Args:
         url: The URL of the webpage to get the HTML from.
 
@@ -77,6 +77,49 @@ def get_raw_html(url: str) -> str:
             logger.error("Failed to reach server.")
             logger.error("Reason: %s", url_error.reason)
 
+    return raw_html
+
+
+def execute_post_request(video_id: str):
+    request_url = f"https://www.youtube.com/youtubei/v1/player"
+    logger.debug("Making POST request to '{}'...".format(video_id))
+    request_body = {
+        "context": {
+            "client": {
+                "clientName": "ANDROID",
+                "clientVersion": "16.05"
+            }
+        },
+        "videoId": video_id
+    }
+    json_body = json.dumps(request_body)
+    encoded_json_body = json_body.encode("utf-8")
+    http_request = urllib.request.Request(
+        request_url,
+        data=encoded_json_body,
+        method="POST"
+    )
+    http_request.add_header("Content-Type", "application/json")
+    http_request.add_header('Content-Length', len(encoded_json_body))
+    http_request.add_header("X-Goog-Api-Key", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8")
+
+    raw_html = None
+
+    try:
+        with urllib.request.urlopen(http_request) as http_response:
+            raw_html = http_response.read().decode("ascii")
+
+    except HTTPError as http_error:
+        logger.error("The server couldn't fullfil the request.")
+        logger.error("HTTP error code: %d", http_error.code)
+    except URLError as url_error:
+        logger.error("An error occurred in the HTTP request.")
+        if hasattr(url_error, "reason"):
+            logger.error("Failed to reach server.")
+            logger.error("Reason: %s", url_error.reason)
+
+    # with open("new_json.json", "w") as debug_file:
+    #     json.dump(json.loads(raw_html), debug_file)
     return raw_html
 
 
@@ -124,14 +167,19 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
         url = f"https://www.youtube.com/get_video_info?html5=1&c=TVHTML5&cver=6.20180913&video_id={video_id}"
         # Perform request to YouTube server. It replies with a formencoded string,
         # which can be parsed with parse_qs.
-        parsed_qs = urllib.parse.parse_qs(get_raw_html(url))
+        # parsed_qs = urllib.parse.parse_qs(get_raw_html(url))
+        # parsed_qs = urllib.parse.parse_qs(execute_post_request(video_id))
+        # print(parsed_qs)
         # Video details are in the player_response object
-        player_response = json.loads(parsed_qs["player_response"][0])
+        # exit()
+        # player_response = json.loads(parsed_qs["player_response"][0])
+        player_response = json.loads(execute_post_request(video_id))
         # Debug - Write JSON to file
         # with open("debug_player_response.json", "w") as jsonFile:
         #     logger.debug("Wrote parsed response JSON to debug file.")
         #     json.dump(player_response, jsonFile, indent=2)
         video_length = player_response["videoDetails"]["lengthSeconds"]
+        print(f"got video length: {video_length}")
         # TODO send error in case something above went wrong
         # Protip to test error, pass invalid or private video ID in url.
         return json.dumps({
@@ -158,7 +206,7 @@ async def server_handler(websocket, path):
 if __name__ == "__main__":
     # TODO Move to config file
     # Add your local IP address here
-    HOST = ""
+    HOST = "192.168.1.100"
     PORT = 14670
 
     start_server = websockets.serve(server_handler, HOST, PORT)
