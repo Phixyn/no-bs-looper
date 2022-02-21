@@ -3,7 +3,7 @@ $(document).foundation();
 
 // Websocket
 // Add your websocket server IP address here
-const websocket = new WebSocket("ws://<server IP address here>:14670");
+const websocket = new WebSocket("ws://192.168.1.100:14670");
 const TYPE_PROP = "type";
 const TYPE_SERVER_ERROR_MESSAGE = "error";
 const TYPE_VIDEO_INFO_MESSAGE = "video_info";
@@ -73,6 +73,7 @@ websocket.onmessage = (event) => {
       // We got a new video duration, so update the slider and input elements
       let videoDuration = parseInt(msg.content.length_seconds, 10);
       // Preserve state.end value if this is the initial video's duration
+      // TODO better condition
       if (!isInitialVideo) {
         state.end = videoDuration;
       }
@@ -411,6 +412,7 @@ function updatePlayer() {
 
   // Initial video is the one that shows when page first loads, thus this
   // should be set to false the first time a new video is loaded.
+  // TODO better condition
   if (isInitialVideo) {
     isInitialVideo = false;
   }
@@ -475,6 +477,7 @@ function updatePlayer() {
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
+  // TODO Move further up?
   console.debug("[DEBUG] Sending request for video info to Python server.");
   websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
