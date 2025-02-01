@@ -73,6 +73,7 @@ websocket.onmessage = (event) => {
       // We got a new video duration, so update the slider and input elements
       let videoDuration = parseInt(msg.content.length_seconds, 10);
       // Preserve state.end value if this is the initial video's duration
+      // TODO better condition
       if (!isInitialVideo) {
         state.end = videoDuration;
       }
@@ -369,6 +370,7 @@ function onPlayerReady(event) {
 
 
   // Request video duration and other info from backend server
+  // TODO TEMP for "debugging"
   // websocket.send(JSON.stringify({ get_video_info: state.v }));
   /* Using a playlist is required to ensure that full videos loop without
    * stopping. See comment above player.loadPlaylist() in updatePlayer()
@@ -376,6 +378,7 @@ function onPlayerReady(event) {
    */
   player.cuePlaylist([state.v, state.v]);
   player.setLoop(true);
+  updateVideoState();
 }
 
 var timer = null;
@@ -441,6 +444,7 @@ function updatePlayer() {
 
   // Initial video is the one that shows when page first loads, thus this
   // should be set to false the first time a new video is loaded.
+  // TODO better condition
   if (isInitialVideo) {
     isInitialVideo = false;
   }
@@ -532,6 +536,8 @@ function updatePlayer() {
   }, 5000);
   // End of temporary fix
 
+  // TODO Move further up?
+  // console.debug("[DEBUG] Sending request for video info to Python server.");
   // websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
 
