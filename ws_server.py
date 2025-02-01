@@ -101,7 +101,8 @@ def execute_post_request(video_id: str):
     )
     http_request.add_header("Content-Type", "application/json")
     http_request.add_header('Content-Length', len(encoded_json_body))
-    http_request.add_header("X-Goog-Api-Key", "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8")
+    # Can get from checking HTTP requests
+    http_request.add_header("X-Goog-Api-Key", "")
 
     raw_html = None
 
