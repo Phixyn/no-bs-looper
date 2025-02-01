@@ -338,8 +338,38 @@ function onPlayerReady(event) {
     updateHistoryState();
   });
 
+  // console.log("[onPlayerReady] player object:");
+  console.log("[onPlayerReady] player getDuration():");
+  console.log(player.getDuration());
+  console.log("[onPlayerReady] player.playerInfo.duration:");
+  console.log(player.playerInfo.duration);
+  // TODO temporary fix for death of get_video_info endpoint
+  // O_O
+  console.log("isInitialVideo");
+  console.log(isInitialVideo);
+  if (isInitialVideo === false) {
+    console.log("setting state end");
+    state.end = player.playerInfo.duration;
+  }
+  updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
+
+  // TODO #54: This shouldn't be needed because it's already set in
+  //    updateSliderAndInputAttributes(). But startTime value is wrong on
+  //    initial video without it...
+  console.debug(
+    "[DEBUG] Setting numeric input fields from websocket onmessage."
+  );
+  startTimeInput.val(state.start.toString()).change();
+
+  // TODO #52: Workaround for slider fill bug
+  setTimeout(() => {
+    loopPortionSlider._reflow();
+  }, TIMEOUT_SLIDER_REFLOW);
+  // End of temporary fix
+
+
   // Request video duration and other info from backend server
-  websocket.send(JSON.stringify({ get_video_info: state.v }));
+  // websocket.send(JSON.stringify({ get_video_info: state.v }));
   /* Using a playlist is required to ensure that full videos loop without
    * stopping. See comment above player.loadPlaylist() in updatePlayer()
    * for more information.
@@ -475,8 +505,34 @@ function updatePlayer() {
   // Request the Python server to make a GET request for video info and send
   // us the data back via the websocket.
   // TODO #49: Improve usage of websocket client in updatePlayer()
-  console.debug("[DEBUG] Sending request for video info to Python server.");
-  websocket.send(JSON.stringify({ get_video_info: state.v }));
+  // console.debug("[DEBUG] Sending request for video info to Python server.");
+  // TODO: Improve - temporary fix for death of get_video_info endpoint
+  setTimeout(() => {
+    console.debug("[DEBUG] Waited 5s.");
+    console.log("[INFO] [updatePlayer] player.playerInfo.duration:");
+    console.log(player.playerInfo.duration);
+
+    state.end = player.playerInfo.duration;
+
+    // O_O
+    updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
+
+    // TODO #54: This shouldn't be needed because it's already set in
+    //    updateSliderAndInputAttributes(). But startTime value is wrong on
+    //    initial video without it...
+    console.debug(
+      "[DEBUG] Setting numeric input fields from websocket onmessage."
+    );
+    startTimeInput.val(state.start.toString()).change();
+
+    // TODO #52: Workaround for slider fill bug
+    setTimeout(() => {
+      loopPortionSlider._reflow();
+    }, TIMEOUT_SLIDER_REFLOW);
+  }, 5000);
+  // End of temporary fix
+
+  // websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
 
 /**
