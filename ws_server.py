@@ -25,7 +25,9 @@ from urllib.error import HTTPError, URLError
 import websockets
 from websockets.client import WebSocketClientProtocol
 
-LOG_LEVEL = logging.INFO
+# Not my API key btw
+GOOG_API_KEY = "AIzaSyAO_FJ2SlqU8Q4STEHLGCilw_Y9_11qcW8"
+LOG_LEVEL = logging.DEBUG
 
 # Create a Formatter to specify how logging messages are displayed
 # e.g. [2017-10-20 02:28:14][INFO] Initializing...
@@ -43,8 +45,10 @@ logger.addHandler(loggerConsoleHandler)
 
 def get_raw_html(url: str) -> str:
     """Makes a simple HTTP GET request to the specified URL and returns the
-    raw HTML response, if successful. Used to make the video info API
+    raw HTML response, if successful. Used to make the (old) video info API
     request to YouTube.
+
+    This function is not currently used.
 
     Args:
         url: The URL of the webpage to get the HTML from.
@@ -80,9 +84,40 @@ def get_raw_html(url: str) -> str:
     return raw_html
 
 
-def execute_post_request(video_id: str):
+def get_video_info(video_id: str) -> Dict[str, Any]:
+    """Gets information about a video, such as video length, channel and other
+    metadata. Part of a workaround to avoid registering and using a developer
+    account for private YT APIs. Credits for this hack go to all the
+    communities that develop YouTube related tools (in particular: youtube-dl,
+    yt-dlp and pytube). I found this workaround on the yt-dlp and pytube repos
+    on GitHub, so extra thank you to those communities!
+
+    This function makes a HTTP POST request to a public endpoint that returns
+    the video info in a JSON format. Presumably, this endpoint is normally used
+    by the YouTube mobile and TV apps. The fact that it's a public endpoint is
+    handy, as it means that we don't need a developer account or any sort of
+    API keys. We also don't have to worry about rate limits and quotas.
+
+    Note that the API key included in the header is not associated with any
+    personal account of mine or other developers. It's not hard to guess how
+    this API key was found, though :P
+
+    The request made is similar (if not identical) to the request made by the
+    YT Android app, which can be observed in the HTTP request body. The request
+    body also includes the ID of the video we're requesting information for.
+
+    Args:
+        video_id: The ID of the video to get the information for.
+
+    Returns:
+        A Dict containing YouTube video info, or an error message.
+    """
+    logger.debug("Getting video info for video ID: '{}'".format(video_id))
+
+    api_response = None
+
     request_url = f"https://www.youtube.com/youtubei/v1/player"
-    logger.debug("Making POST request to '{}'...".format(video_id))
+    # Yes indeed, we are the Android YT app now. Didn't you know?
     request_body = {
         "context": {
             "client": {
@@ -92,8 +127,10 @@ def execute_post_request(video_id: str):
         },
         "videoId": video_id
     }
+    # Request body must be valid JSON *and* encoded
     json_body = json.dumps(request_body)
     encoded_json_body = json_body.encode("utf-8")
+
     http_request = urllib.request.Request(
         request_url,
         data=encoded_json_body,
@@ -101,15 +138,13 @@ def execute_post_request(video_id: str):
     )
     http_request.add_header("Content-Type", "application/json")
     http_request.add_header('Content-Length', len(encoded_json_body))
-    # Can get from checking HTTP requests
-    http_request.add_header("X-Goog-Api-Key", "")
-
-    raw_html = None
+    http_request.add_header("X-Goog-Api-Key", GOOG_API_KEY)
 
     try:
         with urllib.request.urlopen(http_request) as http_response:
-            raw_html = http_response.read().decode("ascii")
-
+            # UTF-8 charset has to be used to handle characters such as
+            # emojis, often used in video titles.
+            api_response = http_response.read().decode("utf-8")
     except HTTPError as http_error:
         logger.error("The server couldn't fullfil the request.")
         logger.error("HTTP error code: %d", http_error.code)
@@ -119,9 +154,27 @@ def execute_post_request(video_id: str):
             logger.error("Failed to reach server.")
             logger.error("Reason: %s", url_error.reason)
 
-    # with open("new_json.json", "w") as debug_file:
-    #     json.dump(json.loads(raw_html), debug_file)
-    return raw_html
+    # Debug - Write JSON to file
+    # with open("debug_api_response.json", "w") as debug_file:
+    #     json.dump(json.loads(api_response), debug_file)
+    #     logger.debug("Wrote parsed response JSON to debug file.")
+
+    try:
+        # The response is in JSON, which can be parsed and stored as a Dict
+        return json.loads(api_response)
+    except (TypeError, JSONDecodeError) as e:
+        logger.error(
+            "Video info response from YT API was not in a valid JSON format."
+        )
+        logger.error(e)
+        logger.debug("Response content was:")
+        logger.debug(api_response)
+        return {
+            "no_bs_error": {
+                "error": "Server error.",
+                "description": "Error getting video info from YT API."
+            }
+        }
 
 
 def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
@@ -152,7 +205,8 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
                 "description": "Server did not understand received message."
             }
         })
-    elif not "get_video_info" in parsed_message.keys():
+    elif not "get_video_info" in parsed_message:
+        # TODO
         # This is a bit lazy, so probably should be improved. But for now, we
         # only care about one message: {"get_video_info": "video_id"}
         return json.dumps({
@@ -163,26 +217,45 @@ def process_message(message: Dict[str, Any]) -> Dict[str, Any]:
             }
         })
     else:
+        # Get and return video length for the given video ID
         # TODO add more logging and could probably go to a separate function
         video_id = parsed_message["get_video_info"]
-        url = f"https://www.youtube.com/get_video_info?html5=1&c=TVHTML5&cver=6.20180913&video_id={video_id}"
-        # Perform request to YouTube server. It replies with a formencoded string,
-        # which can be parsed with parse_qs.
-        # parsed_qs = urllib.parse.parse_qs(get_raw_html(url))
-        # parsed_qs = urllib.parse.parse_qs(execute_post_request(video_id))
-        # print(parsed_qs)
-        # Video details are in the player_response object
-        # exit()
-        # player_response = json.loads(parsed_qs["player_response"][0])
-        player_response = json.loads(execute_post_request(video_id))
-        # Debug - Write JSON to file
-        # with open("debug_player_response.json", "w") as jsonFile:
-        #     logger.debug("Wrote parsed response JSON to debug file.")
-        #     json.dump(player_response, jsonFile, indent=2)
-        video_length = player_response["videoDetails"]["lengthSeconds"]
-        print(f"got video length: {video_length}")
-        # TODO send error in case something above went wrong
-        # Protip to test error, pass invalid or private video ID in url.
+
+        video_info = get_video_info(video_id)
+        if "no_bs_error" in video_info:
+            return json.dumps({
+                "type": "error",
+                "content": video_info["no_bs_error"]
+            })
+
+        # Video details are in the videoDetails object of the YT API response
+        # Protip to test errors: pass invalid or private video ID to
+        # get_video_info().
+        video_details = video_info.get("videoDetails", None)
+        if not video_details:
+            logger.error("Video info JSON did not contain a video details object.")
+            logger.debug("get_video_info() returned:")
+            logger.debug(video_info)
+            return json.dumps({
+                "type": "error",
+                "content": {
+                    "error": "Server error.",
+                    "description": "The YT API response did not contain a video details object."
+                }
+            })
+
+        video_length = video_details.get("lengthSeconds", None)
+        if not video_length:
+            logger.error("Video details object did not contain a video length.")
+            logger.debug(f"Video length was: {video_length}")
+            return json.dumps({
+                "type": "error",
+                "content": {
+                    "error": "Server error.",
+                    "description": "The YT API response did not contain a video length."
+                }
+            })
+
         return json.dumps({
             "type": "video_info",
             "content": {
