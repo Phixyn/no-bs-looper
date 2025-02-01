@@ -748,7 +748,7 @@ function extractVideoId(youtubeUrl) {
   }
 
   // Check if there is a querystring in the URL and parse it
-  if (urlObj.search !== "") {
+  if (urlObj.search !== "" && urlObj.search.includes("si=") !== true) {
     console.log("[INFO] Found querystring in URL, parsing it.");
 
     let qsParse = Qs.parse(urlObj.search, { ignoreQueryPrefix: true });
