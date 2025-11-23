@@ -615,14 +615,13 @@ button.has-tip,
 #footer {
   background-color: var(--accent-background-color);
   border-top: 2px solid var(--primary-accent-color);
-  box-shadow: 0 0 5px 2px var(--secondary-accent-color);
   margin-top: 5em;
-  padding: 1.11em 0;
+  /* padding: 1.11em 0; */
+  padding: 3rem 6rem 3rem 4rem;
 }
 
 .copyright-msg {
   border-top: 1px solid var(--secondary-separator-color);
-  margin: 1.18rem 5.967rem; /* 1.48em 7.4em */
   padding-top: 0.85rem; /* 1.04em */
   color: var(--secondary-text-color);
   font-size: 0.8em;
