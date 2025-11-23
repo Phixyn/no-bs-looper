@@ -45,6 +45,7 @@
     <title>No BS YouTube Looper</title>
 
     <link rel="stylesheet" href="css/foundation.min.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/app.css" />
   </head>
 
@@ -52,15 +53,23 @@
     <!-- TURN OFF THE LIGHTS OVERLAY -->
     <div id="totl-overlay"></div>
 
-    <!-- TOP BAR -->
-    <div class="top-bar" id="top-navbar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <!-- SITE TITLE -->
-          <li class="menu-text">No BS YouTube Looper</li>
-        </ul>
-      </div> <!-- .top-bar-left -->
-    </div> <!-- .top-bar #top-navbar -->
+    <!-- NAVBAR -->
+    <header id="navbar">
+      <nav class="navbar-container">
+        <div class="navbar-title">
+          <img src="./images/logo-navbar-extended.png" style="height: 56px" />
+        </div>
+
+        <!-- TODO #136: Dropdown for language selector -->
+        <div class="navbar-menu">
+          <ul class="navbar-links">
+            <li class="navbar-item">
+              <a class="navbar-link" href="#"><strong>RU</strong></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
 
     <!-- MAIN CONTENT -->
     <!-- TODO #22: Add 'fluid' class for wider player. Might need a separate,
@@ -324,21 +333,19 @@
     </div>
 
     <!-- FOOTER -->
-    <div class="grid-y grid-margin-y" id="footer">
-      <div class="cell">
-        <p class="copyright-msg">
-          No BS Software by
-          <a href="https://twitter.com/Phixyn" title="Phixyn on Twitter">
-          Phixyn</a>. No BS, no rights reserved. Also, no warranty.
-          <br />
-          v1.1.2 (f51c861) &nbsp; | &nbsp;
-          <a
-            href="https://github.com/Phixyn/no-bs-looper"
-            title="GitHub repository"
-          >GitHub</a>
-        </p>
-      </div> <!-- .cell -->
-    </div> <!-- .grid-y -->
+    <footer id="footer">
+      <p class="copyright-msg">
+        No BS Software by
+        <a href="https://twitter.com/Phixyn" title="Phixyn on Twitter">
+        Phixyn</a>. No BS, no rights reserved. Also, no warranty.
+        <br />
+        v1.1.2 (f51c861) &nbsp; | &nbsp;
+        <a
+          href="https://github.com/Phixyn/no-bs-looper"
+          title="GitHub repository"
+        >GitHub</a>
+      </p>
+    </footer>
 
     <script src="lib/jquery.js"></script>
     <script src="lib/what-input.js"></script>

@@ -13,8 +13,8 @@ Author:  Phixyn
 :root {
   --primary-background-color: rgb(18, 18, 18);
   --secondary-background-color: rgb(32, 32, 32);
-  --accent-background-color: rgb(10, 10, 10);
-  --accent-background-color-transparent: rgba(10, 10, 10, 0.5);
+  --accent-background-color: rgb(15, 15, 15);
+  --accent-background-color-transparent: rgba(15, 15, 15, 0.5);
 
   /* TODO: Improve this color. Maybe darker or more transparent? */
   --primary-container-color: rgba(25, 25, 25, 0.8);
@@ -114,6 +114,113 @@ label {
   color: var(--primary-text-color);
   font-weight: bold;
   font-size: 1em;
+}
+
+/* -----------------------------------
+    NAVBAR COMPONENT
+----------------------------------- */
+
+#navbar {
+  --navbar-height: 64px;
+  /* position: fixed; */
+  /* left: 0;
+  right: 0; */
+  height: var(--navbar-height);
+  /* background-color: var(--navbar-bg-color); */
+  border-bottom: 2px solid var(--primary-accent-color);
+  background-color: var(--accent-background-color);
+  margin-bottom: 24px;
+}
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* max-width: 1000px; */
+  /* max-width: 1280px; */
+  height: 100%;
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.navbar-item {
+  margin: 0.4em;
+  width: 100%;
+}
+
+.navbar-title {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: var(--navbar-text-color);
+  /* font-size: 1.25rem; */
+  font-size: 1.5rem;
+  /* font-weight: 400; */
+  font-weight: 700;
+
+}
+
+.home-link,
+.navbar-link {
+  color: var(--navbar-text-color);
+  transition: color 0.2s ease-in-out; /* lol */
+  text-decoration: none;
+  display: flex;
+  font-weight: 400;
+  align-items: center;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.home-link {
+  font-size: 1.5rem;
+}
+
+.home-link:focus,
+.home-link:hover {
+  color: var(--navbar-text-color-focus);
+}
+
+.navbar-link {
+  justify-content: center;
+  width: 100%;
+  padding: 0.4em 0.8em;
+  border-radius: 5px;
+}
+
+.navbar-link:focus,
+.navbar-link:hover {
+  color: var(--navbar-text-color-focus);
+  background-color: var(--navbar-bg-contrast);
+}
+
+.navbar-logo {
+  /* background-color: var(--navbar-text-color-focus); */
+  background-image: url('../images/logo-navbar.png');
+  /* background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%; */
+  border-radius: 50%;
+  /* width: 30px;
+  height: 30px; */
+  width: 40px;
+  height: 40px;
+  margin-right: 0.5em;
+}
+
+.navbar-links {
+  list-style-type: none;
+  overflow: hidden;
+  /* background-color: var(--navbar-bg-color); */
+  background-color: var(--grey-darkest);
+  display: flex;
+  flex-direction: row;
+  max-height: max-content;
+  align-items: center;
+  margin: 1.4rem;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 /* -----------------------------------
@@ -508,14 +615,13 @@ button.has-tip,
 #footer {
   background-color: var(--accent-background-color);
   border-top: 2px solid var(--primary-accent-color);
-  box-shadow: 0 0 5px 2px var(--secondary-accent-color);
   margin-top: 5em;
-  padding: 1.11em 0;
+  /* padding: 1.11em 0; */
+  padding: 3rem 6rem 3rem 4rem;
 }
 
 .copyright-msg {
   border-top: 1px solid var(--secondary-separator-color);
-  margin: 1.18rem 5.967rem; /* 1.48em 7.4em */
   padding-top: 0.85rem; /* 1.04em */
   color: var(--secondary-text-color);
   font-size: 0.8em;
