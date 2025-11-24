@@ -1,0 +1,92 @@
+/*
+ * slider.css - Styles for the No BS Dual Handle Range Slider.
+ * Author: Phixyn
+ *
+ * TODO:
+ * - CSS variables for colors (and slider/track height ?)
+ */
+
+.range-slider {
+  position: relative;
+  height: 40px;
+  width: 100%;
+  user-select: none;
+  touch-action: none;
+}
+
+.range-slider__track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: #e0e0e0;
+  border-radius: 3px;
+  transform: translateY(-50%);
+}
+
+.range-slider__fill {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 3px;
+  transition: left 0.05s ease, right 0.05s ease;
+}
+
+.range-slider__handle {
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border: 3px solid #667eea;
+  border-radius: 50%;
+  cursor: grab;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  z-index: 1;
+}
+
+.range-slider__handle:hover {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.range-slider__handle:active,
+.range-slider__handle.dragging {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.25);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  z-index: 2;
+}
+
+.range-slider__handle:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.3);
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.range-slider__handle:focus .range-slider__label {
+  opacity: 1;
+}
+
+.range-slider__label {
+  position: absolute;
+  top: -30px;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.range-slider__handle:hover .range-slider__label,
+.range-slider__handle.dragging .range-slider__label {
+  opacity: 1;
+}
