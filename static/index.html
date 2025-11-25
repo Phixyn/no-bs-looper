@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/slider.css" />
   </head>
 
   <body>
@@ -72,24 +73,140 @@
     </header>
 
     <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <div class="player-container" style="width: 1280px; height: 720px">
+        <!-- The <iframe> (and video player) will replace this <div> tag -->
+        <div id="player"></div>
+      </div>
+
+      <div id="loop-portion-slider-new" class="range-slider"></div>
+
+      <form
+        id="video-form-new"
+      >
+        <div class="input-row">
+          <label for="video-id-new">Video link or ID</label>
+
+          <div class="input-group-new">
+            <input
+              type="text"
+              id="video-id-new"
+              name="video-id-new"
+              value="KcUnXunuDTs"
+              placeholder="Video link or ID" />
+            <input
+              type="button"
+              id="update-btn-new"
+              class="button primary"
+              name="update-btn-new"
+              value="Update"
+            />
+          </div>
+
+          <p id="video-id-hint" class="help-text">
+            Paste a YouTube link or video ID here (e.g.
+            https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+          </p>
+        </div>
+
+        <div class="input-row">
+          <label for="start-time-new">Start time (seconds)</label>
+          <div class="input-group-new">
+            <input
+              type="number"
+              id="start-time-new"
+              name="start-time-new"
+              placeholder="Start time (seconds)"
+              value="0" />
+            <input
+              type="button"
+              id="start-to-current-btn-new"
+              class="button primary"
+              name="start-to-current-btn-new"
+              value="Current"
+            />
+          </div>
+
+          <p id="start-time-hint" class="help-text">
+            Loop starts at this time.
+          </p>
+        </div>
+
+        <div class="input-row">
+          <label for="end-time-new">End time (seconds)</label>
+
+          <div class="input-group-new">
+            <input
+              type="number"
+              id="end-time-new"
+              name="end-time-new"
+              placeholder="End time (seconds)"
+              value="3600" />
+            <input
+              type="button"
+              id="end-to-current-btn-new"
+              class="button primary"
+              name="end-to-current-btn-new"
+              value="Current"
+            />
+          </div>
+
+          <p class="help-text" id="end-time-hint">
+            Loop ends (restarts) at this time.
+          </p>
+        </div>
+      </form>
+
+      <!-- Control buttons -->
+      <div class="controls-container">
+        <input
+          type="button"
+          id="toggle-vid-btn"
+          class="button primary"
+          name="toggle-vid-btn"
+          value="Show/hide video"
+        />
+        <input
+          type="button"
+          id="lights-off-btn"
+          class="button primary"
+          name="lights-off-btn"
+          value="Turn off the lights"
+          data-tooltip
+          tabindex="1"
+          title="Dim everything except the player"
+          data-hover-delay="350"
+          data-click-open="false"
+          data-disable-for-touch="true"
+          data-position="bottom"
+          data-alignment="center"
+        />
+        <input
+          type="button"
+          id="share-btn"
+          class="button primary"
+          name="share-btn"
+          value="Share/save loop"
+          data-open="share-modal"
+        />
+      </div> <!-- #controls-container -->
+    </main> <!-- #main-content -->
+
+
+    <!-- OLD FOUNDATION / TO REMOVE -->
     <!-- TODO #22: Add 'fluid' class for wider player. Might need a separate,
                    non-fluid container for the form though -->
-    <div class="grid-container" id="main-content">
+    <div class="grid-container">
       <div class="grid-x grid-padding-x grid-padding-y">
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
-          <div class="player-container responsive-embed widescreen">
-            <!-- The <iframe> (and video player) will replace this <div> tag -->
-            <div id="player"></div>
-          </div> <!-- .player-container .responsive-embed .widescreen -->
-
           <div
             id="loop-portion-slider"
             class="slider"
             data-slider
             data-start="0"
-            data-end="100"
+            data-end="3600"
             data-initial-start="0"
-            data-initial-end="100"
+            data-initial-end="3600"
             data-double-sided="true"
             data-changed-delay="500"
           >
@@ -226,7 +343,7 @@
                 class="input-group-field"
                 name="end-time"
                 placeholder="End time (seconds)"
-                value="100"
+                value="3600"
                 min="1"
                 aria-describedby="end-time-hint"
                 aria-errormessage="end-time-error"
@@ -257,41 +374,12 @@
         </div> <!-- .cell -->
 
         <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
-          <!-- Control buttons -->
-          <input
-            type="button"
-            id="toggle-vid-btn"
-            class="button primary"
-            name="toggle-vid-btn"
-            value="Show/hide video"
-          />
-          <input
-            type="button"
-            id="lights-off-btn"
-            class="button primary"
-            name="lights-off-btn"
-            value="Turn off the lights"
-            data-tooltip
-            tabindex="1"
-            title="Dim everything except the player"
-            data-hover-delay="350"
-            data-click-open="false"
-            data-disable-for-touch="true"
-            data-position="bottom"
-            data-alignment="center"
-          />
-          <input
-            type="button"
-            id="share-btn"
-            class="button primary"
-            name="share-btn"
-            value="Share/save loop"
-            data-open="share-modal"
-          />
         </div> <!-- .cell -->
       </form> <!-- .grid-x -->
     </div> <!-- .grid-container -->
 
+    <!-- SHARE MODAL -->
+    <!-- TODO: Refactor to remove Foundation (make custom modal) -->
     <div
       id="share-modal"
       class="reveal"
@@ -351,6 +439,7 @@
     <script src="lib/what-input.js"></script>
     <script src="lib/qs.min.js"></script>
     <script src="lib/foundation.min.js"></script>
+    <script src="js/slider.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

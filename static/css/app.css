@@ -308,11 +308,29 @@ li.is-submenu-item > a:hover {
     MAIN CONTENT
 ----------------------------------- */
 
-#main-content {
+.main-content {
+  /* temp */
+  border: 1px solid red;
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  /* align-items: stretch; */
+  /* justify-content: space-evenly; */
+  gap: 30px 0;
+  width: 1280px;
+  margin: 0 auto;
   /* Makes it possible to have a footer that sticks to
    * the bottom of the page no matter how much content
    * the page has. */
-  min-height: 100vh;
+  /* min-height: 100vh; */
+}
+
+@media screen and (max-width: 1280px) {
+  .main-content {
+    width: 100%;
+  }
 }
 
 /* -----------------------------------
@@ -461,6 +479,39 @@ textarea:disabled {
 
 .is-invalid-input:not(:focus)::placeholder {
   color: var(--primary-menu-link-color);
+}
+
+/* TODO: Class instead */
+#video-form-new {
+  border: 1px solid yellow;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.input-row label {
+  font-size: 1rem;
+}
+
+.input-group-new {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.controls-container {
+  display: flex;
+  gap: 0 24px;
+  border: 1px solid blue;
+  margin: 0 auto;
 }
 
 /* -----------------------------------
