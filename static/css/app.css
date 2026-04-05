@@ -471,10 +471,24 @@ textarea:disabled {
   color: var(--primary-text-color);
 }
 
-/* Foundation Abide plugin error states */
+.show-for-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Validation states */
 
 .is-invalid-input:not(:focus) {
   background-color: var(--accent-container-color);
+  border-width: 2px;
+  border-color: #c14040;
 }
 
 .is-invalid-input:not(:focus)::placeholder {
@@ -515,7 +529,55 @@ textarea:disabled {
 }
 
 /* -----------------------------------
-    FOUNDATION TOOLTIP
+    CUSTOM COMPONENTS
+----------------------------------- */
+
+/* -----------------------------------
+    MODAL
+----------------------------------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.modal__content {
+  position: relative;
+  margin: 7vh auto;
+  width: min(90vw, 40rem);
+  background-color: var(--primary-background-color);
+  border: 1px solid var(--primary-border-color);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.7rem;
+  border: none;
+  background: transparent;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+/* -----------------------------------
+    TOOLTIP
 ----------------------------------- */
 
 input.has-tip {
@@ -539,69 +601,15 @@ button.has-tip,
     var(--accent-background-color-transparent);
 }
 
-/* -----------------------------------
-    SLIDER
------------------------------------ */
-
-.slider {
-  --handle-hover-color: rgba(36, 36, 36, 0.8);
-  background-color: var(--accent-container-color);
-}
-
-.slider-fill {
-  background-color: var(--primary-accent-color);
-  /* box-shadow: 0 0 5px var(--secondary-accent-color); */
-  box-shadow: 0 0 10px var(--secondary-accent-color);
-}
-
-.slider-handle {
-  border: 1px solid var(--primary-border-color);
-  background-color: var(--primary-container-color);
-}
-
-.slider-handle:hover,
-.slider-handle:active,
-.slider-handle:focus {
-  background-color: var(--handle-hover-color);
-}
-
-/* -----------------------------------
-    CLOSE BUTTON
------------------------------------ */
-
-.close-button:focus,
-.close-button:hover {
-  color: var(--primary-text-color);
-}
-
-/* -----------------------------------
-    REVEAL
------------------------------------ */
-
-.reveal {
-  background-color: var(--primary-background-color);
-  border: 1px solid var(--primary-border-color);
-}
-
-[data-whatinput="touch"] .reveal {
-  outline: 0;
-}
-
-/* -----------------------------------
-    CUSTOM COMPONENTS
------------------------------------ */
-
-/* -----------------------------------
-    TOOLTIP
------------------------------------ */
-
 .phix-tooltip {
   display: inline;
   position: relative;
 }
 
 .phix-tooltip .phix-tooltip-text {
-  display: none;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   transform: translateX(150%) translateY(-20%);
   min-width: 8.75rem;
@@ -615,6 +623,11 @@ button.has-tip,
   border-color: var(--secondary-border-color);
   color: var(--primary-text-color);
   text-align: center;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.phix-tooltip .phix-tooltip-text.is-visible {
+  opacity: 1;
 }
 
 .phix-tooltip--bottom .phix-tooltip-text::after {
@@ -649,6 +662,8 @@ button.has-tip,
 
 #totl-overlay {
   display: none;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
   position: fixed;
   top: 0;
   right: 0;
@@ -657,6 +672,10 @@ button.has-tip,
   z-index: 200;
   overflow-y: auto;
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+#totl-overlay.is-visible {
+  opacity: 1;
 }
 
 /* -----------------------------------
