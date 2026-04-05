@@ -25,14 +25,32 @@ var player;
 var state;
 var videoForm;
 var videoIdInput;
-var startTimeInput;
-var endTimeInput;
-var sliderDiv;
-var loopPortionSlider;
-var startTimeSliderHandle;
-var endTimeSliderHandle;
-var shareLinkInput;
+const startTimeInput = document.getElementById('start-time-new');
+const endTimeInput = document.getElementById('end-time-new');
+
+var sliderDiv; // Old
+var loopPortionSlider; // Old
+var startTimeSliderHandle; // Old
+var endTimeSliderHandle; // Old
+const shareLinkInput = document.getElementById('share-link');
 var isInitialVideo = true;
+
+const newSlider = new DualRangeSlider('#loop-portion-slider-new', {
+  min: 0,
+  max: 100,
+  valueMin: 25,
+  valueMax: 75,
+  onChange: (min, max) => {
+    // TODO
+    console.log(min, max);
+    updateLoopPortion();
+
+    startTimeInput.value = min;
+    endTimeInput.value = max;
+    // TODO Need to debounce this call
+    // updateHistoryState();
+  }
+});
 
 // Websocket client
 
@@ -138,7 +156,7 @@ websocket.onclose = (event) => {
  * the handler will execute the appropriate action, such as selecting the
  * input's text or copying it to the user's clipboard.
  */
-$("input").on("focus", function () {
+$("input").on("focus", function() {
   if ($(this).data("autoselect")) {
     $(this).select();
   }
@@ -172,23 +190,30 @@ $("input").on("focus", function () {
   }
 });
 
+// Event handlers for controls
+document.getElementById('update-btn-new').onclick = updatePlayer;
+document.getElementById('start-to-current-btn-new').onclick = setStartTimeToCurrent;
+document.getElementById('end-to-current-btn-new').onclick = setEndTimeToCurrent;
+document.getElementById('toggle-vid-btn').onclick = togglePlayer;
+document.getElementById('lights-off-btn').onclick = enableTotl;
+
 /**
  * Event handler for jQuery's ready event. Everything that we want to execute
  * only after the DOM is ready should go here.
  */
-$(function () {
+$(function() {
   console.log("[INFO] Document ready.");
 
   videoForm = $("#video-form");
   videoIdInput = $("#video-id");
-  startTimeInput = $("#start-time");
-  endTimeInput = $("#end-time");
+  // startTimeInput = $("#start-time");
+  // endTimeInput = $("#end-time");
   sliderDiv = $("#loop-portion-slider");
   // TODO #44: Improve initialization of Foundation Slider element
   loopPortionSlider = new Foundation.Slider(sliderDiv);
   startTimeSliderHandle = $("#start-time-handle");
   endTimeSliderHandle = $("#end-time-handle");
-  shareLinkInput = $("#share-link");
+  // shareLinkInput = $("#share-link");
 
   // Load the Iframe Player API code asynchronously
   console.debug(
@@ -200,18 +225,19 @@ $(function () {
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
   // Register event handlers
-  $("#update-btn").on("click tap", updatePlayer);
+  // $("#update-btn").on("click tap", updatePlayer);
   $("#start-to-current-btn").on("click tap", setStartTimeToCurrent);
   $("#end-to-current-btn").on("click tap", setEndTimeToCurrent);
   $("#toggle-vid-btn").on("click tap", togglePlayer);
-  $("#lights-off-btn").on("click tap", enableTotl);
+  // $("#lights-off-btn").on("click tap", enableTotl);
   /*
    * Add event handler for "Turn off the lights" overlay. This handler disables
    * the overlay by setting the div element's 'display' property to 'none',
    * with a fancy fade animation. Since the div covers the whole page, this
    * gets fired when users click or tap anywhere on the page.
    */
-  $("#totl-overlay").on("click tap", function () {
+  $("#totl-overlay").on("click tap", function() {
+    // TODO replace with CSS opacity + transition
     $(this).fadeOut(ANIMATION_DURATION_DEFAULT);
   });
 
@@ -239,6 +265,22 @@ $(function () {
     console.debug("[DEBUG] State object set using querystring. Current state:");
     console.debug(state);
 
+    startTimeInput.addEventListener('input', () => {
+      // TODO Not sure if parseInt is needed here
+      state.start = parseInt(startTimeInput.value, 10);
+      updateLoopPortion();
+
+      newSlider.setValues(startTimeInput.value, newSlider.getValues().max);
+    });
+
+    endTimeInput.addEventListener('input', () => {
+      // TODO Not sure if parseInt is needed here
+      state.end = parseInt(endTimeInput.value, 10);
+      updateLoopPortion();
+
+      newSlider.setValues(newSlider.getValues().min, endTimeInput.value);
+    });
+
     /* Update text input for video ID (remember we can't update numeric inputs
      * here yet, because we need to set the "max" attributes. We can only set
      * those once the YT player is ready, so that we can get the video duration
@@ -252,8 +294,8 @@ $(function () {
     // Get state data from HTML form (i.e. default values)
     state = {
       v: videoIdInput.val(),
-      start: parseInt(startTimeInput.val(), 10),
-      end: parseInt(endTimeInput.val(), 10),
+      start: parseInt(startTimeInput.value, 10),
+      end: parseInt(endTimeInput.value, 10),
     };
   }
 
@@ -271,9 +313,10 @@ $(function () {
 function onYouTubeIframeAPIReady() {
   console.log("[INFO] YouTube Iframe API ready.");
 
+  // TODO How to make this responsive?
   player = new YT.Player("player", {
-    height: "390",
-    width: "640",
+    width: "1280",
+    height: "720",
     videoId: state.v,
     playerVars: {
       version: 3,
@@ -314,8 +357,8 @@ function onPlayerReady(event) {
   $(sliderDiv).on("moved.zf.slider", () => {
     // Foundation Abide plugin validation. Needs to be manually called on slider
     // change, for all of its bound input elements.
-    videoForm.foundation("validateInput", startTimeInput);
-    videoForm.foundation("validateInput", endTimeInput);
+    // videoForm.foundation("validateInput", startTimeInput);
+    // videoForm.foundation("validateInput", endTimeInput);
 
     updateLoopPortion();
   });
@@ -359,7 +402,8 @@ function onPlayerReady(event) {
   console.debug(
     "[DEBUG] Setting numeric input fields from websocket onmessage."
   );
-  startTimeInput.val(state.start.toString()).change();
+  // startTimeInput.val(state.start.toString()).change();
+  startTimeInput.value = state.start;
 
   // TODO #52: Workaround for slider fill bug
   setTimeout(() => {
@@ -523,7 +567,8 @@ function updatePlayer() {
     console.debug(
       "[DEBUG] Setting numeric input fields from websocket onmessage."
     );
-    startTimeInput.val(state.start.toString()).change();
+    // startTimeInput.val(state.start.toString()).change();
+    startTimeInput.value = state.start;
 
     // TODO #52: Workaround for slider fill bug
     setTimeout(() => {
@@ -541,6 +586,7 @@ function updatePlayer() {
  * the space taken by the element, as it doesn't modify the 'display' property.
  */
 function togglePlayer() {
+  // TODO Remove unnecessary jQuery here
   if ($("#player").parent().css("opacity") === "1") {
     $("#player").parent().css("opacity", "0");
   } else {
@@ -554,6 +600,7 @@ function togglePlayer() {
  * element except the player.
  */
 function enableTotl() {
+  // TODO replace with CSS opacity + transition
   $("#totl-overlay").fadeIn(ANIMATION_DURATION_SLOW);
 }
 
@@ -564,8 +611,8 @@ function enableTotl() {
  * Note: The slider and input elements are data bound.
  */
 function updateLoopPortion() {
-  let startTime = parseInt(startTimeInput.val(), 10);
-  let endTime = parseInt(endTimeInput.val(), 10);
+  let startTime = parseInt(startTimeInput.value, 10);
+  let endTime = parseInt(endTimeInput.value, 10);
 
   if (!isNaN(startTime) && startTime != state.start) {
     state.start = startTime;
@@ -600,7 +647,7 @@ function updateHistoryState() {
    */
   history.replaceState(state, "", "?" + $.param(state));
 
-  shareLinkInput.val(location.href);
+  shareLinkInput.value = location.href;
   console.debug("[DEBUG] New history.state:");
   console.debug(history.state);
 }
@@ -610,7 +657,9 @@ function updateHistoryState() {
  */
 function setStartTimeToCurrent() {
   state.start = parseInt(player.getCurrentTime(), 10);
-  startTimeInput.val(state.start.toString()).change();
+  // startTimeInput.val(state.start.toString()).change();
+  startTimeInput.value = state.start;
+  newSlider.setValues(state.start, newSlider.getValues().max);
 }
 
 /**
@@ -618,7 +667,9 @@ function setStartTimeToCurrent() {
  */
 function setEndTimeToCurrent() {
   state.end = parseInt(player.getCurrentTime(), 10);
-  endTimeInput.val(state.end.toString()).change();
+  // endTimeInput.val(state.end.toString()).change();
+  endTimeInput.value = state.end;
+  newSlider.setValues(newSlider.getValues().min, state.end);
 }
 
 /**
@@ -647,19 +698,23 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.log("[INFO] Updating slider and input data.");
 
   endTimeString = newEndTime.toString();
-  endTimeInput.attr("max", endTimeString);
+  // endTimeInput.attr("max", endTimeString);
+  endTimeInput.max = newEndTime;
   // Don't want start portion slider to be able to go all the way to the end
-  startTimeInput.attr("max", (newEndTime - 1).toString());
+  // startTimeInput.attr("max", (newEndTime - 1).toString());
+  startTimeInput.max = newEndTime - 1;
   console.debug("[DEBUG] Finished setting numeric input max attributes.");
 
   // Update logical end values of slider
   loopPortionSlider.options.end = newEndTime;
   loopPortionSlider.options.initialEnd = newEndTime;
+  newSlider.setMax(newEndTime);
   console.debug("[DEBUG] Updated logical end value of slider.");
 
   // Update visual end values of slider
   sliderDiv.attr("data-end", endTimeString);
   sliderDiv.attr("data-initial-end", endTimeString);
+  newSlider.setValues(newSlider.getValues().min, newEndTime);
   console.debug("[DEBUG] Updated visual end value of slider.");
 
   // Update ARIA 'valuemax' data for time slider handles. Entirely for
@@ -688,7 +743,8 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * to use a jQuery selector (as opposed to something DOM native like
    * document.getElementById).
    */
-  startTimeInput.val(newStartTime.toString()).change();
+  // startTimeInput.val(newStartTime.toString()).change();
+  startTimeInput.value = newStartTime;
   /* By default, we could put the end slider at the end of video time, but if
    * the URL's querystring has a different `end=`, we should honor that, so
    * that's why we use the state here.
@@ -696,7 +752,8 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
    * Note: Do this only after setting logical and visual end values for slider,
    * otherwise the second handle's position won't match the end time value.
    */
-  endTimeInput.val(state.end.toString()).change();
+  // endTimeInput.val(state.end.toString()).change();
+  endTimeInput.value = state.end;
 }
 
 /**
