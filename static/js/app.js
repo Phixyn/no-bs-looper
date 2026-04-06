@@ -22,6 +22,10 @@ const shareBtn = document.getElementById("share-btn");
 const shareModal = document.getElementById("share-modal");
 const shareModalCloseButtons = document.querySelectorAll("[data-modal-close]");
 const videoIdHint = document.getElementById("video-id-hint");
+const videoIdRequiredError = document.getElementById("video-id-required-error");
+const videoIdPatternError = document.getElementById("video-id-pattern-error");
+const startTimeError = document.getElementById("start-time-error");
+const endTimeError = document.getElementById("end-time-error");
 const playerContainer = document.querySelector("#player")?.parentElement;
 var isInitialVideo = true;
 
@@ -196,6 +200,7 @@ function initializeApp() {
   startTimeInput.addEventListener('input', () => {
     const parsedStart = parseInt(startTimeInput.value, 10);
     if (!Number.isNaN(parsedStart)) {
+      setStartTimeValidationState(true);
       newSlider.setValues(parsedStart, newSlider.getValues().max);
     }
   });
@@ -203,6 +208,7 @@ function initializeApp() {
   endTimeInput.addEventListener('input', () => {
     const parsedEnd = parseInt(endTimeInput.value, 10);
     if (!Number.isNaN(parsedEnd)) {
+      setEndTimeValidationState(true);
       newSlider.setValues(newSlider.getValues().min, parsedEnd);
     }
   });
@@ -431,7 +437,7 @@ function updatePlayer() {
     let videoId = extractVideoId(videoIdInputVal);
 
     if (videoId === null) {
-      setVideoIdValidationState(false);
+      setVideoIdValidationState(false, "pattern");
       console.error(
         `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
       );
@@ -444,10 +450,21 @@ function updatePlayer() {
     setVideoIdValidationState(true);
     state.v = videoIdInputVal;
   } else {
-    setVideoIdValidationState(false);
+    setVideoIdValidationState(false, "required");
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
+    return;
+  }
+
+  // Validate time inputs
+  const parsedStart = parseInt(startTimeInput.value, 10);
+  const parsedEnd = parseInt(endTimeInput.value, 10);
+  const startValid = startTimeInput.value.trim() !== "" && !Number.isNaN(parsedStart);
+  const endValid = endTimeInput.value.trim() !== "" && !Number.isNaN(parsedEnd);
+  setStartTimeValidationState(startValid);
+  setEndTimeValidationState(endValid);
+  if (!startValid || !endValid) {
     return;
   }
 
@@ -656,17 +673,53 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   endTimeInput.value = state.end;
 }
 
-function setVideoIdValidationState(isValid) {
+function setVideoIdValidationState(isValid, errorType) {
+  const inputRow = videoIdInput.closest(".input-row");
   if (isValid) {
     videoIdInput.classList.remove("is-invalid-input");
-    videoIdHint.textContent =
-      "Paste a YouTube link or video ID here (e.g. https://www.youtube.com/watch?v=dQw4w9WgXcQ).";
+    videoIdRequiredError.classList.remove("is-visible");
+    videoIdPatternError.classList.remove("is-visible");
+    inputRow.classList.remove("is-invalid");
     return;
   }
 
   videoIdInput.classList.add("is-invalid-input");
-  videoIdHint.textContent =
-    "This link/ID didn't work. Use either an 11-character video ID or a valid YouTube URL.";
+  if (errorType === "pattern") {
+    videoIdRequiredError.classList.remove("is-visible");
+    videoIdPatternError.classList.add("is-visible");
+  } else {
+    videoIdPatternError.classList.remove("is-visible");
+    videoIdRequiredError.classList.add("is-visible");
+  }
+  inputRow.classList.add("is-invalid");
+}
+
+function setStartTimeValidationState(isValid) {
+  const inputRow = startTimeInput.closest(".input-row");
+  if (isValid) {
+    startTimeInput.classList.remove("is-invalid-input");
+    startTimeError.classList.remove("is-visible");
+    inputRow.classList.remove("is-invalid");
+    return;
+  }
+
+  startTimeInput.classList.add("is-invalid-input");
+  startTimeError.classList.add("is-visible");
+  inputRow.classList.add("is-invalid");
+}
+
+function setEndTimeValidationState(isValid) {
+  const inputRow = endTimeInput.closest(".input-row");
+  if (isValid) {
+    endTimeInput.classList.remove("is-invalid-input");
+    endTimeError.classList.remove("is-visible");
+    inputRow.classList.remove("is-invalid");
+    return;
+  }
+
+  endTimeInput.classList.add("is-invalid-input");
+  endTimeError.classList.add("is-visible");
+  inputRow.classList.add("is-invalid");
 }
 
 function openShareModal() {

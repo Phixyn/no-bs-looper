@@ -103,58 +103,77 @@
             />
           </div>
 
+          <p class="form-error" id="video-id-required-error">
+            This can't be empty. Type or paste in a valid YouTube link or video ID.
+          </p>
+
+          <p class="form-error" id="video-id-pattern-error">
+            This link/ID didn't work :( Make sure it's a link to a video that
+            starts with 'http://' or 'https://', or an 11-character video ID.
+          </p>
+
           <p id="video-id-hint" class="help-text">
             Paste a YouTube link or video ID here (e.g.
             https://www.youtube.com/watch?v=dQw4w9WgXcQ).
           </p>
         </div>
 
-        <div class="input-row">
-          <label for="start-time-new">Start time (seconds)</label>
-          <div class="input-group-new">
-            <input
-              type="number"
-              id="start-time-new"
-              name="start-time-new"
-              placeholder="Start time (seconds)"
-              value="0" />
-            <input
-              type="button"
-              id="start-to-current-btn-new"
-              class="button primary"
-              name="start-to-current-btn-new"
-              value="Current"
-            />
+        <div class="time-input-pair">
+          <div class="input-row">
+            <label for="start-time-new">Start time (seconds)</label>
+            <div class="input-group-new">
+              <input
+                type="number"
+                id="start-time-new"
+                name="start-time-new"
+                placeholder="Start time (seconds)"
+                value="0" />
+              <input
+                type="button"
+                id="start-to-current-btn-new"
+                class="button primary"
+                name="start-to-current-btn-new"
+                value="Current"
+              />
+            </div>
+
+            <p class="form-error" id="start-time-error">
+              Invalid start time. Numbers only and can't be empty.
+            </p>
+
+            <p id="start-time-hint" class="help-text">
+              Loop starts at this time.
+            </p>
           </div>
 
-          <p id="start-time-hint" class="help-text">
-            Loop starts at this time.
-          </p>
-        </div>
+          <div class="input-row">
+            <label for="end-time-new">End time (seconds)</label>
 
-        <div class="input-row">
-          <label for="end-time-new">End time (seconds)</label>
+            <div class="input-group-new">
+              <input
+                type="number"
+                id="end-time-new"
+                name="end-time-new"
+                placeholder="End time (seconds)"
+                value="3600" />
+              <input
+                type="button"
+                id="end-to-current-btn-new"
+                class="button primary"
+                name="end-to-current-btn-new"
+                value="Current"
+              />
+            </div>
 
-          <div class="input-group-new">
-            <input
-              type="number"
-              id="end-time-new"
-              name="end-time-new"
-              placeholder="End time (seconds)"
-              value="3600" />
-            <input
-              type="button"
-              id="end-to-current-btn-new"
-              class="button primary"
-              name="end-to-current-btn-new"
-              value="Current"
-            />
+            <p class="form-error" id="end-time-error">
+              Invalid end time. Numbers only and can't be empty.
+            </p>
+
+            <p class="help-text" id="end-time-hint">
+              Loop ends (restarts) at this time.
+            </p>
           </div>
-
-          <p class="help-text" id="end-time-hint">
-            Loop ends (restarts) at this time.
-          </p>
-        </div>
+        </div> <!-- .time-input-pair -->
       </form>
 
       <!-- Control buttons -->

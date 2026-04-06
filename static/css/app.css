@@ -34,6 +34,8 @@ Author:  Phixyn
 
   --container-shadow-color: rgba(0, 0, 0, 0.5);
 
+  --error-color: #c14040;
+
   /* Accent colors that make the theme "pop" */
   --primary-accent-color: rgb(166, 33, 57);
   /* Mainly used as shadow and can be lighter/darker than
@@ -67,9 +69,26 @@ Author:  Phixyn
     HTML ELEMENTS
 ----------------------------------- */
 
+html {
+  box-sizing: border-box;
+}
+
+*,
+::before,
+::after {
+  box-sizing: inherit;
+}
+
 body {
   background-color: var(--primary-background-color);
   color: var(--primary-text-color);
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 
 h3,
@@ -77,6 +96,13 @@ h4,
 .h3,
 .h4 {
   padding: 0.9rem 0;
+}
+
+.h5 {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 a {
@@ -111,6 +137,9 @@ pre {
 }
 
 label {
+  display: block;
+  margin: 0;
+  line-height: 1.8;
   color: var(--primary-text-color);
   font-weight: bold;
   font-size: 1em;
@@ -371,6 +400,19 @@ li.is-submenu-item > a:hover {
   color: var(--primary-text-color);
 }
 
+/* Base reset for <button> elements without .button class */
+button {
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 /* -----------------------------------
     BUTTON
 ----------------------------------- */
@@ -383,6 +425,20 @@ li.is-submenu-item > a:hover {
   /* --button-hover-color: rgba(36, 36, 36, 0.8); */
   --button-border-color: rgba(85, 85, 85, 0.25);
   /* --button-border-color: rgba(72, 72, 72, 0.25); */
+  /* Structural base — replaces Foundation */
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0 1rem 0;
+  padding: 0.85em 1em;
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-align: center;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
 }
 
 .button.primary {
@@ -420,9 +476,33 @@ li.is-submenu-item > a:hover {
 [type="url"],
 [type="week"],
 textarea {
+  /* Structural base — replaces Foundation */
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 2.4375rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+  /* Theme colors */
   background-color: var(--secondary-container-color);
   color: var(--primary-text-color);
   border: 1px solid var(--secondary-border-color);
+}
+
+[type="button"],
+[type="submit"],
+[type="reset"] {
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 [type="color"]:focus,
@@ -468,6 +548,9 @@ textarea:disabled {
 }
 
 .help-text {
+  margin-top: -0.5rem;
+  font-size: 0.8125rem;
+  font-style: italic;
   color: var(--primary-text-color);
 }
 
@@ -488,11 +571,28 @@ textarea:disabled {
 .is-invalid-input:not(:focus) {
   background-color: var(--accent-container-color);
   border-width: 2px;
-  border-color: #c14040;
+  border-color: var(--error-color);
 }
 
 .is-invalid-input:not(:focus)::placeholder {
   color: var(--primary-menu-link-color);
+}
+
+.input-row.is-invalid > label {
+  color: var(--error-color);
+}
+
+.form-error {
+  display: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--error-color);
+}
+
+.form-error.is-visible {
+  display: block;
 }
 
 /* TODO: Class instead */
@@ -519,6 +619,25 @@ textarea:disabled {
   display: flex;
   flex-direction: row;
   gap: 4px;
+  align-items: stretch;
+}
+
+/* Inputs inside input-group-new: fill remaining space, reset margin */
+.input-group-new > input:not([type="button"]):not([type="submit"]):not([type="reset"]) {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Buttons inside input-group-new: natural width, reset margin, stretch to full height */
+.input-group-new > input[type="button"],
+.input-group-new > input[type="submit"],
+.input-group-new > input[type="reset"] {
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  align-self: stretch;
 }
 
 .controls-container {
@@ -526,6 +645,18 @@ textarea:disabled {
   gap: 0 24px;
   border: 1px solid blue;
   margin: 0 auto;
+}
+
+/* Two-column layout for start/end time input rows — always side by side */
+.time-input-pair {
+  display: flex;
+  flex-direction: row;
+  gap: 0 16px;
+}
+
+.time-input-pair > .input-row {
+  flex: 1;
+  min-width: 0;
 }
 
 /* -----------------------------------
@@ -568,12 +699,15 @@ textarea:disabled {
   position: absolute;
   top: 0.5rem;
   right: 0.7rem;
+  padding: 0;
   border: none;
   background: transparent;
   color: var(--primary-text-color);
   cursor: pointer;
   font-size: 1.8rem;
   line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 /* -----------------------------------
