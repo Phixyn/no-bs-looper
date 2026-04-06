@@ -432,6 +432,10 @@ function updatePlayer() {
   }
 
   let videoIdInputVal = videoIdInput.value.trim();
+  if (videoIdInputVal === "") {
+    setVideoIdValidationState(false, "required");
+    return;
+  }
 
   if (isValidHttpUrl(videoIdInputVal)) {
     let videoId = extractVideoId(videoIdInputVal);
@@ -450,7 +454,7 @@ function updatePlayer() {
     setVideoIdValidationState(true);
     state.v = videoIdInputVal;
   } else {
-    setVideoIdValidationState(false, "required");
+    setVideoIdValidationState(false, "pattern");
     console.error(
       `[ERROR] Invalid video URL or ID in input: '${videoIdInputVal}'.`
     );
