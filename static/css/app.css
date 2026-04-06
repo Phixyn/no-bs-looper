@@ -1,8 +1,8 @@
 /* -----------------------------------
-ZURB Foundation Phixed Dark Theme
+Phix Dark Theme
 No BS edition.
 
-Version: 0.5.5 (no bs edition)
+Version: 0.6.0 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -69,14 +69,10 @@ Author:  Phixyn
     HTML ELEMENTS
 ----------------------------------- */
 
-html {
-  box-sizing: border-box;
-}
-
 *,
 ::before,
 ::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 body {
@@ -400,7 +396,11 @@ li.is-submenu-item > a:hover {
   color: var(--primary-text-color);
 }
 
-/* Base reset for <button> elements without .button class */
+/* -----------------------------------
+    BUTTON
+----------------------------------- */
+
+/* Reset for button */
 button {
   padding: 0;
   appearance: none;
@@ -413,10 +413,6 @@ button {
   font-family: inherit;
 }
 
-/* -----------------------------------
-    BUTTON
------------------------------------ */
-
 .button {
   --button-main-color: rgb(25, 25, 25);
   --button-hover-color: var(--secondary-container-color);
@@ -425,19 +421,19 @@ button {
   /* --button-hover-color: rgba(36, 36, 36, 0.8); */
   --button-border-color: rgba(85, 85, 85, 0.25);
   /* --button-border-color: rgba(72, 72, 72, 0.25); */
-  /* Structural base — replaces Foundation */
+
   display: inline-block;
-  vertical-align: middle;
+  border-radius: 0;
   margin: 0 0 1rem 0;
   padding: 0.85em 1em;
   font-family: inherit;
   font-size: 0.9rem;
-  line-height: 1;
   text-align: center;
+  line-height: 1;
+  vertical-align: middle;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  border-radius: 0;
   transition: background-color 0.25s ease-out, color 0.25s ease-out;
 }
 
@@ -461,6 +457,7 @@ button {
     FORMS
 ----------------------------------- */
 
+/* TODO Simplify */
 [type="color"],
 [type="date"],
 [type="datetime-local"],
@@ -476,13 +473,15 @@ button {
 [type="url"],
 [type="week"],
 textarea {
-  /* Structural base — replaces Foundation */
   display: block;
+  border: 1px solid var(--secondary-border-color);
   box-sizing: border-box;
+  background-color: var(--secondary-container-color);
   width: 100%;
   height: 2.4375rem;
   margin: 0 0 1rem;
   padding: 0.5rem;
+  color: var(--primary-text-color);
   font-family: inherit;
   font-size: 1rem;
   font-weight: 400;
@@ -491,20 +490,17 @@ textarea {
   -webkit-appearance: none;
   border-radius: 0;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-  /* Theme colors */
-  background-color: var(--secondary-container-color);
-  color: var(--primary-text-color);
-  border: 1px solid var(--secondary-border-color);
 }
 
 [type="button"],
 [type="submit"],
 [type="reset"] {
+  border-radius: 0;
   appearance: none;
   -webkit-appearance: none;
-  border-radius: 0;
 }
 
+/* TODO Simplify */
 [type="color"]:focus,
 [type="date"]:focus,
 [type="datetime-local"]:focus,
@@ -647,7 +643,7 @@ textarea:disabled {
   margin: 0 auto;
 }
 
-/* Two-column layout for start/end time input rows — always side by side */
+/* Two-column layout for start/end time input rows - always side by side */
 .time-input-pair {
   display: flex;
   flex-direction: row;
@@ -686,11 +682,11 @@ textarea:disabled {
 
 .modal__content {
   position: relative;
-  margin: 7vh auto;
-  width: min(90vw, 40rem);
-  background-color: var(--primary-background-color);
   border: 1px solid var(--primary-border-color);
   border-radius: 0.5rem;
+  background-color: var(--primary-background-color);
+  margin: 7vh auto;
+  width: min(90vw, 40rem);
   padding: 1.5rem;
   z-index: 1;
 }
@@ -724,10 +720,10 @@ button.has-tip,
 }
 
 .tooltip {
-  z-index: 2;
   border: 2px solid var(--primary-border-color);
   background-color: var(--accent-background-color-transparent);
   color: var(--primary-text-color);
+  z-index: 2;
 }
 
 .tooltip.bottom::before {
@@ -796,8 +792,8 @@ button.has-tip,
 
 #totl-overlay {
   display: none;
+  background-color: rgba(0, 0, 0, 0.8);
   opacity: 0;
-  transition: opacity 0.25s ease-in-out;
   position: fixed;
   top: 0;
   right: 0;
@@ -805,7 +801,8 @@ button.has-tip,
   left: 0;
   z-index: 200;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.8);
+  /* TODO Can we transition display? */
+  transition: opacity 0.25s ease-in-out;
 }
 
 #totl-overlay.is-visible {

@@ -6,13 +6,6 @@
  * things that are in use on this website.
  */
 
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 /* Prevent font size inflation */
 html {
   -moz-text-size-adjust: none;
