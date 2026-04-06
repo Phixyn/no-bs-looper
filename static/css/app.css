@@ -334,8 +334,7 @@ li.is-submenu-item > a:hover {
 ----------------------------------- */
 
 .main-content {
-  /* temp */
-  border: 1px solid red;
+  /* TODO Temp */
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -593,7 +592,6 @@ textarea:disabled {
 
 /* TODO: Class instead */
 #video-form-new {
-  border: 1px solid yellow;
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
@@ -639,7 +637,6 @@ textarea:disabled {
 .controls-container {
   display: flex;
   gap: 0 24px;
-  border: 1px solid blue;
   margin: 0 auto;
 }
 
