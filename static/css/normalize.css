@@ -1,11 +1,10 @@
-/* My own, trying to only include what I actually need */
-
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/*
+ * normalize.css - Normalizes styles across browsers and devices.
+ * Author: Phixyn
+ *
+ * This is a very simple and minimal stylesheet. I tried to only normalize
+ * things that are in use on this website.
+ */
 
 /* Prevent font size inflation */
 html {

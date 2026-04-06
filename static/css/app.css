@@ -1,8 +1,8 @@
 /* -----------------------------------
-ZURB Foundation Phixed Dark Theme
+Phix Dark Theme
 No BS edition.
 
-Version: 0.5.5 (no bs edition)
+Version: 0.6.0 (no bs edition)
 Author:  Phixyn
 ----------------------------------- */
 
@@ -33,6 +33,8 @@ Author:  Phixyn
   --secondary-separator-color: rgb(37, 37, 37);
 
   --container-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --error-color: #c14040;
 
   /* Accent colors that make the theme "pop" */
   --primary-accent-color: rgb(166, 33, 57);
@@ -67,9 +69,22 @@ Author:  Phixyn
     HTML ELEMENTS
 ----------------------------------- */
 
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: var(--primary-background-color);
   color: var(--primary-text-color);
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
 }
 
 h3,
@@ -77,6 +92,13 @@ h4,
 .h3,
 .h4 {
   padding: 0.9rem 0;
+}
+
+.h5 {
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 a {
@@ -111,6 +133,9 @@ pre {
 }
 
 label {
+  display: block;
+  margin: 0;
+  line-height: 1.8;
   color: var(--primary-text-color);
   font-weight: bold;
   font-size: 1em;
@@ -308,11 +333,28 @@ li.is-submenu-item > a:hover {
     MAIN CONTENT
 ----------------------------------- */
 
-#main-content {
+.main-content {
+  /* TODO Temp */
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* align-items: center; */
+  /* align-items: stretch; */
+  /* justify-content: space-evenly; */
+  gap: 30px 0;
+  width: 1280px;
+  margin: 0 auto;
   /* Makes it possible to have a footer that sticks to
    * the bottom of the page no matter how much content
    * the page has. */
-  min-height: 100vh;
+  /* min-height: 100vh; */
+}
+
+@media screen and (max-width: 1280px) {
+  .main-content {
+    width: 100%;
+  }
 }
 
 /* -----------------------------------
@@ -357,6 +399,19 @@ li.is-submenu-item > a:hover {
     BUTTON
 ----------------------------------- */
 
+/* Reset for button */
+button {
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  line-height: 1;
+  cursor: pointer;
+  font-family: inherit;
+}
+
 .button {
   --button-main-color: rgb(25, 25, 25);
   --button-hover-color: var(--secondary-container-color);
@@ -365,6 +420,20 @@ li.is-submenu-item > a:hover {
   /* --button-hover-color: rgba(36, 36, 36, 0.8); */
   --button-border-color: rgba(85, 85, 85, 0.25);
   /* --button-border-color: rgba(72, 72, 72, 0.25); */
+
+  display: inline-block;
+  border-radius: 0;
+  margin: 0 0 1rem 0;
+  padding: 0.85em 1em;
+  font-family: inherit;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
 }
 
 .button.primary {
@@ -387,6 +456,7 @@ li.is-submenu-item > a:hover {
     FORMS
 ----------------------------------- */
 
+/* TODO Simplify */
 [type="color"],
 [type="date"],
 [type="datetime-local"],
@@ -402,11 +472,34 @@ li.is-submenu-item > a:hover {
 [type="url"],
 [type="week"],
 textarea {
-  background-color: var(--secondary-container-color);
-  color: var(--primary-text-color);
+  display: block;
   border: 1px solid var(--secondary-border-color);
+  box-sizing: border-box;
+  background-color: var(--secondary-container-color);
+  width: 100%;
+  height: 2.4375rem;
+  margin: 0 0 1rem;
+  padding: 0.5rem;
+  color: var(--primary-text-color);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
 }
 
+[type="button"],
+[type="submit"],
+[type="reset"] {
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* TODO Simplify */
 [type="color"]:focus,
 [type="date"]:focus,
 [type="datetime-local"]:focus,
@@ -450,21 +543,168 @@ textarea:disabled {
 }
 
 .help-text {
+  margin-top: -0.5rem;
+  font-size: 0.8125rem;
+  font-style: italic;
   color: var(--primary-text-color);
 }
 
-/* Foundation Abide plugin error states */
+.show-for-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Validation states */
 
 .is-invalid-input:not(:focus) {
   background-color: var(--accent-container-color);
+  border-width: 2px;
+  border-color: var(--error-color);
 }
 
 .is-invalid-input:not(:focus)::placeholder {
   color: var(--primary-menu-link-color);
 }
 
+.input-row.is-invalid > label {
+  color: var(--error-color);
+}
+
+.form-error {
+  display: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--error-color);
+}
+
+.form-error.is-visible {
+  display: block;
+}
+
+/* TODO: Class instead */
+#video-form-new {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.input-row label {
+  font-size: 1rem;
+}
+
+.input-group-new {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: stretch;
+}
+
+/* Inputs inside input-group-new: fill remaining space, reset margin */
+.input-group-new > input:not([type="button"]):not([type="submit"]):not([type="reset"]) {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Buttons inside input-group-new: natural width, reset margin, stretch to full height */
+.input-group-new > input[type="button"],
+.input-group-new > input[type="submit"],
+.input-group-new > input[type="reset"] {
+  flex-shrink: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  align-self: stretch;
+}
+
+.controls-container {
+  display: flex;
+  gap: 0 24px;
+  margin: 0 auto;
+}
+
+/* Two-column layout for start/end time input rows - always side by side */
+.time-input-pair {
+  display: flex;
+  flex-direction: row;
+  gap: 0 16px;
+}
+
+.time-input-pair > .input-row {
+  flex: 1;
+  min-width: 0;
+}
+
 /* -----------------------------------
-    FOUNDATION TOOLTIP
+    CUSTOM COMPONENTS
+----------------------------------- */
+
+/* -----------------------------------
+    MODAL
+----------------------------------- */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+.modal__content {
+  position: relative;
+  border: 1px solid var(--primary-border-color);
+  border-radius: 0.5rem;
+  background-color: var(--primary-background-color);
+  margin: 7vh auto;
+  width: min(90vw, 40rem);
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.modal__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.7rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--primary-text-color);
+  cursor: pointer;
+  font-size: 1.8rem;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* -----------------------------------
+    TOOLTIP
 ----------------------------------- */
 
 input.has-tip {
@@ -477,10 +717,10 @@ button.has-tip,
 }
 
 .tooltip {
-  z-index: 2;
   border: 2px solid var(--primary-border-color);
   background-color: var(--accent-background-color-transparent);
   color: var(--primary-text-color);
+  z-index: 2;
 }
 
 .tooltip.bottom::before {
@@ -488,69 +728,15 @@ button.has-tip,
     var(--accent-background-color-transparent);
 }
 
-/* -----------------------------------
-    SLIDER
------------------------------------ */
-
-.slider {
-  --handle-hover-color: rgba(36, 36, 36, 0.8);
-  background-color: var(--accent-container-color);
-}
-
-.slider-fill {
-  background-color: var(--primary-accent-color);
-  /* box-shadow: 0 0 5px var(--secondary-accent-color); */
-  box-shadow: 0 0 10px var(--secondary-accent-color);
-}
-
-.slider-handle {
-  border: 1px solid var(--primary-border-color);
-  background-color: var(--primary-container-color);
-}
-
-.slider-handle:hover,
-.slider-handle:active,
-.slider-handle:focus {
-  background-color: var(--handle-hover-color);
-}
-
-/* -----------------------------------
-    CLOSE BUTTON
------------------------------------ */
-
-.close-button:focus,
-.close-button:hover {
-  color: var(--primary-text-color);
-}
-
-/* -----------------------------------
-    REVEAL
------------------------------------ */
-
-.reveal {
-  background-color: var(--primary-background-color);
-  border: 1px solid var(--primary-border-color);
-}
-
-[data-whatinput="touch"] .reveal {
-  outline: 0;
-}
-
-/* -----------------------------------
-    CUSTOM COMPONENTS
------------------------------------ */
-
-/* -----------------------------------
-    TOOLTIP
------------------------------------ */
-
 .phix-tooltip {
   display: inline;
   position: relative;
 }
 
 .phix-tooltip .phix-tooltip-text {
-  display: none;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
   position: absolute;
   transform: translateX(150%) translateY(-20%);
   min-width: 8.75rem;
@@ -564,6 +750,11 @@ button.has-tip,
   border-color: var(--secondary-border-color);
   color: var(--primary-text-color);
   text-align: center;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.phix-tooltip .phix-tooltip-text.is-visible {
+  opacity: 1;
 }
 
 .phix-tooltip--bottom .phix-tooltip-text::after {
@@ -598,6 +789,8 @@ button.has-tip,
 
 #totl-overlay {
   display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
   position: fixed;
   top: 0;
   right: 0;
@@ -605,7 +798,12 @@ button.has-tip,
   left: 0;
   z-index: 200;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.8);
+  /* TODO Can we transition display? */
+  transition: opacity 0.25s ease-in-out;
+}
+
+#totl-overlay.is-visible {
+  opacity: 1;
 }
 
 /* -----------------------------------

@@ -44,9 +44,9 @@
     />
     <title>No BS YouTube Looper</title>
 
-    <link rel="stylesheet" href="css/foundation.min.css" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/slider.css" />
   </head>
 
   <body>
@@ -72,264 +72,185 @@
     </header>
 
     <!-- MAIN CONTENT -->
-    <!-- TODO #22: Add 'fluid' class for wider player. Might need a separate,
-                   non-fluid container for the form though -->
-    <div class="grid-container" id="main-content">
-      <div class="grid-x grid-padding-x grid-padding-y">
-        <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
-          <div class="player-container responsive-embed widescreen">
-            <!-- The <iframe> (and video player) will replace this <div> tag -->
-            <div id="player"></div>
-          </div> <!-- .player-container .responsive-embed .widescreen -->
+    <main class="main-content">
+      <div class="player-container" style="width: 1280px; height: 720px">
+        <!-- The <iframe> (and video player) will replace this <div> tag -->
+        <div id="player"></div>
+      </div>
 
-          <div
-            id="loop-portion-slider"
-            class="slider"
-            data-slider
-            data-start="0"
-            data-end="100"
-            data-initial-start="0"
-            data-initial-end="100"
-            data-double-sided="true"
-            data-changed-delay="500"
-          >
-            <span
-              id="start-time-handle"
-              class="slider-handle"
-              data-slider-handle
-              role="slider"
-              tabindex="1"
-              aria-controls="start-time"
-            ></span>
-            <span class="slider-fill" data-slider-fill></span>
-            <span
-              id="end-time-handle"
-              class="slider-handle"
-              data-slider-handle
-              role="slider"
-              tabindex="1"
-              aria-controls="end-time"
-            ></span>
-            <!-- <input type="hidden" id="slider-start">
-            <input type="hidden" id="slider-end"> -->
-          </div> <!-- .slider -->
-        </div> <!-- .cell -->
-      </div> <!-- .grid-x -->
+      <div id="loop-portion-slider-new" class="range-slider"></div>
 
       <form
-        id="video-form"
-        class="grid-x grid-padding-x grid-padding-y"
-        data-abide
-        novalidate
+        id="video-form-new"
       >
-        <!-- Video ID -->
-        <div
-          class="cell small-12 medium-8 large-8 medium-offset-2 large-offset-2"
-        >
-          <label>Video link or ID
-            <div class="input-group">
-              <input
-                type="text"
-                id="video-id"
-                class="input-group-field"
-                name="video-id"
-                placeholder="Video link or ID"
-                value="KcUnXunuDTs"
-                aria-describedby="video-id-hint"
-                aria-errormessage="video-id-error"
-                data-autoselect="true"
-                required
-              />
-              <div class="input-group-button">
-                <input
-                  type="button"
-                  id="update-btn"
-                  class="button primary"
-                  name="update-btn"
-                  value="Update"
-                />
-              </div>
-            </div> <!-- .input-group -->
-            <span
-              id="video-id-error"
-              class="form-error"
-              data-form-error-for="video-id"
-              data-form-error-on="required"
-            >
-              This can't be empty. Type or paste in a valid YouTube link or
-              video ID.
-            </span>
-            <span
-              class="form-error"
-              data-form-error-for="video-id"
-              data-form-error-on="pattern"
-            >
-              This link/ID didn't work :( Make sure it's a link to a video that
-              starts with 'http://' or 'https://', or an 11-character video ID.
-            </span>
-          </label>
-          <p class="help-text" id="video-id-hint">
+        <div class="input-row">
+          <label for="video-id-new">Video link or ID</label>
+
+          <div class="input-group-new">
+            <input
+              type="text"
+              id="video-id-new"
+              name="video-id-new"
+              value="KcUnXunuDTs"
+              placeholder="Video link or ID" />
+            <input
+              type="button"
+              id="update-btn-new"
+              class="button primary"
+              name="update-btn-new"
+              value="Update"
+            />
+          </div>
+
+          <p class="form-error" id="video-id-required-error">
+            This can't be empty. Type or paste in a valid YouTube link or video ID.
+          </p>
+
+          <p class="form-error" id="video-id-pattern-error">
+            This link/ID didn't work :( Make sure it's a link to a video that
+            starts with 'http://' or 'https://', or an 11-character video ID.
+          </p>
+
+          <p id="video-id-hint" class="help-text">
             Paste a YouTube link or video ID here (e.g.
             https://www.youtube.com/watch?v=dQw4w9WgXcQ).
           </p>
         </div>
-        <!-- .cell -->
 
-        <!-- Start time -->
-        <div
-          class="cell small-6 medium-4 large-4 medium-offset-2 large-offset-2"
-        >
-          <label>Start time (seconds)
-            <div class="input-group">
+        <div class="time-input-pair">
+          <div class="input-row">
+            <label for="start-time-new">Start time (seconds)</label>
+            <div class="input-group-new">
               <input
                 type="number"
-                id="start-time"
-                class="input-group-field"
-                name="start-time"
+                id="start-time-new"
+                name="start-time-new"
                 placeholder="Start time (seconds)"
-                value="0"
-                aria-describedby="start-time-hint"
-                aria-errormessage="start-time-error"
-                required
-                pattern="number"
+                value="0" />
+              <input
+                type="button"
+                id="start-to-current-btn-new"
+                class="button primary"
+                name="start-to-current-btn-new"
+                value="Current"
               />
-              <div class="input-group-button">
-                <input
-                  type="button"
-                  id="start-to-current-btn"
-                  class="button primary"
-                  name="start-to-current-btn"
-                  value="Current"
-                />
-              </div>
-            </div> <!-- .input-group -->
-            <span
-              id="start-time-error"
-              class="form-error"
-              data-form-error-for="start-time"
-            >
-              Invalid start time. Numbers only and can't be empty.
-            </span>
-          </label>
-          <p class="help-text" id="start-time-hint">
-            Loop starts at this time.
-          </p>
-        </div> <!-- .cell -->
+            </div>
 
-        <!-- End time -->
-        <div class="cell small-6 medium-4 large-4">
-          <label>End time (seconds)
-            <div class="input-group">
+            <p class="form-error" id="start-time-error">
+              Invalid start time. Numbers only and can't be empty.
+            </p>
+
+            <p id="start-time-hint" class="help-text">
+              Loop starts at this time.
+            </p>
+          </div>
+
+          <div class="input-row">
+            <label for="end-time-new">End time (seconds)</label>
+
+            <div class="input-group-new">
               <input
                 type="number"
-                id="end-time"
-                class="input-group-field"
-                name="end-time"
+                id="end-time-new"
+                name="end-time-new"
                 placeholder="End time (seconds)"
-                value="100"
-                min="1"
-                aria-describedby="end-time-hint"
-                aria-errormessage="end-time-error"
-                required
-                pattern="number"
+                value="3600" />
+              <input
+                type="button"
+                id="end-to-current-btn-new"
+                class="button primary"
+                name="end-to-current-btn-new"
+                value="Current"
               />
-              <div class="input-group-button">
-                <input
-                  type="button"
-                  id="end-to-current-btn"
-                  class="button primary"
-                  name="end-to-current-btn"
-                  value="Current"
-                />
-              </div>
-            </div> <!-- .input-group -->
-            <span
-              id="end-time-error"
-              class="form-error"
-              data-form-error-for="end-time"
-            >
+            </div>
+
+            <p class="form-error" id="end-time-error">
               Invalid end time. Numbers only and can't be empty.
-            </span>
-          </label>
-          <p class="help-text" id="end-time-hint">
-            Loop ends (restarts) at this time.
-          </p>
-        </div> <!-- .cell -->
+            </p>
 
-        <div class="cell medium-8 large-8 medium-offset-2 large-offset-2">
-          <!-- Control buttons -->
-          <input
-            type="button"
-            id="toggle-vid-btn"
-            class="button primary"
-            name="toggle-vid-btn"
-            value="Show/hide video"
-          />
-          <input
-            type="button"
-            id="lights-off-btn"
-            class="button primary"
-            name="lights-off-btn"
-            value="Turn off the lights"
-            data-tooltip
-            tabindex="1"
-            title="Dim everything except the player"
-            data-hover-delay="350"
-            data-click-open="false"
-            data-disable-for-touch="true"
-            data-position="bottom"
-            data-alignment="center"
-          />
-          <input
-            type="button"
-            id="share-btn"
-            class="button primary"
-            name="share-btn"
-            value="Share/save loop"
-            data-open="share-modal"
-          />
-        </div> <!-- .cell -->
-      </form> <!-- .grid-x -->
-    </div> <!-- .grid-container -->
-
-    <div
-      id="share-modal"
-      class="reveal"
-      aria-labelledby="share-modal-header"
-      data-reveal
-      data-animation-out="fade-out fast"
-    >
-      <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
-      <form>
-        <label for="share-link" class="show-for-sr">Share link</label>
-        <div class="phix-tooltip phix-tooltip--bottom">
-          <input
-            type="text"
-            id="share-link"
-            name="share-link"
-            placeholder="Share link"
-            aria-describedby="share-link-hint"
-            data-autocopy="true"
-            data-autoselect="true"
-            readonly
-          />
-          <span class="phix-tooltip-text" id="share-link-tooltip">
-            Link copied!
-          </span>
-        </div>
-        <p class="help-text" id="share-link-hint">
-          Copy this link to share your loop with others. You can also bookmark
-          this page to save your loop.
-        </p>
+            <p class="help-text" id="end-time-hint">
+              Loop ends (restarts) at this time.
+            </p>
+          </div>
+        </div> <!-- .time-input-pair -->
       </form>
-      <button
-        class="close-button"
-        data-close
-        aria-label="Close share modal"
-        type="button"
+
+      <!-- Control buttons -->
+      <div class="controls-container">
+        <input
+          type="button"
+          id="toggle-vid-btn"
+          class="button primary"
+          name="toggle-vid-btn"
+          value="Show/hide video"
+        />
+        <input
+          type="button"
+          id="lights-off-btn"
+          class="button primary"
+          name="lights-off-btn"
+          value="Turn off the lights"
+          data-tooltip
+          tabindex="1"
+          title="Dim everything except the player"
+          data-hover-delay="350"
+          data-click-open="false"
+          data-disable-for-touch="true"
+          data-position="bottom"
+          data-alignment="center"
+        />
+        <input
+          type="button"
+          id="share-btn"
+          class="button primary"
+          name="share-btn"
+          value="Share/save loop"
+          data-open="share-modal"
+        />
+      </div> <!-- #controls-container -->
+    </main> <!-- #main-content -->
+
+    <!-- SHARE MODAL -->
+    <div id="share-modal" class="modal" aria-hidden="true">
+      <div class="modal__backdrop" data-modal-close></div>
+      <div
+        class="modal__content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="share-modal-header"
       >
-        <span aria-hidden="true">&times;</span>
-      </button>
+        <h2 id="share-modal-header" class="h5"><strong>Share</strong></h2>
+        <form>
+          <label for="share-link" class="show-for-sr">Share link</label>
+          <div class="phix-tooltip phix-tooltip--bottom">
+            <input
+              type="text"
+              id="share-link"
+              name="share-link"
+              placeholder="Share link"
+              aria-describedby="share-link-hint"
+              data-autocopy="true"
+              data-autoselect="true"
+              readonly
+            />
+            <span class="phix-tooltip-text" id="share-link-tooltip">
+              Link copied!
+            </span>
+          </div>
+          <p class="help-text" id="share-link-hint">
+            Copy this link to share your loop with others. You can also bookmark
+            this page to save your loop.
+          </p>
+        </form>
+        <button
+          class="modal__close"
+          data-modal-close
+          aria-label="Close share modal"
+          type="button"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
     </div>
 
     <!-- FOOTER -->
@@ -347,10 +268,8 @@
       </p>
     </footer>
 
-    <script src="lib/jquery.js"></script>
-    <script src="lib/what-input.js"></script>
     <script src="lib/qs.min.js"></script>
-    <script src="lib/foundation.min.js"></script>
+    <script src="js/slider.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
