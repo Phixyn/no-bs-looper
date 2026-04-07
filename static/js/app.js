@@ -1,9 +1,3 @@
-// Websocket
-// Add your websocket server IP address here
-const websocket = new WebSocket("ws://127.0.0.1:14670");
-const TYPE_PROP = "type";
-const TYPE_SERVER_ERROR_MESSAGE = "error";
-const TYPE_VIDEO_INFO_MESSAGE = "video_info";
 // Video
 const VIDEO_ID_LENGTH = 11;
 // Timeouts
@@ -45,97 +39,6 @@ const newSlider = new DualRangeSlider('#loop-portion-slider-new', {
     updateHistoryState();
   }
 });
-
-// Websocket client
-
-/**
- * Websocket client 'onmessage' event handler. Called whenever a message is
- * received from the websocket server.
- *
- * @param {event} event An event object containing event data.
- */
-websocket.onmessage = (event) => {
-  let msg;
-  console.log("[INFO] Received data from websocket server.");
-  console.debug(event.data);
-
-  try {
-    msg = JSON.parse(event.data);
-  } catch (err) {
-    // TODO #75: Show error toast to the user
-    console.error("[ERROR] Error parsing received data from the server.");
-    console.error(`[ERROR] ${err.name}: ${err.message}`);
-    return;
-  }
-
-  if (!msg.hasOwnProperty(TYPE_PROP)) {
-    // TODO #75: Show error toast to the user
-    console.error("[ERROR] Malformed message received from socket server.");
-    return;
-  }
-
-  switch (msg.type) {
-    case undefined:
-    case null:
-    case "":
-      // TODO #75: Show error toast to the user
-      console.error("[ERROR] Malformed message received from socket server.");
-      break;
-    case TYPE_VIDEO_INFO_MESSAGE:
-      // We got a new video duration, so update the slider and input elements
-      let videoDuration = parseInt(msg.content.length_seconds, 10);
-      // Preserve state.end value if this is the initial video's duration
-      if (!isInitialVideo) {
-        state.end = videoDuration;
-      }
-
-      updateSliderAndInputAttributes(state.start, videoDuration);
-
-      // TODO #54: This shouldn't be needed because it's already set in
-      //    updateSliderAndInputAttributes(). But startTime value is wrong on
-      //    initial video without it...
-      console.debug(
-        "[DEBUG] Setting numeric input fields from websocket onmessage."
-      );
-      startTimeInput.value = state.start;
-      break;
-    case TYPE_SERVER_ERROR_MESSAGE:
-      // TODO #75: Show error toast to the user
-      console.error("[ERROR] A server error has ocurred.");
-      console.error(
-        `[ERROR] Server: ${msg.content.error}\n${msg.content.description}`
-      );
-      break;
-    default:
-      // TODO #75: Show error toast to the user
-      console.error("[ERROR] Unsupported message received from socket server.");
-      break;
-  }
-};
-
-/**
- * Websocket client 'onopen' event handler. Called when a connection to the
- * websocket server is successfully opened.
- *
- * @param {event} event An event object containing event data.
- */
-websocket.onopen = (event) => {
-  console.log("[INFO] Successfully opened websocket connection.");
-  console.debug(event);
-};
-
-/**
- * Websocket client 'onclose' event handler. Called when the connection to the
- * websocket server is closed.
- *
- * TODO #47: Implement a proper websocket client onclose handler
- *
- * @param {event} event An event object containing event data.
- */
-websocket.onclose = (event) => {
-  console.log("[INFO] Websocket server connection closed.");
-  console.debug(event);
-};
 
 /**
  * Event handler for input focus events.
@@ -334,27 +237,12 @@ function onPlayerReady(event) {
   console.log(player.getDuration());
   console.log("[onPlayerReady] player.playerInfo.duration:");
   console.log(player.playerInfo.duration);
-  // TODO temporary fix for death of get_video_info endpoint
-  // O_O
-  console.log("isInitialVideo");
-  console.log(isInitialVideo);
   if (isInitialVideo === false) {
-    console.log("setting state end");
     state.end = player.playerInfo.duration;
   }
   updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
-
-  // TODO #54: This shouldn't be needed because it's already set in
-  //    updateSliderAndInputAttributes(). But startTime value is wrong on
-  //    initial video without it...
-  console.debug(
-    "[DEBUG] Setting numeric input fields from websocket onmessage."
-  );
   startTimeInput.value = state.start;
 
-
-  // Request video duration and other info from backend server
-  // websocket.send(JSON.stringify({ get_video_info: state.v }));
   /* Using a playlist is required to ensure that full videos loop without
    * stopping. See comment above player.loadPlaylist() in updatePlayer()
    * for more information.
@@ -399,25 +287,9 @@ function onPlayerStateChange(event) {
  * Updates the YouTube player with a new video. Called when the user clicks
  * the "Update" button. The video ID is taken from the text input element
  * in the HTML form. If the user enters a URL, the ID is extracted from it.
- * This function also requests video info from our backend server via websocket
- * (see why this is necessary below), which hopefully causes the websocket
- * client's "onmessage" handler to get called.
  *
- * Normally, we'd update the slider and input attributes with new max values
- * based on the video duration here. However, we can't update them here
- * because we can't get the duration of the video yet. Check out this little
- * gem from the YouTube IFrame API:
- *
- * > "getDuration() will return 0 until the video's metadata is loaded, which
- * normally happens just after the video starts playing."
- * Thanks Google, really helpful and really nice UX for my users, eh.
- *
- * As a workaround we could perform this GET request to get video info:
- * https://www.youtube.com/get_video_info?html5=1&video_id=orxvTsPW10k
- * However, because of CORS, we can't do this from the web application, as
- * YouTube won't allow our cross-origin requests :(. So instead, we send a
- * message to our Python server, asking it to perform the HTTP GET request on
- * our behalf and send us the video info back via websocket.
+ * Note: getDuration() returns 0 until video metadata is loaded, so the
+ * slider and input max attributes are updated via a setTimeout after load.
  *
  * TODO #48: Rename updatePlayer to be more descriptive?
  */
@@ -496,38 +368,21 @@ function updatePlayer() {
    * For more info on loading and queueing videos, see:
    * https://developers.google.com/youtube/iframe_api_reference#Queueing_Functions
    */
-  // player.loadPlaylist(state.v);
   player.loadPlaylist([state.v, state.v]);
   player.setLoop(true);
 
-  // On new videos, reset start time to 0 and set end to new video's length
+  // On new videos, reset start time to 0. The video duration is not yet
+  // available, so wait for playback metadata to load before updating the
+  // slider and input max attributes.
   state.start = 0;
-  // Request the Python server to make a GET request for video info and send
-  // us the data back via the websocket.
-  // TODO #49: Improve usage of websocket client in updatePlayer()
-  // console.debug("[DEBUG] Sending request for video info to Python server.");
-  // TODO: Improve - temporary fix for death of get_video_info endpoint
   setTimeout(() => {
-    console.debug("[DEBUG] Waited 5s.");
     console.log("[INFO] [updatePlayer] player.playerInfo.duration:");
     console.log(player.playerInfo.duration);
 
     state.end = player.playerInfo.duration;
-
-    // O_O
     updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
-
-    // TODO #54: This shouldn't be needed because it's already set in
-    //    updateSliderAndInputAttributes(). But startTime value is wrong on
-    //    initial video without it...
-    console.debug(
-      "[DEBUG] Setting numeric input fields from websocket onmessage."
-    );
     startTimeInput.value = state.start;
   }, 5000);
-  // End of temporary fix
-
-  // websocket.send(JSON.stringify({ get_video_info: state.v }));
 }
 
 /**
