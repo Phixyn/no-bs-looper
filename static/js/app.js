@@ -413,7 +413,9 @@ function togglePlayer() {
 function enableTotl() {
   totlOverlay.style.display = "block";
   requestAnimationFrame(() => {
-    totlOverlay.classList.add("is-visible");
+    requestAnimationFrame(() => {
+      totlOverlay.classList.add("is-visible");
+    });
   });
 }
 
