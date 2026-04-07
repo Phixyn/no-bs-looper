@@ -105,6 +105,8 @@ function initializeApp() {
     if (!Number.isNaN(parsedStart)) {
       setStartTimeValidationState(true);
       newSlider.setValues(parsedStart, newSlider.getValues().max);
+    } else {
+      setStartTimeValidationState(false);
     }
   });
 
@@ -113,6 +115,8 @@ function initializeApp() {
     if (!Number.isNaN(parsedEnd)) {
       setEndTimeValidationState(true);
       newSlider.setValues(newSlider.getValues().min, parsedEnd);
+    } else {
+      setEndTimeValidationState(false);
     }
   });
 
@@ -477,6 +481,7 @@ function updateHistoryState() {
 function setStartTimeToCurrent() {
   state.start = parseInt(player.getCurrentTime(), 10);
   startTimeInput.value = state.start;
+  setStartTimeValidationState(true);
   newSlider.setValues(state.start, newSlider.getValues().max);
 }
 
@@ -486,6 +491,7 @@ function setStartTimeToCurrent() {
 function setEndTimeToCurrent() {
   state.end = parseInt(player.getCurrentTime(), 10);
   endTimeInput.value = state.end;
+  setEndTimeValidationState(true);
   newSlider.setValues(newSlider.getValues().min, state.end);
 }
 
