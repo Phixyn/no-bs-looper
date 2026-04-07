@@ -591,12 +591,14 @@ function setEndTimeValidationState(isValid) {
 function openShareModal() {
   shareModal.setAttribute("aria-hidden", "false");
   shareModal.classList.add("is-open");
+  document.body.classList.add("modal-open");
   shareLinkInput.focus();
 }
 
 function closeShareModal() {
   shareModal.setAttribute("aria-hidden", "true");
   shareModal.classList.remove("is-open");
+  document.body.classList.remove("modal-open");
   shareBtn.focus();
 }
 
