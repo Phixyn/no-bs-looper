@@ -296,10 +296,9 @@ initializeApp();
 function onYouTubeIframeAPIReady() {
   console.log("[INFO] YouTube Iframe API ready.");
 
-  // TODO How to make this responsive?
   player = new YT.Player("player", {
-    width: "1280",
-    height: "720",
+    width: "100%",
+    height: "100%",
     videoId: state.v,
     playerVars: {
       version: 3,
