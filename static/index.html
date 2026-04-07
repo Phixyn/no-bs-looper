@@ -106,11 +106,11 @@
             />
           </div>
 
-          <p class="form-error" id="video-id-required-error">
+          <p class="form-error" id="video-id-required-error" role="alert">
             This can't be empty. Type or paste in a valid YouTube link or video ID.
           </p>
 
-          <p class="form-error" id="video-id-pattern-error">
+          <p class="form-error" id="video-id-pattern-error" role="alert">
             This link/ID didn't work :( Make sure it's a link to a video that
             starts with 'http://' or 'https://', or an 11-character video ID.
           </p>
@@ -140,7 +140,7 @@
               />
             </div>
 
-            <p class="form-error" id="start-time-error">
+            <p class="form-error" id="start-time-error" role="alert">
               Invalid start time. Numbers only and can't be empty.
             </p>
 
@@ -168,7 +168,7 @@
               />
             </div>
 
-            <p class="form-error" id="end-time-error">
+            <p class="form-error" id="end-time-error" role="alert">
               Invalid end time. Numbers only and can't be empty.
             </p>
 
@@ -194,14 +194,7 @@
           class="button primary"
           name="lights-off-btn"
           value="Turn off the lights"
-          data-tooltip
-          tabindex="1"
           title="Dim everything except the player"
-          data-hover-delay="350"
-          data-click-open="false"
-          data-disable-for-touch="true"
-          data-position="bottom"
-          data-alignment="center"
         />
         <input
           type="button"

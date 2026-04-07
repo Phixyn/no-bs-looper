@@ -64,8 +64,33 @@ function initializeApp() {
     el.addEventListener("click", closeShareModal);
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && shareModal.getAttribute("aria-hidden") === "false") {
+    const modalIsOpen = shareModal.getAttribute("aria-hidden") === "false";
+
+    if (event.key === "Escape" && modalIsOpen) {
       closeShareModal();
+      return;
+    }
+
+    if (event.key === "Tab" && modalIsOpen) {
+      const focusable = Array.from(
+        shareModal.querySelector(".modal__content").querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey) {
+        if (document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     }
   });
 
