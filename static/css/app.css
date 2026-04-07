@@ -37,18 +37,23 @@ Author:  Phixyn
   --error-color: #c14040;
 
   /* Accent colors that make the theme "pop" */
-  --primary-accent-color: rgb(166, 33, 57);
+  --primary-accent-color: #a62139;
   /* Mainly used as shadow and can be lighter/darker than
    * primary accent, if desired. */
-  --secondary-accent-color: rgb(166, 33, 57);
+  --secondary-accent-color: #a62139;
 
   /* Text colors */
-  --primary-text-color: rgb(175, 175, 175);
-  --secondary-text-color: rgb(119, 119, 119);
-  --primary-link-color: rgb(219, 90, 127);
-  --secondary-link-color: rgb(217, 147, 167);
-  --primary-menu-link-color: rgb(157, 157, 157);
-  --secondary-menu-link-color: rgb(234, 234, 234);
+  --primary-text-color: rgb(185, 185, 185);
+  --secondary-text-color: rgb(120, 120, 120);
+  --primary-link-color: #db5a7f;
+  --secondary-link-color: #e087a8;
+  --primary-menu-link-color: rgb(150, 150, 150);
+  --secondary-menu-link-color: rgb(225, 225, 225);
+
+  /* Navbar */
+  --navbar-text-color: rgb(200, 200, 200);
+  --navbar-text-color-focus: rgb(235, 235, 235);
+  --navbar-bg-contrast: rgba(255, 255, 255, 0.06);
 }
 
 /* -----------------------------------
@@ -78,8 +83,9 @@ Author:  Phixyn
 body {
   background-color: var(--primary-background-color);
   color: var(--primary-text-color);
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
 }
 
 p {
@@ -242,8 +248,7 @@ label {
 .navbar-links {
   list-style-type: none;
   overflow: hidden;
-  /* background-color: var(--navbar-bg-color); */
-  background-color: var(--grey-darkest);
+  background-color: rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: row;
   max-height: max-content;
