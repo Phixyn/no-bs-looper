@@ -2,8 +2,8 @@
   <title>No BS</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#a62139"/>
-      <stop offset="100%" stop-color="#db5a7f"/>
+      <stop offset="0%" stop-color="#9b2355"/>
+      <stop offset="100%" stop-color="#d05a8a"/>
     </linearGradient>
   </defs>
   <!-- Badge -->
