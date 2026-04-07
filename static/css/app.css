@@ -259,6 +259,7 @@ button {
   font-family: inherit;
   font-size: 0.875rem;
   font-weight: 500;
+  /* TODO Rem? */
   letter-spacing: 0.01em;
   text-align: center;
   line-height: 1;
