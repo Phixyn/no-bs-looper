@@ -123,6 +123,12 @@ a:focus {
   outline: none;
 }
 
+a:focus-visible {
+  outline: 2px solid var(--primary-link-color);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 hr {
   border-bottom: 1px solid var(--primary-separator-color);
 }
@@ -156,7 +162,7 @@ label {
   height: var(--navbar-height);
   border-bottom: 1px solid rgba(166, 33, 57, 0.5);
   background-color: var(--accent-background-color);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .navbar-container {
@@ -287,6 +293,11 @@ button {
   outline: none;
 }
 
+.button.primary:focus-visible {
+  outline: 2px solid rgba(166, 33, 57, 0.7);
+  outline-offset: 2px;
+}
+
 /* -----------------------------------
     FORMS
 ----------------------------------- */
@@ -377,7 +388,7 @@ textarea:disabled {
   margin-top: -0.5rem;
   font-size: 0.8125rem;
   font-style: italic;
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .show-for-sr {
@@ -431,8 +442,8 @@ textarea:disabled {
 .input-row {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .input-row label {
@@ -443,7 +454,7 @@ textarea:disabled {
   flex: 1;
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 0.25rem;
   align-items: stretch;
 }
 
@@ -468,7 +479,7 @@ textarea:disabled {
 .controls-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 0.5rem 1rem;
   justify-content: center;
   margin: 0 auto;
 }
@@ -477,7 +488,7 @@ textarea:disabled {
 .time-input-pair {
   display: flex;
   flex-direction: row;
-  gap: 0 16px;
+  gap: 0 1rem;
 }
 
 .time-input-pair > .input-row {
@@ -550,6 +561,12 @@ textarea:disabled {
 
 .modal__close:hover {
   color: var(--primary-text-color);
+}
+
+.modal__close:focus-visible {
+  outline: 2px solid var(--primary-accent-color);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* -----------------------------------
