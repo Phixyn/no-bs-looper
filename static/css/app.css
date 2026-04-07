@@ -37,18 +37,23 @@ Author:  Phixyn
   --error-color: #c14040;
 
   /* Accent colors that make the theme "pop" */
-  --primary-accent-color: rgb(166, 33, 57);
+  --primary-accent-color: #a62139;
   /* Mainly used as shadow and can be lighter/darker than
    * primary accent, if desired. */
-  --secondary-accent-color: rgb(166, 33, 57);
+  --secondary-accent-color: #a62139;
 
   /* Text colors */
-  --primary-text-color: rgb(175, 175, 175);
-  --secondary-text-color: rgb(119, 119, 119);
-  --primary-link-color: rgb(219, 90, 127);
-  --secondary-link-color: rgb(217, 147, 167);
-  --primary-menu-link-color: rgb(157, 157, 157);
-  --secondary-menu-link-color: rgb(234, 234, 234);
+  --primary-text-color: rgb(185, 185, 185);
+  --secondary-text-color: rgb(120, 120, 120);
+  --primary-link-color: #db5a7f;
+  --secondary-link-color: #e087a8;
+  --primary-menu-link-color: rgb(150, 150, 150);
+  --secondary-menu-link-color: rgb(225, 225, 225);
+
+  /* Navbar */
+  --navbar-text-color: rgb(200, 200, 200);
+  --navbar-text-color-focus: rgb(235, 235, 235);
+  --navbar-bg-contrast: rgba(255, 255, 255, 0.06);
 }
 
 /* -----------------------------------
@@ -78,8 +83,13 @@ Author:  Phixyn
 body {
   background-color: var(--primary-background-color);
   color: var(--primary-text-color);
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+body.modal-open {
+  overflow: hidden;
 }
 
 p {
@@ -117,6 +127,12 @@ a:focus {
   outline: none;
 }
 
+a:focus-visible {
+  outline: 2px solid var(--primary-link-color);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 hr {
   border-bottom: 1px solid var(--primary-separator-color);
 }
@@ -137,7 +153,7 @@ label {
   margin: 0;
   line-height: 1.8;
   color: var(--primary-text-color);
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1em;
 }
 
@@ -146,26 +162,20 @@ label {
 ----------------------------------- */
 
 #navbar {
-  --navbar-height: 64px;
-  /* position: fixed; */
-  /* left: 0;
-  right: 0; */
+  --navbar-height: 56px;
   height: var(--navbar-height);
-  /* background-color: var(--navbar-bg-color); */
-  border-bottom: 2px solid var(--primary-accent-color);
+  border-bottom: 1px solid rgba(166, 33, 57, 0.5);
   background-color: var(--accent-background-color);
-  margin-bottom: 24px;
+  margin-bottom: 1.25rem;
 }
 
 .navbar-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* max-width: 1000px; */
-  /* max-width: 1280px; */
   height: 100%;
-  padding-left: 1.4rem;
-  padding-right: 1.4rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
   margin-left: auto;
   margin-right: auto;
 }
@@ -180,38 +190,21 @@ label {
   display: flex;
   align-items: center;
   color: var(--navbar-text-color);
-  /* font-size: 1.25rem; */
-  font-size: 1.5rem;
-  /* font-weight: 400; */
-  font-weight: 700;
-
+  font-size: 1.25rem;
+  font-weight: 600;
 }
 
-.home-link,
 .navbar-link {
   color: var(--navbar-text-color);
-  transition: color 0.2s ease-in-out; /* lol */
   text-decoration: none;
   display: flex;
   font-weight: 400;
   align-items: center;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-}
-
-.home-link {
-  font-size: 1.5rem;
-}
-
-.home-link:focus,
-.home-link:hover {
-  color: var(--navbar-text-color-focus);
-}
-
-.navbar-link {
   justify-content: center;
   width: 100%;
   padding: 0.4em 0.8em;
   border-radius: 5px;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .navbar-link:focus,
@@ -220,118 +213,18 @@ label {
   background-color: var(--navbar-bg-contrast);
 }
 
-.navbar-logo {
-  /* background-color: var(--navbar-text-color-focus); */
-  background-image: url('../images/logo-navbar.svg');
-  /* background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%; */
-  border-radius: 50%;
-  /* width: 30px;
-  height: 30px; */
-  width: 40px;
-  height: 40px;
-  margin-right: 0.5em;
-}
-
 .navbar-logo-img {
-  height: 3rem;
+  height: 2.5rem;
   width: auto;
 }
 
 .navbar-links {
   list-style-type: none;
-  overflow: hidden;
-  /* background-color: var(--navbar-bg-color); */
-  background-color: var(--grey-darkest);
   display: flex;
   flex-direction: row;
-  max-height: max-content;
   align-items: center;
-  margin: 1.4rem;
-  border-radius: 5px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-}
-
-/* -----------------------------------
-    TOP BAR
------------------------------------ */
-
-/* Prevent FOUC (Flash Of Unstyled Content) for top bar */
-.no-js .top-bar {
-  display: none;
-}
-
-.top-bar {
-  border-bottom: 2px solid var(--primary-accent-color);
-  box-shadow: 0 0 7px 2px var(--secondary-accent-color);
-  padding: 0.55rem 0.1rem;
-}
-
-.top-bar,
-.top-bar ul {
-  background-color: var(--accent-background-color);
-  color: var(--primary-menu-link-color);
-}
-
-/* -----------------------------------
-    MENUS
------------------------------------ */
-
-.menu .menu-text {
-  padding: 0.5rem 2.5rem;
-  font-size: 1.25rem;
-  font-weight: normal;
-  letter-spacing: 0.15em;
-}
-
-.menu a,
-.dropdown > li > a {
-  color: var(--primary-menu-link-color);
-}
-
-.menu a:focus,
-.menu a:hover,
-.dropdown > li > a:focus,
-.dropdown > li > a:hover {
-  color: var(--secondary-menu-link-color);
-}
-
-.dropdown > li > a:focus,
-.dropdown > li > a:hover {
-  box-shadow: 0 -2px 0 0 var(--secondary-accent-color) inset;
-}
-
-/* TODO: Add a pink box-shadow bottom to active links? */
-/* .dropdown.menu > li.is-active > a,
-.dropdown.menu > li.is-active > a:focus,
-.dropdown.menu > li.is-active > a:hover {
-  box-shadow: 0 -2px 0 0 var(--secondary-accent-color) inset;
-} */
-
-.dropdown.menu > li.is-active > a,
-.dropdown.menu > li.is-active > a:focus {
-  color: var(--primary-accent-color);
-}
-
-.dropdown.menu > li.is-active > a:hover {
-  color: var(--primary-accent-color);
-}
-
-/* Down arrow for opening sub-menus */
-.dropdown.menu > li.is-dropdown-submenu-parent > a::after {
-  border-color: var(--secondary-accent-color) transparent transparent;
-}
-
-.is-dropdown-submenu.js-dropdown-active {
-  border: 1px solid var(--primary-border-color);
-  background-color: var(--accent-background-color-transparent);
-  margin-top: 0.3rem;
-}
-
-li.is-submenu-item > a:focus,
-li.is-submenu-item > a:hover {
-  background-color: var(--accent-background-color);
+  margin: 0;
+  padding: 0;
 }
 
 /* -----------------------------------
@@ -341,55 +234,18 @@ li.is-submenu-item > a:hover {
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 30px 0;
+  gap: 2rem 0;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-}
-
-/* -----------------------------------
-    THUMBNAIL
------------------------------------ */
-
-.thumbnail {
-  /* border: 1px solid var(--primary-border-color); */
-  /* For now, 4px border around it is fine */
-  border-color: var(--primary-border-color);
-}
-
-.thumbnail > img {
-  width: 100%;
-}
-
-/* -----------------------------------
-    CALLOUT
------------------------------------ */
-
-.callout {
-  border: 1px solid var(--primary-border-color);
-  background-color: var(--primary-container-color);
-  color: var(--primary-text-color);
-}
-
-/* -----------------------------------
-    CARD
------------------------------------ */
-
-.card {
-  border: 1px solid var(--primary-border-color);
-}
-
-.card,
-.card-divider {
-  background-color: var(--primary-container-color);
-  color: var(--primary-text-color);
+  padding: 0 1.5rem;
 }
 
 /* -----------------------------------
     BUTTON
 ----------------------------------- */
 
-/* Reset for button */
+/* Reset for <button> elements */
 button {
   padding: 0;
   appearance: none;
@@ -403,27 +259,26 @@ button {
 }
 
 .button {
-  --button-main-color: rgb(25, 25, 25);
-  --button-hover-color: var(--secondary-container-color);
+  --button-main-color: rgb(28, 28, 28);
+  --button-hover-color: rgb(38, 38, 38);
   --button-tap-highlight-color: rgba(36, 36, 36, 0);
-  /* Could also add transparency to button on hover */
-  /* --button-hover-color: rgba(36, 36, 36, 0.8); */
-  --button-border-color: rgba(85, 85, 85, 0.25);
-  /* --button-border-color: rgba(72, 72, 72, 0.25); */
+  --button-border-color: rgba(100, 100, 100, 0.3);
 
   display: inline-block;
-  border-radius: 0;
+  border-radius: 6px;
   margin: 0 0 1rem 0;
-  padding: 0.85em 1em;
+  padding: 0.6em 1.1em;
   font-family: inherit;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
   text-align: center;
   line-height: 1;
   vertical-align: middle;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out, color 0.2s ease-out;
 }
 
 .button.primary {
@@ -436,10 +291,15 @@ button {
 .button.primary:active,
 .button.primary:focus {
   -webkit-tap-highlight-color: var(--button-tap-highlight-color);
-  -webkit-focus-ring-color: var(--secondary-border-color);
   background-color: var(--button-hover-color);
+  border-color: rgba(166, 33, 57, 0.5);
   color: var(--primary-text-color);
-  outline-color: var(--secondary-border-color);
+  outline: none;
+}
+
+.button.primary:focus-visible {
+  outline: 2px solid rgba(166, 33, 57, 0.7);
+  outline-offset: 2px;
 }
 
 /* -----------------------------------
@@ -477,14 +337,13 @@ textarea {
   line-height: 1.5;
   appearance: none;
   -webkit-appearance: none;
-  border-radius: 0;
-  transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
+  border-radius: 6px;
+  transition: border-color 0.2s ease-in-out;
 }
 
 [type="button"],
 [type="submit"],
 [type="reset"] {
-  border-radius: 0;
   appearance: none;
   -webkit-appearance: none;
 }
@@ -506,12 +365,9 @@ textarea {
 [type="week"]:focus,
 textarea:focus {
   background-color: var(--accent-container-color);
-  /* border-color: var(--accent-border-color); */
-  /* Trying out using theme accent as :focus border,
-   * not sure if I like it yet. */
   border-width: 2px;
   border-color: var(--primary-accent-color);
-  -webkit-box-shadow: none;
+  outline: none;
   box-shadow: none;
   color: var(--primary-text-color);
 }
@@ -536,7 +392,7 @@ textarea:disabled {
   margin-top: -0.5rem;
   font-size: 0.8125rem;
   font-style: italic;
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .show-for-sr {
@@ -590,8 +446,8 @@ textarea:disabled {
 .input-row {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .input-row label {
@@ -602,7 +458,7 @@ textarea:disabled {
   flex: 1;
   display: flex;
   flex-direction: row;
-  gap: 4px;
+  gap: 0.25rem;
   align-items: stretch;
 }
 
@@ -627,7 +483,7 @@ textarea:disabled {
 .controls-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
+  gap: 0.5rem 1rem;
   justify-content: center;
   margin: 0 auto;
 }
@@ -636,7 +492,7 @@ textarea:disabled {
 .time-input-pair {
   display: flex;
   flex-direction: row;
-  gap: 0 16px;
+  gap: 0 1rem;
 }
 
 .time-input-pair > .input-row {
@@ -656,11 +512,16 @@ textarea:disabled {
   position: fixed;
   inset: 0;
   z-index: 500;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
 }
 
 .modal.is-open {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .modal__backdrop {
@@ -678,6 +539,12 @@ textarea:disabled {
   width: min(90vw, 40rem);
   padding: 1.5rem;
   z-index: 1;
+  transform: translateY(0.75rem);
+  transition: transform 0.25s ease-out;
+}
+
+.modal.is-open .modal__content {
+  transform: translateY(0);
 }
 
 .modal__close {
@@ -687,38 +554,28 @@ textarea:disabled {
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
   cursor: pointer;
   font-size: 1.8rem;
   line-height: 1;
   appearance: none;
   -webkit-appearance: none;
+  transition: color 0.15s ease-out;
+}
+
+.modal__close:hover {
+  color: var(--primary-text-color);
+}
+
+.modal__close:focus-visible {
+  outline: 2px solid var(--primary-accent-color);
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* -----------------------------------
     TOOLTIP
 ----------------------------------- */
-
-input.has-tip {
-  font-weight: 400;
-}
-
-button.has-tip,
-[type="button"].has-tip {
-  cursor: pointer;
-}
-
-.tooltip {
-  border: 2px solid var(--primary-border-color);
-  background-color: var(--accent-background-color-transparent);
-  color: var(--primary-text-color);
-  z-index: 2;
-}
-
-.tooltip.bottom::before {
-  border-color: transparent transparent
-    var(--accent-background-color-transparent);
-}
 
 .phix-tooltip {
   display: inline;
@@ -730,7 +587,9 @@ button.has-tip,
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  transform: translateX(150%) translateY(-20%);
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 8.75rem;
   max-width: 16rem;
   padding: 0.3125rem;
@@ -814,10 +673,9 @@ button.has-tip,
 
 #footer {
   background-color: var(--accent-background-color);
-  border-top: 2px solid var(--primary-accent-color);
-  margin-top: 5em;
-  /* padding: 1.11em 0; */
-  padding: 3rem 6rem 3rem 4rem;
+  border-top: 1px solid rgba(166, 33, 57, 0.4);
+  margin-top: 4rem;
+  padding: 1.5rem 2rem;
 }
 
 .copyright-msg {
@@ -845,6 +703,10 @@ button.has-tip,
 
 /* Mobile (≤ 640px) */
 @media screen and (max-width: 640px) {
+  .main-content {
+    padding: 0 1rem;
+  }
+
   .navbar-logo-img {
     height: 2.25rem;
   }
