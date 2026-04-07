@@ -224,10 +224,11 @@ label {
 .main-content {
   display: flex;
   flex-direction: column;
-  gap: 30px 0;
+  gap: 2rem 0;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 /* -----------------------------------
@@ -496,11 +497,16 @@ textarea:disabled {
   position: fixed;
   inset: 0;
   z-index: 500;
-  display: none;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
 }
 
 .modal.is-open {
-  display: block;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .modal__backdrop {
@@ -518,6 +524,12 @@ textarea:disabled {
   width: min(90vw, 40rem);
   padding: 1.5rem;
   z-index: 1;
+  transform: translateY(0.75rem);
+  transition: transform 0.25s ease-out;
+}
+
+.modal.is-open .modal__content {
+  transform: translateY(0);
 }
 
 .modal__close {
@@ -527,12 +539,17 @@ textarea:disabled {
   padding: 0;
   border: none;
   background: transparent;
-  color: var(--primary-text-color);
+  color: var(--secondary-text-color);
   cursor: pointer;
   font-size: 1.8rem;
   line-height: 1;
   appearance: none;
   -webkit-appearance: none;
+  transition: color 0.15s ease-out;
+}
+
+.modal__close:hover {
+  color: var(--primary-text-color);
 }
 
 /* -----------------------------------
@@ -549,7 +566,9 @@ textarea:disabled {
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  transform: translateX(150%) translateY(-20%);
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
   min-width: 8.75rem;
   max-width: 16rem;
   padding: 0.3125rem;
@@ -663,6 +682,10 @@ textarea:disabled {
 
 /* Mobile (≤ 640px) */
 @media screen and (max-width: 640px) {
+  .main-content {
+    padding: 0 1rem;
+  }
+
   .navbar-logo-img {
     height: 2.25rem;
   }
