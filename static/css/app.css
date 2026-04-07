@@ -222,7 +222,7 @@ label {
 
 .navbar-logo {
   /* background-color: var(--navbar-text-color-focus); */
-  background-image: url('../images/logo-navbar.png');
+  background-image: url('../images/logo-navbar.svg');
   /* background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%; */
@@ -232,6 +232,11 @@ label {
   width: 40px;
   height: 40px;
   margin-right: 0.5em;
+}
+
+.navbar-logo-img {
+  height: 3rem;
+  width: auto;
 }
 
 .navbar-links {
@@ -840,6 +845,10 @@ button.has-tip,
 
 /* Mobile (≤ 640px) */
 @media screen and (max-width: 640px) {
+  .navbar-logo-img {
+    height: 2.25rem;
+  }
+
   /* Stack start/end time inputs vertically */
   .time-input-pair {
     flex-direction: column;

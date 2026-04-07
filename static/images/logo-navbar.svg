@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="No BS">
+  <title>No BS</title>
+  <!-- Badge background -->
+  <rect x="0" y="0" width="48" height="48" fill="rgb(25, 25, 25)" rx="3" ry="3"/>
+  <!-- NO text -->
+  <text
+    x="24" y="22"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="16" font-weight="700"
+    fill="rgb(175, 175, 175)"
+    text-anchor="middle"
+  >NO</text>
+  <!-- BS text -->
+  <text
+    x="24" y="40"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="16" font-weight="700"
+    fill="rgb(175, 175, 175)"
+    text-anchor="middle"
+  >BS</text>
+</svg>

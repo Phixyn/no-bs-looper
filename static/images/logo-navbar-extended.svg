@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" role="img" aria-label="No BS Looper">
+  <title>No BS Looper</title>
+  <!-- Badge background -->
+  <rect x="2" y="4" width="40" height="40" fill="rgb(25, 25, 25)" rx="3" ry="3"/>
+  <!-- NO text -->
+  <text
+    x="22" y="23"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="14" font-weight="700"
+    fill="rgb(175, 175, 175)"
+    text-anchor="middle"
+  >NO</text>
+  <!-- BS text -->
+  <text
+    x="22" y="39"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="14" font-weight="700"
+    fill="rgb(175, 175, 175)"
+    text-anchor="middle"
+  >BS</text>
+  <!-- Looper text -->
+  <text
+    x="54" y="33"
+    font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+    font-size="22" font-weight="400"
+    fill="rgb(175, 175, 175)"
+  >Looper</text>
+</svg>
