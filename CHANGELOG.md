@@ -6,6 +6,15 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.1.3](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3) - 2025-02-01
+
+Fixes an issue wherein the video length could not be fetched.
+
+### Fixed
+
+- Fixed [#123](https://github.com/Phixyn/no-bs-looper/issues/123): Maximum end time now matches the duration of the video
+- Handle links that contain the "si" query parameter
+
 ## [1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) - 2021-01-31
 
 Fixes a critical issue wherein the "Update" button would not work the first time it was clicked or tapped.
