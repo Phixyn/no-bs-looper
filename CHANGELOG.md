@@ -4,24 +4,7 @@ All notable changes to this project are documented in this file. The format is i
 
 This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- - -
-
-## Table of Contents
-
-- [1.1.2 - 2021-01-31](#112---2021-01-31)
-    - [Changed](#changed)
-    - [Fixed](#fixed)
-- [1.1.1 - 2021-01-29](#111---2021-01-29)
-    - [Changed](#changed-1)
-    - [Removed](#removed)
-    - [Fixed](#fixed-1)
-    - [Security](#security)
-- [1.1.0 - 2020-10-31](#110---2020-10-31)
-    - [Added](#added)
-    - [Changed](#changed-2)
-    - [Fixed](#fixed-2)
-- [1.0.0 - 2020-09-30](#100---2020-09-30)
-    - [Added](#added-1)
+---
 
 ## [1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) - 2021-01-31
 
