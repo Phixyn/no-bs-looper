@@ -7,7 +7,7 @@
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2">
+  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   </a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
@@ -97,10 +97,10 @@ Run that from the repo's root directory. Then activate it with either `source .e
 
 **Docker:**
 
-This project has a work-in-progress `Dockerfile` that you can use to spin up an Nginx server, if you prefer. You'll have to mount/bind a volume for the `static/` folder. Something like this could work for running the website on port 14666:
+This project has a work-in-progress `Dockerfile` that you can use to spin up an Nginx server, if you prefer. You'll have to mount/bind a volume for the `static/` folder. Something like this could work for running the website on port 8080:
 
 ```sh
-docker container run --name no-bs-looper -d -p 14666:80 -v E:\Phixyn\Projects\no-bs-looper\static:/usr/share/nginx/html phixyn/no-bs-looper
+docker container run --name no-bs-looper -d -p 8080:80 -v /path/to/no-bs-looper/static:/usr/share/nginx/html no-bs-looper
 ```
 
 Obviously replace the path to the static folder with your own path. Note that it has to be an **absolute path.**
@@ -131,7 +131,7 @@ If you can't host your own instance of the website, use any of the public instan
 
 | Owner  | Version                                                             | Link                                                       |
 | ------ | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Phixyn | [v1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
+| Phixyn | [v1.1.3](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
 
 If you decide to **host your own** public instance, feel free to update the README with a link to it and **make a PR.**
 
@@ -141,7 +141,7 @@ See [milestones](https://github.com/Phixyn/no-bs-looper/milestones) for a list o
 
 ## Contributing
 
-This is still a **work in progress.** The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
+If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
 
 Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping. All contributions are **greatly appreciated!**
 
@@ -153,13 +153,11 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 ## Contact
 
-> Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](https://phixyn.com)
+> X [@phixyn](https://x.com/Phixyn/) &bull; [phixyn.com](https://phixyn.com)
 
 ## Acknowledgements
 
 This software uses the following open source ❤︎ projects:
 
-- [jQuery](https://github.com/jquery/jquery/)
-- [Zurb Foundation for Sites](https://github.com/foundation/foundation-sites)
 - [Qs: A querystring parser with nesting support](https://github.com/ljharb/qs/)
 - [GitHub - aaugustin/websockets: Library for building WebSocket servers and clients in Python](https://github.com/aaugustin/websockets)
