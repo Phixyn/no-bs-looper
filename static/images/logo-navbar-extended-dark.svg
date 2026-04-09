@@ -2,8 +2,8 @@
   <title>No BS Looper</title>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#9b2355"/>
-      <stop offset="100%" stop-color="#d05a8a"/>
+      <stop offset="0%" stop-color="#18181f"/>
+      <stop offset="100%" stop-color="#2d2d3d"/>
     </linearGradient>
   </defs>
   <!-- Badge -->
@@ -16,7 +16,7 @@
     fill="white" text-anchor="middle"
     letter-spacing="2">NO</text>
   <!-- Separator -->
-  <line x1="11" y1="24" x2="37" y2="24" stroke="rgba(255,255,255,0.3)" stroke-width="0.75"/>
+  <line x1="11" y1="24" x2="37" y2="24" stroke="rgba(255,255,255,0.2)" stroke-width="0.75"/>
   <!-- BS -->
   <text
     x="24" y="40"
