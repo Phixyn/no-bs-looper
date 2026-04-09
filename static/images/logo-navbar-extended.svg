@@ -28,7 +28,7 @@
   <text
     x="56" y="31"
     font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
-    font-size="20" font-weight="300"
-    fill="#d0d0d9"
-    letter-spacing="1">Looper</text>
+    font-size="20" font-weight="400"
+    fill="rgba(208, 208, 217, 0.75)"
+    letter-spacing="4">LOOPER</text>
 </svg>
