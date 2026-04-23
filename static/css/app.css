@@ -77,7 +77,7 @@ Author:  Phixyn
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  /* TODO */
+  /* TODO Improve font stack */
   font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.6;
@@ -426,8 +426,8 @@ textarea:disabled {
   display: block;
 }
 
-/* TODO: Class instead */
-#video-form-new {
+/* TODO: Class instead? */
+#video-form {
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
@@ -444,7 +444,7 @@ textarea:disabled {
   font-size: 1rem;
 }
 
-.input-group-new {
+.input-group {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -452,17 +452,19 @@ textarea:disabled {
   align-items: stretch;
 }
 
-/* Inputs inside input-group-new: fill remaining space, reset margin */
-.input-group-new > input:not([type="button"]):not([type="submit"]):not([type="reset"]) {
+/* Inputs inside input-group: fill remaining space, reset margin */
+.input-group > input:not([type="button"]):not([type="submit"]):not([type="reset"]) {
   flex: 1;
   min-width: 0;
   margin: 0;
 }
 
-/* Buttons inside input-group-new: natural width, reset margin, stretch to full height */
-.input-group-new > input[type="button"],
-.input-group-new > input[type="submit"],
-.input-group-new > input[type="reset"] {
+/* Buttons inside input-group: natural width, reset margin, stretch to
+ * full height.
+ */
+.input-group > input[type="button"],
+.input-group > input[type="submit"],
+.input-group > input[type="reset"] {
   flex-shrink: 0;
   width: auto;
   height: auto;
@@ -695,7 +697,7 @@ input[type=number] {
 
 /* Tablet / large mobile (≤ 768px) */
 @media screen and (max-width: 768px) {
-  #video-form-new {
+  #video-form {
     width: 92%;
   }
 
@@ -720,7 +722,7 @@ input[type=number] {
     gap: 0;
   }
 
-  #video-form-new {
+  #video-form {
     width: 92%;
   }
 

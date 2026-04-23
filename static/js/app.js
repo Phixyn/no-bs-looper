@@ -5,11 +5,11 @@ const TIMEOUT_TOOLTIP = 3000;
 // Intervals
 const INTERVAL_CHECK_CURRENT_TIME = 1000;
 
-var player;
-var state;
-const videoIdInput = document.getElementById("video-id-new");
-const startTimeInput = document.getElementById('start-time-new');
-const endTimeInput = document.getElementById('end-time-new');
+let player;
+let state;
+const videoIdInput = document.getElementById("video-id");
+const startTimeInput = document.getElementById('start-time');
+const endTimeInput = document.getElementById('end-time');
 const totlOverlay = document.getElementById("totl-overlay");
 const shareLinkInput = document.getElementById('share-link');
 const shareBtn = document.getElementById("share-btn");
@@ -21,9 +21,9 @@ const videoIdPatternError = document.getElementById("video-id-pattern-error");
 const startTimeError = document.getElementById("start-time-error");
 const endTimeError = document.getElementById("end-time-error");
 const playerContainer = document.querySelector("#player")?.parentElement;
-var isInitialVideo = true;
+let isInitialVideo = true;
 
-const newSlider = new DualRangeSlider('#loop-portion-slider-new', {
+const loopSlider = new DualRangeSlider('#loop-portion-slider', {
   min: 0,
   max: 100,
   valueMin: 25,
@@ -41,20 +41,18 @@ const newSlider = new DualRangeSlider('#loop-portion-slider-new', {
 });
 
 /**
- * Event handler for input focus events.
+ * Initializes the app by registering event listeners, loading the Iframe
+ * Player and setting the state.
  *
- * This handler looks for the custom data attributes 'data-autoselect' and
- * 'data-autocopy' in form input elements. If these are found and set to true,
- * the handler will execute the appropriate action, such as selecting the
- * input's text or copying it to the user's clipboard.
+ * TODO #114: Clean up/split into smaller functions.
  */
 function initializeApp() {
   console.log("[INFO] Document ready.");
 
   // Event handlers for controls
-  document.getElementById('update-btn-new').onclick = updatePlayer;
-  document.getElementById('start-to-current-btn-new').onclick = setStartTimeToCurrent;
-  document.getElementById('end-to-current-btn-new').onclick = setEndTimeToCurrent;
+  document.getElementById('update-btn').onclick = updatePlayer;
+  document.getElementById('start-to-current-btn').onclick = setStartTimeToCurrent;
+  document.getElementById('end-to-current-btn').onclick = setEndTimeToCurrent;
   document.getElementById('toggle-vid-btn').onclick = togglePlayer;
   document.getElementById('lights-off-btn').onclick = enableTotl;
 
@@ -94,7 +92,7 @@ function initializeApp() {
     }
   });
 
-  // Totl overlay click closes overlay.
+  // TOTL overlay click closes overlay.
   totlOverlay.addEventListener("click", disableTotl);
 
   // Event handlers for auto-select and auto-copy behaviors.
@@ -129,7 +127,7 @@ function initializeApp() {
     const parsedStart = parseInt(startTimeInput.value, 10);
     if (!Number.isNaN(parsedStart)) {
       setStartTimeValidationState(true);
-      newSlider.setValues(parsedStart, newSlider.getValues().max);
+      loopSlider.setValues(parsedStart, loopSlider.getValues().max);
     } else {
       setStartTimeValidationState(false);
     }
@@ -139,7 +137,7 @@ function initializeApp() {
     const parsedEnd = parseInt(endTimeInput.value, 10);
     if (!Number.isNaN(parsedEnd)) {
       setEndTimeValidationState(true);
-      newSlider.setValues(newSlider.getValues().min, parsedEnd);
+      loopSlider.setValues(loopSlider.getValues().min, parsedEnd);
     } else {
       setEndTimeValidationState(false);
     }
@@ -209,8 +207,8 @@ function initializeApp() {
     };
   }
 
-  newSlider.setMax(state.end);
-  newSlider.setValues(state.start, state.end);
+  loopSlider.setMax(state.end);
+  loopSlider.setValues(state.start, state.end);
 
   // Do this just in case history.state doesn't get automatically set
   // from the URL's querystring.
@@ -280,7 +278,7 @@ function onPlayerReady(event) {
   player.setLoop(true);
 }
 
-var timer = null;
+let timer = null;
 /**
  * Called by the API when the video player's state changes.
  *
@@ -509,7 +507,7 @@ function setStartTimeToCurrent() {
   state.start = parseInt(player.getCurrentTime(), 10);
   startTimeInput.value = state.start;
   setStartTimeValidationState(true);
-  newSlider.setValues(state.start, newSlider.getValues().max);
+  loopSlider.setValues(state.start, loopSlider.getValues().max);
 }
 
 /**
@@ -519,7 +517,7 @@ function setEndTimeToCurrent() {
   state.end = parseInt(player.getCurrentTime(), 10);
   endTimeInput.value = state.end;
   setEndTimeValidationState(true);
-  newSlider.setValues(newSlider.getValues().min, state.end);
+  loopSlider.setValues(loopSlider.getValues().min, state.end);
 }
 
 /**
@@ -533,7 +531,7 @@ function setEndTimeToCurrent() {
  * able to enter the expected end time values.
  *
  * Remember both numeric inputs and both slider handles have to be updated
- * everytime the video changes. If only the slider attributes are updated,
+ * every time the video changes. If only the slider attributes are updated,
  * users might not be able to use input fields to set new times properly and
  * will be forced to use the slider. We want users to have a choice and for
  * both inputs and slider to work 100% all the time.
@@ -550,8 +548,8 @@ function updateSliderAndInputAttributes(newStartTime, newEndTime) {
   console.debug("[DEBUG] Finished setting numeric input max attributes.");
 
   // Update slider values and ARIA values.
-  newSlider.setMax(newEndTime);
-  newSlider.setValues(newStartTime, state.end);
+  loopSlider.setMax(newEndTime);
+  loopSlider.setValues(newStartTime, state.end);
   console.debug(
     "[DEBUG] Finished setting slider max and current values."
   );
