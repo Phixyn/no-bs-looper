@@ -4,16 +4,52 @@ All notable changes to this project are documented in this file. The format is i
 
 This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- - -
+---
 
-## Table of Contents
+## [1.1.3](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3) - 2025-02-01
 
-- [1.1.0 - 2020-10-31](#110---2020-10-31)
-    - [Added](#added)
-    - [Changed](#changed)
-    - [Fixed](#fixed)
-- [1.0.0 - 2020-09-30](#100---2020-09-30)
-    - [Added](#added-1)
+Fixes an issue wherein the video length could not be fetched.
+
+### Fixed
+
+- Fixed [#123](https://github.com/Phixyn/no-bs-looper/issues/123): Maximum end time now matches the duration of the video
+- Handle links that contain the "si" query parameter
+
+## [1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) - 2021-01-31
+
+Fixes a critical issue wherein the "Update" button would not work the first time it was clicked or tapped.
+
+### Changed
+
+- Changed outline and background colors of active/focused buttons on mobile to fit dark theme
+
+### Fixed
+
+- Fixed [#111](https://github.com/Phixyn/no-bs-looper/issues/111): Videos will now successfully load after clicking "Update" for the first time
+
+## [1.1.1](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.1) - 2021-01-29
+
+Fixes a critical issue wherein the value for "End time" could be stuck at 1 and the slider could not be moved.
+
+Contains some minor improvements to the UI.
+
+### Changed
+
+- Increased website title's font size on mobile and decreased it on desktop
+- Changed background colors of the top bar and footer to be slightly lighter
+- Added a CSS transition for text color to hyperlinks
+
+### Removed
+
+- Removed the background image and replaced it with a solid color background
+
+### Fixed
+
+- Fixed [#112](https://github.com/Phixyn/no-bs-looper/issues/112): End time no longer gets stuck at 1 second when first loading the website
+
+### Security
+
+- Website is now more CSP-friendly - [#101](https://github.com/Phixyn/no-bs-looper/issues/101)
 
 ## [1.1.0](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.0) - 2020-10-31
 
