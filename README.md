@@ -1,5 +1,4 @@
 <h1 align="center">
-  <!-- TODO #68: Replace with a project logo once we have one -->
   No BS YouTube Looper
 </h1>
 
@@ -7,19 +6,19 @@
   <h4>Loop YouTube videos easily and without distractions.</h4>
 
   <img src="https://img.shields.io/badge/%E2%9B%94-No%20BS%20Software-aa0000" alt="No BS software badge" />
-  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2">
+  <a href="https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3">
     <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/phixyn/no-bs-looper">
   </a>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
     <img src="https://img.shields.io/badge/license-GPLv3-blue.svg" alt="GPLv3 badge" />
   </a>
 
-  <a href="http://ytlooper.phixyn.com/" title="Website">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/releases">Releases</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md" title="Contributing">Contributing</a>
+  <a href="http://ytlooper.phixyn.com/">Website</a> • <a href="https://github.com/Phixyn/no-bs-looper/issues">Issue Tracker</a> • <a href="https://github.com/Phixyn/no-bs-looper/releases">Releases</a> • <a href="https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md">Contributing</a>
 
   ![Preview Screenshot](docs/screenshots/desktop_demo_yt_controls.png?raw=true)
 </div>
 
-- - -
+***
 
 ## Table of Contents
 
@@ -37,7 +36,7 @@
 - [Contact](#contact)
 - [Acknowledgements](#acknowledgements)
 
-- - -
+***
 
 ## Overview
 
@@ -60,50 +59,35 @@ To get a local instance up and running, follow these steps. If it's too complica
 
 ### Prerequisites
 
-- Python 3.7+
-- A HTTP server (e.g. Nginx or Apache)
-- Docker (optional)
+- A HTTP server (e.g., Nginx or Apache) or Docker
 
-### Installation
+### Deployment
 
-1. Clone the repo.
+1. Clone the repo:
 
 ```sh
 git clone https://github.com/Phixyn/no-bs-looper.git
 ```
 
-2. Install Python dependencies*
+2. Deploy everything from the folder `static` to your web server of choice
+
+#### Docker:
+
+This project has a `Dockerfile` that you can use to spin up an Nginx server, if you prefer.
+
+1. Build the image:
 
 ```sh
-pip install -r requirements.txt
+docker build --tag no-bs/looper:1.1.3 .
 ```
 
-3. Open `ws_server.py` and scroll to the bottom.
-4. Replace `HOST` and `PORT` with your desired values. Note that `HOST` should be the local address of your machine (e.g. `192.168.1.69`).
-5. Open `static/js/app.js`
-6. Replace the address in `const websocket = new WebSocket( ... );` with the address and port you set in step 4.
-7. Copy all the files in the `static/` folder to a HTTP server such as Nginx or Apache.
-8. Run the backend server: `python ws_server.py` (CTRL + C to quit it).
-
-***Python virtual environment:**
-
-I recommend setting up a virtual environment for the project. It's really easy:
+2. Run a container (minimal example):
 
 ```sh
-python -m venv .env
+docker run --publish 8080:8080/tcp --name looper no-bs/looper:1.1.3
 ```
 
-Run that from the repo's root directory. Then activate it with either `source .env/bin/activate` or `.env\Scripts\activate.bat` on Windows. Once that's done you can install the project's requirements locally in the environment, instead of globally on your machine (see step 2).
-
-**Docker:**
-
-This project has a work-in-progress `Dockerfile` that you can use to spin up an Nginx server, if you prefer. You'll have to mount/bind a volume for the `static/` folder. Something like this could work for running the website on port 14666:
-
-```sh
-docker container run --name no-bs-looper -d -p 14666:80 -v E:\Phixyn\Projects\no-bs-looper\static:/usr/share/nginx/html phixyn/no-bs-looper
-```
-
-Obviously replace the path to the static folder with your own path. Note that it has to be an **absolute path.**
+The Looper will be available on `http://localhost:8080`.
 
 ## Usage
 
@@ -131,7 +115,7 @@ If you can't host your own instance of the website, use any of the public instan
 
 | Owner  | Version                                                             | Link                                                       |
 | ------ | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| Phixyn | [v1.1.2](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.2) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
+| Phixyn | [v1.1.3](https://github.com/Phixyn/no-bs-looper/releases/tag/1.1.3) | [http://ytlooper.phixyn.com/](http://ytlooper.phixyn.com/) |
 
 If you decide to **host your own** public instance, feel free to update the README with a link to it and **make a PR.**
 
@@ -141,7 +125,7 @@ See [milestones](https://github.com/Phixyn/no-bs-looper/milestones) for a list o
 
 ## Contributing
 
-This is still a **work in progress.** The Python backend server will soon be replaced and this will eventually be a full Node.js project. If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
+If you'd like to help out, please check out the [issues](https://github.com/Phixyn/no-bs-looper/issues) page for anything you might be able to help with.
 
 Please take a look at the [contributing guidelines](https://github.com/Phixyn/no-bs-looper/blob/master/.github/CONTRIBUTING.md) if you're interested in helping. All contributions are **greatly appreciated!**
 
@@ -153,13 +137,11 @@ Please take a look at the [contributing guidelines](https://github.com/Phixyn/no
 
 ## Contact
 
-> Twitter [@phixyn](https://twitter.com/phixyn) &bull; [phixyn.com](https://phixyn.com)
+> X [@phixyn](https://x.com/Phixyn/) &bull; [phixyn.com](https://phixyn.com)
 
 ## Acknowledgements
 
 This software uses the following open source ❤︎ projects:
 
-- [jQuery](https://github.com/jquery/jquery/)
-- [Zurb Foundation for Sites](https://github.com/foundation/foundation-sites)
 - [Qs: A querystring parser with nesting support](https://github.com/ljharb/qs/)
 - [GitHub - aaugustin/websockets: Library for building WebSocket servers and clients in Python](https://github.com/aaugustin/websockets)

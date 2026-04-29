@@ -1,0 +1,10 @@
+.git/
+.github/
+.vscode/
+docs/
+.gitignore
+CHANGELOG.md
+README.md
+ws_client.py
+ws_server.py
+requirements.txt
