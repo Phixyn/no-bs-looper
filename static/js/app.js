@@ -46,7 +46,7 @@ const loopSlider = new DualRangeSlider('#loop-portion-slider', {
  * Initializes the app by registering event listeners, loading the Iframe
  * Player and setting the state.
  *
- * TODO #114: Clean up/split into smaller functions.
+ * TODO #114: Clean up/split into smaller functions
  */
 function initializeApp() {
   console.log("[INFO] Document ready.");
@@ -97,7 +97,7 @@ function initializeApp() {
   // TOTL overlay click closes overlay
   totlOverlay.addEventListener("click", disableTotl);
 
-  // Event handlers for auto-select and auto-copy behaviors.
+  // Event handlers for auto-select and auto-copy behaviors
   document.querySelectorAll("input").forEach((input) => {
     input.addEventListener("focus", () => {
       if (input.dataset.autoselect === "true") {
@@ -236,7 +236,7 @@ function onYouTubeIframeAPIReady() {
       version: 3,
       rel: 0,
       start: state.start,
-      modestBranding: 1,
+      modestBranding: 1,  // TODO: Deprecated, remove
       loop: 1,
     },
     events: {
@@ -261,7 +261,6 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("[INFO] YouTube player ready.");
 
-  // console.log("[onPlayerReady] player object:");
   console.log("[onPlayerReady] player getDuration():");
   console.log(player.getDuration());
   console.log("[onPlayerReady] player.playerInfo.duration:");
