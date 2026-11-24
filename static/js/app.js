@@ -5,6 +5,9 @@ const TIMEOUT_TOOLTIP = 3000;
 // Intervals
 const INTERVAL_CHECK_CURRENT_TIME = 1000;
 
+// Default page title, as set by the <title> tag in the HTML
+const BASE_PAGE_TITLE = document.title;
+
 let player;
 let state;
 const videoIdInput = document.getElementById("video-id");
@@ -44,7 +47,7 @@ const loopSlider = new DualRangeSlider('#loop-portion-slider', {
  * Initializes the app by registering event listeners, loading the Iframe
  * Player and setting the state.
  *
- * TODO #114: Clean up/split into smaller functions.
+ * TODO #114: Clean up/split into smaller functions
  */
 function initializeApp() {
   console.log("[INFO] Document ready.");
@@ -92,10 +95,10 @@ function initializeApp() {
     }
   });
 
-  // TOTL overlay click closes overlay.
+  // TOTL overlay click closes overlay
   totlOverlay.addEventListener("click", disableTotl);
 
-  // Event handlers for auto-select and auto-copy behaviors.
+  // Event handlers for auto-select and auto-copy behaviors
   document.querySelectorAll("input").forEach((input) => {
     input.addEventListener("focus", () => {
       if (input.dataset.autoselect === "true") {
@@ -234,7 +237,7 @@ function onYouTubeIframeAPIReady() {
       version: 3,
       rel: 0,
       start: state.start,
-      modestBranding: 1,
+      modestBranding: 1,  // TODO: Deprecated, remove
       loop: 1,
     },
     events: {
@@ -259,7 +262,6 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
   console.log("[INFO] YouTube player ready.");
 
-  // console.log("[onPlayerReady] player object:");
   console.log("[onPlayerReady] player getDuration():");
   console.log(player.getDuration());
   console.log("[onPlayerReady] player.playerInfo.duration:");
@@ -300,6 +302,12 @@ function onPlayerStateChange(event) {
       }
     }, INTERVAL_CHECK_CURRENT_TIME);
   }
+  else if (event.data === YT.PlayerState.CUED) {
+    // Set page title for first video loaded when page is first opened.
+    // Videos are only cued on page load, before the interval is started,
+    // so there is no interval to clear here.
+    setPageTitle(player.videoTitle);
+  }
   // TODO #45: This also affects things like PlayerState === buffering, so
   // maybe do 'if (event.data === YT.PlayerState.PAUSED)' ?
   else {
@@ -322,12 +330,6 @@ function onPlayerStateChange(event) {
  */
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
-
-  // Initial video is the one that shows when page first loads, thus this
-  // should be set to false the first time a new video is loaded.
-  if (isInitialVideo) {
-    isInitialVideo = false;
-  }
 
   let videoIdInputVal = videoIdInput.value.trim();
   if (videoIdInputVal === "") {
@@ -370,6 +372,15 @@ function updatePlayer() {
     return;
   }
 
+  // Initial video is the one that shows when page first loads, thus this
+  // should be set to false the first time a new video is loaded.
+  if (isInitialVideo) {
+    isInitialVideo = false;
+  }
+
+  // Reset page title while we wait for new video metadata
+  setPageTitle();
+
   console.log(`[INFO] Loading new video in player with ID '${state.v}'.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
@@ -398,9 +409,9 @@ function updatePlayer() {
   player.loadPlaylist([state.v, state.v]);
   player.setLoop(true);
 
-  // On new videos, reset start time to 0. The video duration is not yet
-  // available, so wait for playback metadata to load before updating the
-  // slider and input max attributes.
+  // On new videos, reset start time to 0. The video duration and other
+  // metadata are not yet available, so wait for playback metadata to load
+  // before updating the slider and input max attributes, and page title.
   state.start = 0;
   setTimeout(() => {
     console.log("[INFO] [updatePlayer] player.playerInfo.duration:");
@@ -409,7 +420,25 @@ function updatePlayer() {
     state.end = player.playerInfo.duration;
     updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
     startTimeInput.value = state.start;
+
+    setPageTitle(player.videoTitle);
   }, 5000);
+}
+
+/**
+ * Sets the page title, prefixing the base page title with the given video
+ * title. If no video title is given (or it's empty), the page title is set
+ * to just the base page title.
+ *
+ * Note: `player.videoTitle` is not part of the documented Iframe Player API,
+ * so it could be missing if YouTube changes it.
+ *
+ * @param {string=} videoTitle The title of the YouTube video, if available.
+ */
+function setPageTitle(videoTitle) {
+  document.title = videoTitle
+    ? `${videoTitle} \u2013 ${BASE_PAGE_TITLE}`
+    : BASE_PAGE_TITLE;
 }
 
 /**
