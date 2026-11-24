@@ -329,12 +329,6 @@ function onPlayerStateChange(event) {
 function updatePlayer() {
   console.debug("[DEBUG] Updating player (state.v, state.start).");
 
-  // Initial video is the one that shows when page first loads, thus this
-  // should be set to false the first time a new video is loaded.
-  if (isInitialVideo) {
-    isInitialVideo = false;
-  }
-
   let videoIdInputVal = videoIdInput.value.trim();
   if (videoIdInputVal === "") {
     setVideoIdValidationState(false, "required");
@@ -374,6 +368,12 @@ function updatePlayer() {
   setEndTimeValidationState(endValid);
   if (!startValid || !endValid) {
     return;
+  }
+
+  // Initial video is the one that shows when page first loads, thus this
+  // should be set to false the first time a new video is loaded.
+  if (isInitialVideo) {
+    isInitialVideo = false;
   }
 
   // Reset page title while we wait for new video metadata
