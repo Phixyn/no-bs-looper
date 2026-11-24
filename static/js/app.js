@@ -5,6 +5,8 @@ const TIMEOUT_TOOLTIP = 3000;
 // Intervals
 const INTERVAL_CHECK_CURRENT_TIME = 1000;
 
+const BASE_PAGE_TITLE = "No BS YouTube Looper";
+
 let player;
 let state;
 const videoIdInput = document.getElementById("video-id");
@@ -92,7 +94,7 @@ function initializeApp() {
     }
   });
 
-  // TOTL overlay click closes overlay.
+  // TOTL overlay click closes overlay
   totlOverlay.addEventListener("click", disableTotl);
 
   // Event handlers for auto-select and auto-copy behaviors.
@@ -300,6 +302,10 @@ function onPlayerStateChange(event) {
       }
     }, INTERVAL_CHECK_CURRENT_TIME);
   }
+  else if (event.data === YT.PlayerState.CUED) {
+    // Set page title for first video loaded when page is first opened
+    document.title = `${player.videoTitle} \u2013 ${BASE_PAGE_TITLE}`;
+  }
   // TODO #45: This also affects things like PlayerState === buffering, so
   // maybe do 'if (event.data === YT.PlayerState.PAUSED)' ?
   else {
@@ -370,6 +376,9 @@ function updatePlayer() {
     return;
   }
 
+  // Reset page title while we wait for new video metadata
+  document.title = BASE_PAGE_TITLE;
+
   console.log(`[INFO] Loading new video in player with ID '${state.v}'.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
    * videos (i.e. not portions of a video). It's for this same reason that we
@@ -398,9 +407,9 @@ function updatePlayer() {
   player.loadPlaylist([state.v, state.v]);
   player.setLoop(true);
 
-  // On new videos, reset start time to 0. The video duration is not yet
-  // available, so wait for playback metadata to load before updating the
-  // slider and input max attributes.
+  // On new videos, reset start time to 0. The video duration and other
+  // metadata are not yet available, so wait for playback metadata to load
+  // before updating the slider and input max attributes, and page title.
   state.start = 0;
   setTimeout(() => {
     console.log("[INFO] [updatePlayer] player.playerInfo.duration:");
@@ -409,6 +418,8 @@ function updatePlayer() {
     state.end = player.playerInfo.duration;
     updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
     startTimeInput.value = state.start;
+
+    document.title = `${player.videoTitle} \u2013 ${BASE_PAGE_TITLE}`;
   }, 5000);
 }
 
