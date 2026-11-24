@@ -303,7 +303,9 @@ function onPlayerStateChange(event) {
     }, INTERVAL_CHECK_CURRENT_TIME);
   }
   else if (event.data === YT.PlayerState.CUED) {
-    // Set page title for first video loaded when page is first opened
+    // Set page title for first video loaded when page is first opened.
+    // Videos are only cued on page load, before the interval is started,
+    // so there is no interval to clear here.
     setPageTitle(player.videoTitle);
   }
   // TODO #45: This also affects things like PlayerState === buffering, so
