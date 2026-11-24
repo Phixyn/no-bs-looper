@@ -5,7 +5,8 @@ const TIMEOUT_TOOLTIP = 3000;
 // Intervals
 const INTERVAL_CHECK_CURRENT_TIME = 1000;
 
-const BASE_PAGE_TITLE = "No BS YouTube Looper";
+// Default page title, as set by the <title> tag in the HTML
+const BASE_PAGE_TITLE = document.title;
 
 let player;
 let state;
@@ -303,7 +304,7 @@ function onPlayerStateChange(event) {
   }
   else if (event.data === YT.PlayerState.CUED) {
     // Set page title for first video loaded when page is first opened
-    document.title = `${player.videoTitle} \u2013 ${BASE_PAGE_TITLE}`;
+    setPageTitle(player.videoTitle);
   }
   // TODO #45: This also affects things like PlayerState === buffering, so
   // maybe do 'if (event.data === YT.PlayerState.PAUSED)' ?
@@ -376,7 +377,7 @@ function updatePlayer() {
   }
 
   // Reset page title while we wait for new video metadata
-  document.title = BASE_PAGE_TITLE;
+  setPageTitle();
 
   console.log(`[INFO] Loading new video in player with ID '${state.v}'.`);
   /* loadPlaylist() and setLoop() are required to make infinite loops of full
@@ -418,8 +419,24 @@ function updatePlayer() {
     updateSliderAndInputAttributes(state.start, player.playerInfo.duration);
     startTimeInput.value = state.start;
 
-    document.title = `${player.videoTitle} \u2013 ${BASE_PAGE_TITLE}`;
+    setPageTitle(player.videoTitle);
   }, 5000);
+}
+
+/**
+ * Sets the page title, prefixing the base page title with the given video
+ * title. If no video title is given (or it's empty), the page title is set
+ * to just the base page title.
+ *
+ * Note: `player.videoTitle` is not part of the documented Iframe Player API,
+ * so it could be missing if YouTube changes it.
+ *
+ * @param {string=} videoTitle The title of the YouTube video, if available.
+ */
+function setPageTitle(videoTitle) {
+  document.title = videoTitle
+    ? `${videoTitle} \u2013 ${BASE_PAGE_TITLE}`
+    : BASE_PAGE_TITLE;
 }
 
 /**
