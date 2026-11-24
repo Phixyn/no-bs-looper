@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Backend server for the no BS YouTube looper.
+"""DEPRECATED - DO NOT USE. Backend server for the No BS YouTube Looper.
 
 Provides a way to send GET requests to YouTube, bypassing CORS. Uses
 websocket to communicate with clients. Scroll to the bottom to find

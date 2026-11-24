@@ -1,1 +1,2 @@
+# Deprecated, no longer needed
 websockets
